@@ -1,0 +1,6 @@
+.panel {
+  padding-bottom: 10px;
+  border: 2px solid #eee;
+  margin-top: -2px;
+  background: rgba(0, 0, 0, 0.02);
+}

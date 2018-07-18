@@ -1,0 +1,22 @@
+<header-component></header-component>
+<div class="container base-container">
+    <div class="login-card">
+      <div class="row" align="center">
+          <h4 class="pb-30">A token is sent to your email. Please check to continue here</h4>
+      </div>
+      <div class="row">
+        <div *ngIf="errorMessage" class="alert alert-block alert-danger">
+          {{errorMessage}}
+        </div>
+      </div>
+      <div class="row">
+        <div  class="input-wrapper">
+          <label  class="form-label" for="token">Token</label>
+          <input  class="input w-input" id="token" maxlength="256" (keyup)="txtTokenKeyUp()" [(ngModel)]="token" placeholder="Token" type="text">
+        </div>
+      </div>
+      <div class="row">
+        <input type="submit" (click)="btnSubmitClick()" value="Submit" class="btn btn-primary btn-default full">
+      </div>
+    </div>
+</div>

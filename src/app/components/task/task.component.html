@@ -1,0 +1,332 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card task-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Tasks</h2>
+    </div>
+    <div class="asset-ctn">
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && tasks.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddTaskClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let task of tasks; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#userTask' + i">{{task.TaskNumber}} | {{task.Subject}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="sub-panel collapse in asset-panel" id="userTask{{i}}">
+          <div class="tabbable-panel custom-scroll">
+            <div class="tabbable-line">
+              <ul class="nav nav-tabs ">
+                <li class="active">
+                  <a href="#tab_default_1{{i}}" data-toggle="tab">
+                  Document </a>
+                </li>
+                <li>
+                  <a href="#tab_default_2{{i}}" data-toggle="tab">
+                  Comments </a>
+                </li>
+                <li>
+                  <a href="#tab_default_3{{i}}" data-toggle="tab">
+                  Changes </a>
+                </li>
+                <li>
+                  <a href="#tab_default_4{{i}}" data-toggle="tab">
+                  Attachments </a>
+                </li>
+                <li>
+                  <a href="#tab_default_5{{i}}" data-toggle="tab">
+                  Collaborators </a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_default_1{{i}}">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="Subject{{i}}" [(ngModel)]="task.Subject" (change)="txtValueChange($event, 'task', 'Subject', task)"  placeholder="Subject" />
+                        <label  class="form-label form-small-label" for="Subject{{i}}">Subject</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div  class="input-wrapper text-area-wrapper">
+                        <textarea class="input w-input w-small-input" id="Description{{i}}" (change)="txtValueChange($event, 'task', 'Description', task)" [(ngModel)]="task.Description" placeholder="Description"></textarea>
+                        <label  class="form-label form-small-label" for="Description{{i}}">Description</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mar-t-20">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select  class="input w-input w-small-input" id="AssigneeSoid{{i}}" [(ngModel)]="task.AssigneeSoid" (change)="txtValueChange($event, 'task', 'AssigneeSoid', task)" placeholder="Assignee">
+                          <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="AssigneeSoid{{i}}">Assignee</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select  class="input w-input w-small-input" id="OriginatorSoid{{i}}" [(ngModel)]="task.OriginatorSoid" (change)="txtValueChange($event, 'task', 'OriginatorSoid', task)" placeholder="Originator">
+                          <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="OriginatorSoid{{i}}">Originator</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mar-t-20">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select  class="input w-input w-small-input require-field" id="OfficeSoid" (change)="txtValueChange($event, 'task', 'OfficeSoid', task)" [(ngModel)]="task.OfficeSoid" placeholder="Office">
+                          <option *ngFor="let office of offices;" value="{{office.Soid}}">{{(office.OfficeName? office.OfficeName: '')}}</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="OfficeSoid">Office</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select  class="input w-input w-small-input" id="Category{{i}}" [(ngModel)]="task.Category" (change)="txtValueChange($event, 'task', 'Category', task)" placeholder="Category">
+                          <option value="Tax">Tax</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="Category{{i}}">Category</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="DueOn{{i}}" [(ngModel)]="task.DueOn" (blur)="txtValueChange($event, 'task', 'DueOn', task)" max="9999-12-31" maxlength="8" placeholder="Due On" type="date">
+                        <label  class="form-label form-small-label" for="DueOn{{i}}">Due On</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="Resolution{{i}}" (change)="txtValueChange($event, 'task', 'Resolution', task)" [(ngModel)]="task.Resolution" placeholder="Resolution"/>
+                        <label  class="form-label form-small-label" for="Resolution{{i}}">Resolution</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select  class="input w-input w-small-input" id="Status{{i}}" [(ngModel)]="task.Status" (change)="txtValueChange($event, 'task', 'Status', task)" placeholder="Status">
+                          <option value="Open">Open</option>
+                          <option value="In Progress">In Progress</option>
+                          <option value="Closed">Closed</option>
+                          <option value="Rejected">Rejected</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="Status{{i}}">Status</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select  class="input w-input w-small-input" id="Priority{{i}}" [(ngModel)]="task.Priority" (change)="txtValueChange($event, 'task', 'Priority', task)" placeholder="Priority">
+                          <option value="0">Low</option>
+                          <option value="1">Normal</option>
+                          <option value="2">High</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="Priority{{i}}">Priority</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mar-b-15">
+                    <div class="col-xs-12">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <div tagControl spellcheck="true" class="input w-input w-small-input w-tag-input" id="Tags{{task.Soid}}" (saveTags)="saveTags($event)" placeholder="Tags">{{task.Tags}}</div>
+                        <label  class="form-label form-small-label" for="Tags{{task.Soid}}">Tags</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab_default_2{{i}}">
+                  <!--Comments-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="task.Comments.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div class="base-comment-item" *ngFor="let comment of task.Comments" [ngClass]="{'is-editing': comment.isEditing}">
+                      <div class="base-comment-user-avatar">{{(comment.AuthorName? comment.AuthorName[0] : (comment.CreatedBy? comment.CreatedBy[0] : ''))}}</div>
+                      <div class="base-comment-content">
+                        <span *ngIf="!comment.isEditing">{{comment.Content}}</span>
+                        <textarea spellcheck="false" *ngIf="comment.isEditing" type="text" [(ngModel)]="comment.Content"></textarea>
+                        <div *ngIf="comment.isEditing" class="full mar-t-5">
+                          <button class="btn btn-default pull-right btn-small-base mar-l-10" (click)="comment.isEditing=false">Cancel</button>
+                          <button class="btn btn-primary pull-right btn-small-base" (click)="btnUpdateCommentClick(task, comment, $event)">Update</button>
+                        </div>
+                        <span class="lbl-created">{{comment.CreatedOn | date: 'M/d/yyyy, h:mm a'}}</span>
+                      </div>
+                      <div class="base-comment-operators"><i class="material-icons" (click)="comment.isEditing = true;">edit</i><i class="material-icons" (click)="btnDeleteCommentClick(task, comment, i)">delete</i></div>
+                    </div>
+                    <div class="base-comment-item">
+                      <div class="base-comment-user-avatar">{{((userInfo && userInfo.userInfo && userInfo.userInfo.UserName)? userInfo.userInfo.UserName[0] : '')}}</div>
+                      <div class="base-comment-content comment-input">
+                        <textarea (keyup)="txtCommentKeyUp($event, task)"></textarea>
+                      </div>
+                      <div class="base-comment-content comment-input pull-right">
+                        <button class="btn-base btn-primary pull-right" (click)="btnAddCommentClick($event, task)">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab_default_3{{i}}">
+                  <!--Changes-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="task.Changes.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div class="base-comment-item" *ngFor="let change of task.Changes">
+                      <div class="base-comment-user-avatar">{{(change.ChangeByName? change.ChangeByName[0] : '')}}</div>
+                      <div class="base-comment-content">
+                        <span>Update {{(change.FieldName? change.FieldName : '""')}} to "{{(change.NewValue? change.NewValue : '')}}"</span>
+                        <span class="lbl-created">{{change.CreatedOn | date: 'M/d/yyyy, h:mm a'}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab_default_4{{i}}">
+                  <!--Attachments-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="task.Attachments.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div class="base-comment-item" *ngFor="let attachment of task.Attachments">
+                      <div class="base-comment-user-avatar">{{(attachment.CreatedBy? attachment.CreatedBy[0] : '')}}</div>
+                      <div class="base-comment-content">
+                        <span>Added new file <a target="_blank" href="{{attachment.DownloadUrl}}">{{(attachment.FileName? attachment.FileName : '""')}}</a></span>
+                        <span class="lbl-created">{{attachment.CreatedOn | date: 'M/d/yyyy, h:mm a'}}</span>
+                      </div>
+                    </div>
+                    <div class="base-comment-item">
+                      <button class="btn btn-base btn-primary pull-right" id="btnAttachFile{i}" (click)="btnAttachmentFileClick(i)">Upload a file</button>
+                      <form id="frmTaskAttachment{{i}}">
+                        <input type="file" id="taskFileInput{{i}}" (change)="onFileChange($event, task, i)" class="hidden">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab_default_5{{i}}">
+                  <!--Collaborators-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="task.Collaborators.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div class="base-comment-item" *ngFor="let collaborator of task.Collaborators">
+                      <div class="base-comment-user-avatar">{{(collaborator.CreatedBy? collaborator.CreatedBy[0] : '')}}</div>
+                      <div class="base-comment-content">
+                        <span>{{(collaborator.UserName? collaborator.UserName : '')}}</span>
+                        <span class="lbl-created">{{collaborator.CreatedOn | date: 'M/d/yyyy, h:mm a'}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="custom-ctn mar-b-10">
+            <button class="btn-base btn" (click)="btnNotifyUserClick(task)">Notify</button>
+            <button class="btn-base btn btn-default mar-l-5" (click)="btnRemoveTaskClick(task, i)">Remove</button>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || tasks.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddTaskClick($event)">Add a task</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-notify-user" tabindex="-1" role="dialog" aria-hidden="true" id="modalTaskNotifyUser">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Notify User</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="col-xs-12 mar-t-15">
+          <div  class="input-wrapper input-small-wrapper">
+            <select  class="input w-input w-small-input" id="ddlUser_{{i}}" [(ngModel)]="notifyUser" placeholder="Users">
+              <option value="" selected>All</option>
+              <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+            </select>
+            <label  class="form-label form-small-label" for="ddlUser_{{i}}">User</label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnProcessNotifyUserClick($event)">Notify</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddTask">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Task</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="NewSubject{{i}}" [(ngModel)]="newTask.Subject" placeholder="Subject" />
+              <label  class="form-label form-small-label" for="NewSubject{{i}}">Subject</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper text-area-wrapper">
+              <textarea class="input w-input w-small-input require-field" id="NewDescription{{i}}" [(ngModel)]="newTask.Description" placeholder="Description"></textarea>
+              <label  class="form-label form-small-label" for="NewDescription{{i}}">Description</label>
+            </div>
+          </div>
+        </div>
+        <div class="row mar-t-20">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <select  class="input w-input w-small-input" id="NewPriority{{i}}" [(ngModel)]="newTask.Priority" placeholder="Priority">
+                <option value="0">Low</option>
+                <option value="1">Normal</option>
+                <option value="2">High</option>
+              </select>
+              <label  class="form-label form-small-label" for="NewPriority{{i}}">Priority</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <select  class="input w-input w-small-input" id="NewAssigneeSoid{{i}}" [(ngModel)]="newTask.AssigneeSoid" placeholder="Assignee">
+                <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+              </select>
+              <label  class="form-label form-small-label" for="NewAssigneeSoid{{i}}">Assignee</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="newDueOn{{i}}" [(ngModel)]="newTask.DueOn" maxlength="8" max="9999-12-31" placeholder="Due On" type="date">
+              <label  class="form-label form-small-label" for="newDueOn{{i}}">Due On</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveTaskClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

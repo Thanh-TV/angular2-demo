@@ -1,0 +1,101 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Groups</h2>
+    </div>
+    <div class="asset-ctn">
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && groups.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddGroupClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let group of groups; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#adminGroup' + i">{{(group.GroupName? group.GroupName : '')}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="sub-panel collapse in asset-panel" id="adminGroup{{i}}">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="GroupName{{i}}" (change)="txtValueChange($event, 'group', 'GroupName', group)" [(ngModel)]="group.GroupName" placeholder="Group Name"/>
+                <label  class="form-label form-small-label" for="GroupName{{i}}">Group Name</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="Order{{i}}" (change)="txtValueChange($event, 'group', 'Order', group)" [(ngModel)]="group.Order" placeholder="Order" numberOnlyFomatter/>
+                <label  class="form-label form-small-label" for="Order{{i}}">Order</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div class="cbk-base-ctn mar-t-5">
+                <input type="checkbox" [(ngModel)]="group.IsAdmin" (change)="txtValueChange($event, 'group', 'IsAdmin', group)" class="regular-checkbox" /><span>Is Admin</span>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div class="cbk-base-ctn mar-t-5">
+                <input type="checkbox" [(ngModel)]="group.Active" (change)="txtValueChange($event, 'group', 'Active', group)" class="regular-checkbox" /><span>Active</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button class="btn-base btn btn-default pull-right" (click)="btnRemoveGroupClick(group, i)">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || groups.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddGroupClick($event)">Add an group</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddGroup">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add group</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newGroupName" [(ngModel)]="newGroup.GroupName" placeholder="Group Name" />
+              <label  class="form-label form-small-label" for="newGroupName">Group Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="NewOrder" [(ngModel)]="newGroup.Order" placeholder="Order" />
+              <label  class="form-label form-small-label" for="NewOrder">Order</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="cbk-base-ctn mar-b-5">
+              <input type="checkbox" [(ngModel)]="newGroup.IsAdmin" class="regular-checkbox" /><span>Is Admin</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveGroupClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

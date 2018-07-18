@@ -1,0 +1,69 @@
+.tabbable-line > .tab-content {
+  min-height: 30px;
+}
+.modal-dialog.modal-add-payment {
+  width: 730px !important;
+}
+.modal-dialog.modal-add-invoice {
+  width: 600px !important;
+}
+.lbl-cash {
+  display: table;
+  width: 100%;
+  position: relative;
+  padding: 10px;
+  padding-left: 15px;
+  background: #ddd;
+  font-weight: 700;
+}
+.lbl-info-base {
+  margin-bottom: 10px;
+}
+.lbl-info-base b {
+  display: table;
+  float: left;
+  color: #444444;
+}
+.lbl-payment-info b {
+  width: 70px;
+}
+.lbl-payment-info.right b {
+  width: 120px;
+}
+.lbl-transaction-info b {
+  width: 120px;
+}
+.lbl-transaction-info.right b {
+  width: 130px;
+}
+.lbl-new-invoice-content {
+  background: white !important;
+  margin-top: 4px;
+}
+.check-credit-ctn .btn-clear-invoice-items {
+  width: 60px;
+  background: #b22625;
+  text-align: center;
+  padding: 5px;
+  border-radius: 4px;
+  padding: 5px 0;
+  cursor: pointer;
+  text-align: center;
+  margin: 4px;
+  color: #fff;
+  text-shadow: -1px 1px 0 #666;
+  position: absolute;
+  right: 2px;
+  top: 1px;
+}
+@media (min-width: 768px) {
+  .lbl-payment-info.right b {
+    width: 120px;
+  }
+}
+@media (max-width: 767px) {
+  .modal-dialog.modal-add-payment,
+  .modal-dialog.modal-add-invoice {
+    width: 95% !important;
+  }
+}

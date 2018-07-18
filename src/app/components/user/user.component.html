@@ -1,0 +1,180 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Users</h2>
+    </div>
+    <div class="asset-ctn">
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && users.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddUserClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let user of users; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#adminUser' + i">{{(user.ScreenName? user.ScreenName : (user.UserName? user.UserName : user.EmailAddress))}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="sub-panel collapse in asset-panel" id="adminUser{{i}}">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="UserName{{i}}" (change)="txtValueChange($event, 'user', 'UserName', user)" [(ngModel)]="user.UserName" placeholder="User Name"/>
+                <label  class="form-label form-small-label" for="UserName{{i}}">User Name</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="ScreenName{{i}}" (change)="txtValueChange($event, 'user', 'ScreenName', user)" [(ngModel)]="user.ScreenName" placeholder="Screen Name"/>
+                <label  class="form-label form-small-label" for="ScreenName{{i}}">Screen Name</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="EmailAddress{{i}}" (change)="txtValueChange($event, 'user', 'EmailAddress', user)" [(ngModel)]="user.EmailAddress" placeholder="Email Address" type="email"/>
+                <label  class="form-label form-small-label" for="EmailAddress{{i}}">Email Address</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" id="NextStepOn{{i}}" [(ngModel)]="user.ExpiresOn" (blur)="txtValueChange($event, 'user', 'ExpiresOn', user)" max="9999-12-31" maxlength="8" placeholder="Expires On" type="date">
+                <label  class="form-label form-small-label" for="NextStepOn{{i}}">Expires On</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <select  class="input w-input w-small-input" id="GroupSoid{{i}}" [(ngModel)]="user.GroupSoid" (change)="txtValueChange($event, 'user', 'GroupSoid', user)" placeholder="Group">
+                  <option *ngFor="let group of groups;" value="{{group.Soid}}">{{group.GroupName}}</option>
+                </select>
+                <label  class="form-label form-small-label" for="GroupSoid{{i}}">Group</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="Realm{{i}}" (change)="txtValueChange($event, 'user', 'Realm', user)" [(ngModel)]="user.Realm" placeholder="Realm"/>
+                <label  class="form-label form-small-label" for="Realm{{i}}">Realm</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" disabled="disabled" id="LastTokenRequest{{i}}" [(ngModel)]="user.LastTokenRequest" (blur)="txtValueChange($event, 'user', 'LastTokenRequest', user)" max="9999-12-31" maxlength="8" placeholder="Last Token Request" type="date">
+                <label  class="form-label form-small-label" for="LastTokenRequest{{i}}">Last Token Request</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" disabled="disabled" id="LastLogin{{i}}" [(ngModel)]="user.LastLogin" (blur)="txtValueChange($event, 'user', 'LastLogin', user)" max="9999-12-31" maxlength="8" placeholder="Last Login" type="date">
+                <label  class="form-label form-small-label" for="LastLogin{{i}}">Last Login</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <select  class="input w-input w-small-input" id="Role{{i}}" [(ngModel)]="user.Role" (change)="txtValueChange($event, 'user', 'Role', user)" placeholder="Role">
+                  <option value="SuperAdmin">SuperAdmin</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Manager">Manager</option>
+                  <option value="User">User</option>
+                </select>
+                <label  class="form-label form-small-label" for="Role{{i}}">Role</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div class="cbk-base-ctn mar-t-5">
+                <input type="checkbox" [(ngModel)]="user.IsNew" (change)="txtValueChange($event, 'user', 'IsNew', user)" class="regular-checkbox" /><span>Is New</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div class="cbk-base-ctn mar-t-5">
+                <input type="checkbox" [(ngModel)]="user.Reset" (change)="txtValueChange($event, 'user', 'Reset', user)" class="regular-checkbox" /><span>Reset</span>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <button class="btn-base btn btn-default pull-right" (click)="btnRemoveUserClick(user, i)">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || users.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddUserClick($event)">Add an user</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddUser">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add user</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="NewUserName" [(ngModel)]="newUser.UserName" placeholder="User Name" />
+              <label  class="form-label form-small-label" for="NewUserName">User Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="NewScreenName" [(ngModel)]="newUser.ScreenName" placeholder="Screen Name" />
+              <label  class="form-label form-small-label" for="NewScreenName">Screen Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="NewEmailAddress" [(ngModel)]="newUser.EmailAddress" placeholder="Email Address" type="email"/>
+              <label  class="form-label form-small-label" for="NewEmailAddress">Email Address</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <select  class="input w-input w-small-input require-field" id="NewGroupSoid{{i}}" [(ngModel)]="newUser.GroupSoid" placeholder="Group">
+                <option *ngFor="let group of groups;" value="{{group.Soid}}">{{group.GroupName}}</option>
+              </select>
+              <label  class="form-label form-small-label" for="NewGroupSoid{{i}}">Group</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <select  class="input w-input w-small-input require-field" id="NewRole" [(ngModel)]="newUser.Role" placeholder="Role">
+                <option value="SuperAdmin">SuperAdmin</option>
+                <option value="Admin">Admin</option>
+                <option value="Manager">Manager</option>
+                <option value="User">User</option>
+              </select>
+              <label  class="form-label form-small-label" for="NewRole">Role</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveUserClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

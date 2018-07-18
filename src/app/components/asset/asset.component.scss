@@ -1,0 +1,13 @@
+#modalAddAsset .modal-content-ctn {
+  padding-top: 20px;
+  display: table;
+  width: 100%;
+}
+#modalAddAsset .modal-header {
+  text-align: center;
+}
+.modal-dialog {
+  top: 0;
+  margin-top: 50vh;
+  transform: translateY(-50%) !important;
+}

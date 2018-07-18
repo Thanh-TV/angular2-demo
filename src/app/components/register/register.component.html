@@ -1,0 +1,37 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<div class="container base-container">
+    <div class="login-card">
+      <div class="row" align="center">
+          <h2 class="pb-30">Register</h2>
+      </div>
+      <div class="row">
+        <div *ngIf="errorMessage" class="alert alert-block alert-danger">
+          {{errorMessage}}
+        </div>
+        <div *ngIf="!errorMessage && isSuccess" class="alert alert-block alert-success">
+          Register succeeded. Please check your email to continue!
+        </div>
+      </div>
+      <div class="row">
+        <div  class="input-wrapper">
+          <label  class="form-label" for="email">Your Email</label>
+          <input  class="input w-input" id="email" (keyup)="txtEmailKeyUp()" [(ngModel)]="email" maxlength="256" placeholder="Email Address" type="email">
+        </div>
+      </div>
+      <div class="row">
+        <div  class="input-wrapper">
+          <label  class="form-label" for="firstName">First Name</label>
+          <input  class="input w-input" id="firstName" (keyup)="txtFirstNameKeyUp()" [(ngModel)]="firstName" maxlength="25" placeholder="First Name" type="text">
+        </div>
+      </div>
+      <div class="row">
+        <div  class="input-wrapper">
+          <label  class="form-label" for="lastName">Last Name</label>
+          <input  class="input w-input" id="lastName" (keyup)="txtLastNameKeyUp()" [(ngModel)]="lastName" maxlength="25" placeholder="Last Name" type="text">
+        </div>
+      </div>
+      <div class="row">
+        <button type="submit" (click)="btnSubmitClick($event)" class="btn btn-primary btn-default full">Submit</button>
+      </div>
+    </div>
+</div>

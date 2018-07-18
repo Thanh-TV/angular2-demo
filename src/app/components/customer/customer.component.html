@@ -1,0 +1,621 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Customers</h2>
+    </div>
+    <div class="asset-ctn">
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && customers.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddCustomerClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let customer of customers; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#userCustomer' + i">{{(customer.PersonName? customer.PersonName : '')}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="sub-panel collapse in" id="userCustomer{{i}}">
+          <div class="tabbable-panel custom-scroll">
+            <div class="tabbable-line">
+              <ul class="nav nav-tabs ">
+                <li class="active">
+                  <a href="#tab_default_1{{i}}" data-toggle="tab">
+                  Document </a>
+                </li>
+                <li>
+                  <a href="#tab_default_2{{i}}" data-toggle="tab">
+                  Visits </a>
+                </li>
+                <li>
+                  <a href="#tab_default_3{{i}}" data-toggle="tab">
+                  Invoices </a>
+                </li>
+                <li>
+                  <a href="#tab_default_4{{i}}" data-toggle="tab">
+                  Payments </a>
+                </li>
+                <li>
+                  <a href="#tab_default_5{{i}}" data-toggle="tab">
+                  Transactions </a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_default_1{{i}}">
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select  class="input w-input w-small-input" id="PersonSoid{{i}}" [(ngModel)]="customer.PersonSoid" (change)="txtValueChange($event, 'customer', 'PersonSoid', customer)" placeholder="Person">
+                          <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="PersonSoid{{i}}">Person</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select  class="input w-input w-small-input" id="OfficeSoid{{i}}" [(ngModel)]="customer.OfficeSoid" (change)="txtValueChange($event, 'customer', 'OfficeSoid', customer)" placeholder="Office">
+                          <option *ngFor="let office of offices;" value="{{office.Soid}}">{{(office.OfficeName? office.OfficeName: '')}}</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="OfficeSoid{{i}}">Office</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_default_2{{i}}">
+                  <!--Visits-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="customer.Visits.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let visit of customer.Visits; let vIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#visit' + vIndex + '-customer' + i">{{visit.VisitDate | date: 'M/d/yyyy, h:mm a'}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="visit{{vIndex}}-customer{{i}}">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="VisitDate{{vIndex}}" [(ngModel)]="visit.VisitDate" (blur)="txtValueChange($event, 'visit', 'VisitDate', visit, customer)" maxlength="256" max="9999-12-31T23:59" placeholder="Visit Date" type="datetime-local">
+                              <label  class="form-label form-small-label" for="VisitDate{{vIndex}}">Visit Date</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 mar-b-5">
+                            <div  class="input-wrapper text-area-wrapper">
+                              <textarea class="input w-input w-small-input" id="VisitNotes{{vIndex}}" [(ngModel)]="visit.Notes" (change)="txtValueChange($event, 'visit', 'Notes', visit, customer)" maxlength="256" placeholder="Notes" type="text"></textarea>
+                              <label  class="form-label form-small-label" for="VisitNotes{{vIndex}}">Notes</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <button class="btn-base btn-remove btn btn-default pull-right mar-t-5" (click)="btnDeleteClick(visit, 'visit', i, customer)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                          <button class="btn-base btn-primary pull-right" (click)="btnAddClick($event, customer, 'visit')">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_default_3{{i}}">
+                  <!--Invoices-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="customer.Invoices.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let invoice of customer.Invoices; let vIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#invoice' + vIndex + '-customer' + i">{{invoice.InvoicedOn | date: 'M/d/yyyy, h:mm a'}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="invoice{{vIndex}}-customer{{i}}">
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="InvoiceNumber{{iIndex}}" [(ngModel)]="invoice.InvoiceNumber" (change)="txtValueChange($event, 'invoice', 'InvoiceNumber', invoice, customer)" maxlength="10" numbernumberOnlyFormatter placeholder="Invoice Number" type="text">
+                              <label  class="form-label form-small-label" for="InvoiceNumber{{iIndex}}">Invoice Number</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Label{{iIndex}}" [(ngModel)]="invoice.Label" (change)="txtValueChange($event, 'invoice', 'Label', invoice, customer)" maxlength="256" placeholder="Label" type="text">
+                              <label  class="form-label form-small-label" for="Label{{iIndex}}">Label</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="InvoicedOn{{iIndex}}" [(ngModel)]="invoice.InvoicedOn" (blur)="txtValueChange($event, 'invoice', 'InvoicedOn', invoice, customer)" maxlength="256" max="9999-12-31T23:59" placeholder="Invoiced On" type="datetime-local">
+                              <label  class="form-label form-small-label" for="InvoicedOn{{iIndex}}">Invoiced On</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="DueOn{{iIndex}}" [(ngModel)]="invoice.DueOn" (blur)="txtValueChange($event, 'invoice', 'DueOn', invoice, customer)" maxlength="256" max="9999-12-31T23:59" placeholder="Due On" type="datetime-local">
+                              <label  class="form-label form-small-label" for="DueOn{{iIndex}}">Due On</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="DiscountAmt{{iIndex}}" [(ngModel)]="invoice.DiscountAmt" (change)="txtValueChange($event, 'invoice', 'DiscountAmt', invoice, customer)" maxlength="10" numbernumberOnlyFormatter placeholder="Discount Amt" type="text">
+                              <label  class="form-label form-small-label" for="DiscountAmt{{iIndex}}">Discount Amt</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="DiscountPct{{iIndex}}" [(ngModel)]="invoice.DiscountPct" (change)="txtValueChange($event, 'invoice', 'DiscountPct', invoice, customer)" maxlength="10" numbernumberOnlyFormatter placeholder="Discount Pct" type="text">
+                              <label  class="form-label form-small-label" for="DiscountPct{{iIndex}}">Discount Pct</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Fees{{iIndex}}" [(ngModel)]="invoice.Fees" (change)="txtValueChange($event, 'invoice', 'Fees', invoice, customer)" maxlength="10" numbernumberOnlyFormatter placeholder="Fees" type="text">
+                              <label  class="form-label form-small-label" for="Fees{{iIndex}}">Fees</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Taxes{{iIndex}}" [(ngModel)]="invoice.Taxes" (change)="txtValueChange($event, 'invoice', 'Taxes', invoice, customer)" maxlength="10" numbernumberOnlyFormatter placeholder="Taxes" type="text">
+                              <label  class="form-label form-small-label" for="Taxes{{iIndex}}">Taxes</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Balance{{iIndex}}" [(ngModel)]="invoice.Balance" (change)="txtValueChange($event, 'invoice', 'Balance', invoice, customer)" maxlength="10" numbernumberOnlyFormatter placeholder="Balance" type="text">
+                              <label  class="form-label form-small-label" for="Balance{{iIndex}}">Balance</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="FeeTotal{{iIndex}}" [(ngModel)]="invoice.FeeTotal" (change)="txtValueChange($event, 'invoice', 'FeeTotal', invoice, customer)" maxlength="10" numbernumberOnlyFormatter placeholder="Fee Total" type="text">
+                              <label  class="form-label form-small-label" for="FeeTotal{{iIndex}}">Fee Total</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Total{{iIndex}}" [(ngModel)]="invoice.Total" (change)="txtValueChange($event, 'invoice', 'Total', invoice, customer)" maxlength="10" numbernumberOnlyFormatter placeholder="Total" type="text">
+                              <label  class="form-label form-small-label" for="Total{{iIndex}}">Total</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="SubTotal{{iIndex}}" [(ngModel)]="invoice.SubTotal" (change)="txtValueChange($event, 'invoice', 'SubTotal', invoice, customer)" maxlength="10" numbernumberOnlyFormatter placeholder="Sub Total" type="text">
+                              <label  class="form-label form-small-label" for="SubTotal{{iIndex}}">Sub Total</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 mar-b-10">
+                            <div  class="input-wrapper text-area-wrapper">
+                              <textarea class="input w-input w-small-input" id="Notes" [(ngModel)]="invoice.Notes" (change)="txtValueChange($event, 'invoice', 'Notes', invoice, customer)" placeholder="Notes"></textarea>
+                              <label  class="form-label form-small-label" for="Notes">Notes</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <button class="btn-base btn-remove btn btn-default pull-right mar-t-5" (click)="btnDeleteClick(invoice, 'invoice', i, customer)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                          <button class="btn-base btn-primary pull-right" (click)="btnAddClick($event, customer, 'invoice')">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_default_4{{i}}">
+                  <!--Payments-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="customer.Payments.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let payment of customer.Payments; let pIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#payment' + pIndex + '-customer' + i">{{payment.PaidOn | date: 'dd/MM/yyyy hh:mm a'}}<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="payment{{pIndex}}-customer{{i}}">
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <span class="lbl-info-base lbl-payment-info"><b>Staff:</b> {{payment.CreatedBy}}</span>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <span class="lbl-info-base lbl-payment-info right"><b>Receipt Number:</b> {{payment.ReceiptNumber}}</span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <span class="lbl-info-base lbl-payment-info"><b>Amount:</b> {{payment.Amount | number : '1.2-2'}}</span>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <span class="lbl-info-base lbl-payment-info right"><b>Balance:</b> {{payment.Balance | number : '1.2-2'}}</span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-xs-6 col-xs-12 desktop-pad-r-5">
+                            <span class="lbl-info-base lbl-payment-info"><b>Paid On:</b> {{payment.PaidOn | date: 'dd/MM/yyyy hh:mm a'}}</span>
+                            <!--<div  class="input-wrapper input-small-wrapper">-->
+                              <!--<input  class="input w-input w-small-input" disabled="disabled" id="PaymentPaidOn{{pIndex}}" [(ngModel)]="payment.PaidOn" max="9999-12-31T23:59" placeholder="Paid On" type="datetime-local">-->
+                              <!--<label  class="form-label form-small-label" for="PaymentPaidOn{{pIndex}}">Paid On</label>-->
+                            <!--</div>-->
+                          </div>
+                          <div class="col-md-6 col-xs-6 col-xs-12 desktop-pad-l-5">
+                            <button class="btn-base btn-remove btn btn-default pull-right mar-t-5" (click)="btnDeleteClick(payment, 'payment', i, customer)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                          <button class="btn-base btn-primary pull-right" (click)="btnAddClick($event, customer, 'payment')">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_default_5{{i}}">
+                  <!--Transactions-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="customer.Transactions.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let transaction of customer.Transactions; let tIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#transaction' + tIndex + '-customer' + i">{{transaction.CreatedOn | date: 'dd/MM/yyyy hh:mm a'}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="transaction{{tIndex}}-customer{{i}}">
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <span class="lbl-info-base lbl-transaction-info"><b>Staff:</b> {{transaction.CreatedBy}}</span>
+                            <!--<div  class="input-wrapper input-small-wrapper">-->
+                              <!--<input  class="input w-input w-small-input" id="CustomerInvoiceId{{tIndex}}" [(ngModel)]="transaction.CustomerInvoiceId" (blur)="txtValueChange($event, 'transaction', 'CustomerInvoiceId', transaction, customer)" maxlength="10" numbernumberOnlyFormatter placeholder="Customer Invoice Id" type="text">-->
+                              <!--<label  class="form-label form-small-label" for="CustomerInvoiceId{{tIndex}}">Customer Invoice Id</label>-->
+                            <!--</div>-->
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <span class="lbl-info-base lbl-transaction-info right"><b>Receipt Number:</b> {{transaction.ReceiptNumber}}</span>
+                            <!--<div  class="input-wrapper input-small-wrapper">-->
+                              <!--<input  class="input w-input w-small-input" id="CustomerPaymentId{{tIndex}}" [(ngModel)]="transaction.CustomerPaymentId" (change)="txtValueChange($event, 'transaction', 'CustomerPaymentId', transaction, customer)" maxlength="10" numbernumberOnlyFormatter placeholder="Customer Payment Id" type="text">-->
+                              <!--<label  class="form-label form-small-label" for="CustomerPaymentId{{tIndex}}">Customer Payment Id</label>-->
+                            <!--</div>-->
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <span class="lbl-info-base lbl-transaction-info"><b>Created On:</b> {{transaction.CreatedOn | date: 'dd/MM/yyyy hh:mm a'}}</span>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <span class="lbl-info-base lbl-transaction-info right"><b>Amount:</b> {{transaction.Amount | number : '1.2-2'}}</span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <span class="lbl-info-base lbl-transaction-info"><b>Invoice Balance:</b> {{transaction.InvoiceBalance | number : '1.2-2'}}</span>
+                            <!--<div  class="input-wrapper input-small-wrapper">-->
+                              <!--<input  class="input w-input w-small-input" id="Amount{{tIndex}}" [(ngModel)]="transaction.Amount" (blur)="txtValueChange($event, 'transaction', 'Amount', transaction, customer)" maxlength="10" numbernumberOnlyFormatter placeholder="Amount" type="text">-->
+                              <!--<label  class="form-label form-small-label" for="Amount{{tIndex}}">Amount</label>-->
+                            <!--</div>-->
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <span class="lbl-info-base lbl-transaction-info right"><b>Payment Balance:</b> {{transaction.PaymentBalance | number : '1.2-2'}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                          <button class="btn-base btn-primary pull-right" (click)="btnAddClick($event, customer, 'transaction')">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="custom-ctn mar-t-10 mar-b-10">
+            <button class="btn-base btn-remove btn btn-default" (click)="btnDeleteClick(customer, 'customer', i)">Remove customer</button>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || customers.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddCustomerClick($event)">Add an customer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddCustomer">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add customer</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <select  class="input w-input w-small-input require-field" id="newCustomerPerson" [(ngModel)]="newCustomer.PersonSoid" placeholder="Person">
+                 <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+              </select>
+              <label  class="form-label form-small-label" for="newCustomerPerson">Person</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <select  class="input w-input w-small-input require-field" id="newCustomerOffice" [(ngModel)]="newCustomer.OfficeSoid" placeholder="Office">
+                <option *ngFor="let office of offices;" value="{{office.Soid}}">{{(office.OfficeName? office.OfficeName: '')}}</option>
+              </select>
+              <label  class="form-label form-small-label" for="newCustomerOffice">Office</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveCustomerClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddInvoice">
+  <div class="modal-dialog modal-md modal-add-invoice">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Invoice</h4>
+      </div>
+      <div class="modal-content-ctn custom-scroll">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="NewInvoiceNumber" [(ngModel)]="newInvoice.InvoiceNumber" numberOnlyFormatter maxlength="256" placeholder="Invoice Number" type="text">
+              <label  class="form-label form-small-label" for="NewInvoiceNumber">Invoice Number</label>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="NewInvoiceLabel" [(ngModel)]="newInvoice.Label" maxlength="256" placeholder="Label" type="text">
+              <label  class="form-label form-small-label" for="NewInvoiceLabel">Label</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="NewInvoicedOn" [(ngModel)]="newInvoice.InvoicedOn" maxlength="256" max="9999-12-31T23:59" placeholder="Invoiced On" type="datetime-local">
+              <label  class="form-label form-small-label" for="NewInvoicedOn">Invoiced On</label>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="NewInvoiceDueOn" [(ngModel)]="newInvoice.DueOn" maxlength="256" max="9999-12-31T23:59" placeholder="Due On" type="datetime-local">
+              <label  class="form-label form-small-label" for="NewInvoiceDueOn">Due On</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="check-credit-ctn">
+              <span><i class="material-icons" (click)="btnAddInvoiceItemClick()">add_circle_outline</i><b>Items</b><span class="pull-right btn-clear-invoice-items" (click)="btnClearInvoiceItemsClick()">Clear</span></span>
+              <div class="table-responsive">
+                <table class="table table2 four-columns">
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>UoM</th>
+                      <th>Unit Price</th>
+                      <th class="align-right">Quantity</th>
+                      <th>Price</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of newInvoice.Items; let iIndex = index;">
+                      <td>
+                        <select [(ngModel)]="item.ListItemSoid" (change)="listItemChange(item)">
+                          <option value="">Select</option>
+                          <option *ngFor="let invoiceItem of invoiceItems" value="{{invoiceItem.Soid}}">{{invoiceItem.Name}}</option>
+                        </select>
+                      </td>
+                      <td><span class="lbl-new-invoice-content align-center">{{item.UnitOfMeasure}}</span></td>
+                      <td><input type="text" [(ngModel)]="item.UnitPrice" (keyup)="txtNewInvoiceChange(item)" numberOnlyFormatter></td>
+                      <td><input type="text" class="align-right" (keyup)="txtNewInvoiceChange(item)" [(ngModel)]="item.Quantity" numberOnlyFormatter></td>
+                      <td><span class="lbl-new-invoice-content">{{item.Price  | number : '1.2-2'}}</span></td>
+                      <td><i class="material-icons" (click)="btnDeleteInvoiceItem(iIndex)">highlight_off</i></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td><b class="pull-right lbl-new-invoice-content">Sub Total:</b></td>
+                      <td><span class="lbl-new-invoice-content">{{newInvoiceSubTotal | number : '1.2-2'}}</span></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td><b class="pull-right lbl-new-invoice-content">Total:</b></td>
+                      <td><span class="lbl-new-invoice-content">{{newInvoiceTotal | number : '1.2-2'}}</span></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+         <div class="col-xs-12 mar-b-10">
+           <div  class="input-wrapper text-area-wrapper">
+              <textarea class="input w-input w-small-input" id="newInvoiceNote" [(ngModel)]="newInvoice.Notes" placeholder="Notes"></textarea>
+              <label  class="form-label form-small-label" for="newInvoiceNote">Notes</label>
+            </div>
+         </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveInvoiceClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddPayment">
+  <div class="modal-dialog modal-md modal-add-payment">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Payment</h4>
+      </div>
+      <div class="modal-content-ctn custom-scroll">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="NewPaymentReceiptNumber" [(ngModel)]="newPayment.ReceiptNumber" maxlength="256" placeholder="Receipt Number" type="text">
+              <label  class="form-label form-small-label" for="NewPaymentReceiptNumber">Receipt Number</label>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="NewPaymentPaidOn" [(ngModel)]="newPayment.PaidOn" maxlength="256" max="9999-12-31T23:59" placeholder="Paid On" type="datetime-local">
+              <label  class="form-label form-small-label" for="NewPaymentPaidOn">Paid On</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <span class="lbl-cash">Cash</span>
+            <div class="table-responsive">
+              <table class="table table1">
+                <thead>
+                  <tr>
+                    <th align="center">$ 100</th>
+                    <th align="center">$ 50</th>
+                    <th align="center">$ 20</th>
+                    <th align="center">$ 10</th>
+                    <th align="center">$ 5</th>
+                    <th align="center">$ 2</th>
+                    <th align="center">$ 1</th>
+                    <th align="center">¢ 25</th>
+                    <th align="center">¢ 10</th>
+                    <th align="center">¢ 5</th>
+                    <th align="center">¢ 1</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="newPayment.Bills100" (keyup)="txtFinancialKeyUp($event)" ></td>
+                    <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="newPayment.Bills050" (keyup)="txtFinancialKeyUp($event)"></td>
+                    <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="newPayment.Bills020" (keyup)="txtFinancialKeyUp($event)"></td>
+                    <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="newPayment.Bills010" (keyup)="txtFinancialKeyUp($event)"></td>
+                    <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="newPayment.Bills005" (keyup)="txtFinancialKeyUp($event)"></td>
+                    <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="newPayment.Bills002" (keyup)="txtFinancialKeyUp($event)"></td>
+                    <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="newPayment.Bills001" (keyup)="txtFinancialKeyUp($event)"></td>
+                    <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="newPayment.Coins025" (keyup)="txtFinancialKeyUp($event)"></td>
+                    <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="newPayment.Coins010" (keyup)="txtFinancialKeyUp($event)"></td>
+                    <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="newPayment.Coins005" (keyup)="txtFinancialKeyUp($event)"></td>
+                    <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="newPayment.Coins001" (keyup)="txtFinancialKeyUp($event)"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="check-credit-ctn">
+              <span><i class="material-icons" (click)="btnAddCheckCreditClick('check')">add_circle_outline</i><b>Checks</b></span>
+              <div class="table-responsive">
+                <table class="table table2 four-columns">
+                  <thead>
+                    <tr>
+                      <th>Bank Name</th>
+                      <th>Number</th>
+                      <th>Owner</th>
+                      <th>Amount</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let check of newPayment.Checks; let chIndex = index;">
+                      <td><input type="text" [(ngModel)]="check.BankName" ></td>
+                      <td><input type="text" [(ngModel)]="check.CheckNumber" ></td>
+                      <td><input type="text" [(ngModel)]="check.CardHolder" ></td>
+                      <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="check.Amount" (keyup)="txtFinancialKeyUp($event)" ></td>
+                      <td><i class="material-icons" (click)="btnDeletePaymentCheck(chIndex)">highlight_off</i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="check-credit-ctn">
+              <span><i class="material-icons" (click)="btnAddCheckCreditClick('credit')">add_circle_outline</i><b>Credits</b></span>
+              <div class="table-responsive">
+                <table class="table table2 four-columns">
+                  <thead>
+                    <tr>
+                      <th>Bank Name</th>
+                      <th>Number</th>
+                      <th>Owner</th>
+                      <th>Amount</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let credit of newPayment.Credits; let cIndex = index;">
+                      <td><input type="text" [(ngModel)]="credit.BankName" ></td>
+                      <td><input type="text" [(ngModel)]="credit.CardNumber" ></td>
+                      <td><input type="text" [(ngModel)]="credit.CardHolder" ></td>
+                      <td><input type="text" maxlength="10" numberOnlyFormatter [(ngModel)]="credit.Amount" (keyup)="txtFinancialKeyUp($event)" ></td>
+                      <td><i class="material-icons" (click)="btnDeletePaymentCredit(cIndex)">highlight_off</i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 mar-b-10">
+            <span class=""><b>Amount:</b> {{newPayment.Amount | number : '1.2-2'}}</span>
+          </div>
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="NewPaymentPaymentInfo" [(ngModel)]="newPayment.PaymentInfo" maxlength="256" placeholder="Payment Info" type="text">
+              <label  class="form-label form-small-label" for="NewPaymentPaymentInfo">Payment Info</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSavePaymentClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

@@ -1,0 +1,358 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Assets</h2>
+    </div>
+    <div class="asset-ctn">
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && assets.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddAssetClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let asset of assets; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#userAsset' + i">{{asset.AssetName}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="sub-panel collapse in asset-panel" id="userAsset{{i}}">
+          <div class="tabbable-panel custom-scroll">
+            <div class="tabbable-line">
+              <ul class="nav nav-tabs ">
+                <li class="active">
+                  <a href="#tab_default_1{{i}}" data-toggle="tab">
+                  Document </a>
+                </li>
+                <li>
+                  <a href="#tab_default_2{{i}}" data-toggle="tab">
+                  Owners </a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_default_1{{i}}">
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select  class="input w-input w-small-input" id="new_asset_type_{{i}}" [(ngModel)]="asset.AssetType" (change)="txtValueChange($event, 'asset', 'AssetType', asset)" placeholder="Asset Type">
+                          <option value="Home">Home</option>
+                          <option value="Car">Car</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="new_asset_type_{{i}}">Asset Type</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="AssetName{{i}}" [(ngModel)]="asset.AssetName" (change)="txtValueChange($event, 'asset', 'AssetName', asset)"  placeholder="Asset Name" />
+                        <label  class="form-label form-small-label" for="AssetName{{i}}">Asset Name</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="PurchaseDate{{i}}" [(ngModel)]="asset.PurchaseDate" (blur)="txtValueChange($event, 'asset', 'PurchaseDate', asset)" max="9999-12-31" maxlength="8" placeholder="Purchase Date" type="date">
+                        <label  class="form-label form-small-label" for="PurchaseDate{{i}}">Purchase Date</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="PurchasePrice{{i}}" [(ngModel)]="asset.PurchasePrice" (change)="txtValueChange($event, 'asset', 'PurchasePrice', asset)" maxlength="15" numberOnlyFormatter placeholder="Purchase Price" type="text">
+                        <label  class="form-label form-small-label" for="PurchasePrice{{i}}">Purchase Price</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="AmountPaidOff{{i}}" [(ngModel)]="asset.AmountPaidOff" (change)="txtValueChange($event, 'asset', 'AmountPaidOff', asset)" maxlength="15" numberOnlyFormatter placeholder="Amount Paid Off" type="text">
+                        <label  class="form-label form-small-label" for="AmountPaidOff{{i}}">Amount Paid Off</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 desktop-pad-l-5 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="MonthlyDues{{i}}" [(ngModel)]="asset.MonthlyDues" (change)="txtValueChange($event, 'asset', 'MonthlyDues', asset)" maxlength="4" numberOnlyFormatter placeholder="Monthly Dues" type="text">
+                        <label  class="form-label form-small-label" for="MonthlyDues{{i}}">Monthly Dues</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="Year{{i}}" [(ngModel)]="asset.Year" (change)="txtValueChange($event, 'asset', 'Year', asset)" maxlength="4" numberOnlyFormatter placeholder="Year" type="text">
+                        <label  class="form-label form-small-label" for="Year{{i}}">Year</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div [hidden]="asset.AssetType != 'Car'">
+                    <div class="row">
+                      <div class="col-md-4 col-sm-4 col-xs-12 desktop-pad-r-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="VIN{{i}}" [(ngModel)]="asset.VIN" (change)="txtValueChange($event, 'asset', 'VIN', asset)" maxlength="256" placeholder="VIN" type="text">
+                          <label  class="form-label form-small-label" for="VIN{{i}}">VIN</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-xs-12 desktop-pad-l-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="Make{{i}}" [(ngModel)]="asset.Make" (change)="txtValueChange($event, 'asset', 'Make', asset)" maxlength="256" placeholder="Make" type="text">
+                          <label  class="form-label form-small-label" for="Make{{i}}">Make</label>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-xs-12 desktop-pad-l-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="Model{{i}}" [(ngModel)]="asset.Model" (change)="txtValueChange($event, 'asset', 'Model', asset)" maxlength="256" placeholder="Model" type="text">
+                          <label  class="form-label form-small-label" for="Model{{i}}">Model</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div [hidden]="asset.AssetType != 'Home'">
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="County{{i}}" [(ngModel)]="asset.County" (change)="txtValueChange($event, 'asset', 'County', asset)" maxlength="256" placeholder="County" type="text">
+                          <label  class="form-label form-small-label" for="County{{i}}">County</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="ConstructionType{{i}}" [(ngModel)]="asset.ConstructionType" (change)="txtValueChange($event, 'asset', 'ConstructionType', asset)" maxlength="256" placeholder="ConstructionType" type="text">
+                          <label  class="form-label form-small-label" for="ConstructionType{{i}}">Construction Type</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="NbrBedrooms{{i}}" [(ngModel)]="asset.NbrBedrooms" (change)="txtValueChange($event, 'asset', 'NbrBedrooms', asset)" maxlength="5" numberOnlyFormatter placeholder="Nbr Bed rooms" type="text">
+                          <label  class="form-label form-small-label" for="NbrBedrooms{{i}}">Nbr Bed rooms</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="NbrFireplaces{{i}}" [(ngModel)]="asset.NbrFireplaces" (change)="txtValueChange($event, 'asset', 'NbrFireplaces', asset)" maxlength="5" numberOnlyFormatter placeholder="Nbr Fire Places" type="text">
+                          <label  class="form-label form-small-label" for="NbrFireplaces{{i}}">Nbr Fire Places</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="NbrBathFull{{i}}" [(ngModel)]="asset.NbrBathFull" (change)="txtValueChange($event, 'asset', 'NbrBathFull', asset)" maxlength="5" numberOnlyFormatter placeholder="Nbr Bath Full" type="text">
+                          <label  class="form-label form-small-label" for="NbrBathFull{{i}}">Nbr Bath Full</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="NbrBathHalf{{i}}" [(ngModel)]="asset.NbrBathHalf" (change)="txtValueChange($event, 'asset', 'NbrBathHalf', asset)" maxlength="5" numberOnlyFormatter placeholder="Nbr Bath Half" type="text">
+                          <label  class="form-label form-small-label" for="NbrBathHalf{{i}}">Nbr Bath Half</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="NbrStories{{i}}" [(ngModel)]="asset.NbrStories" (change)="txtValueChange($event, 'asset', 'NbrStories', asset)" maxlength="5" numberOnlyFormatter placeholder="Nbr Stories" type="text">
+                          <label  class="form-label form-small-label" for="NbrStories{{i}}">NbrStories</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="DwellingAmount{{i}}" [(ngModel)]="asset.DwellingAmount" (change)="txtValueChange($event, 'asset', 'DwellingAmount', asset)" maxlength="10" numberOnlyFormatter placeholder="Dwelling Amount" type="text">
+                          <label  class="form-label form-small-label" for="DwellingAmount{{i}}">DwellingAmount</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="NbrGaragesAttached{{i}}" [(ngModel)]="asset.NbrGaragesAttached" (change)="txtValueChange($event, 'asset', 'NbrGaragesAttached', asset)" maxlength="5" numberOnlyFormatter placeholder="Nbr Garages Attached" type="text">
+                          <label  class="form-label form-small-label" for="NbrGaragesAttached{{i}}">Nbr Garages Attached</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="NbrGaragesDetached{{i}}" [(ngModel)]="asset.NbrGaragesDetached" (change)="txtValueChange($event, 'asset', 'NbrGaragesDetached', asset)" maxlength="5" numberOnlyFormatter placeholder="Nbr Garages Detached" type="text">
+                          <label  class="form-label form-small-label" for="NbrGaragesDetached{{i}}">Nbr Garages Detached</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="Breed{{i}}" [(ngModel)]="asset.Breed" (change)="txtValueChange($event, 'asset', 'Breed', asset)" maxlength="256" placeholder="Breed" type="text">
+                          <label  class="form-label form-small-label" for="Breed{{i}}">Breed</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="YearWiringReplaced{{i}}" [(ngModel)]="asset.YearWiringReplaced" (change)="txtValueChange($event, 'asset', 'YearWiringReplaced', asset)" maxlength="4" numberOnlyFormatter placeholder="Year Wiring Replaced" type="text">
+                          <label  class="form-label form-small-label" for="YearWiringReplaced{{i}}">Year Wiring Replaced</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="YearRoofReplaced{{i}}" [(ngModel)]="asset.YearRoofReplaced" (change)="txtValueChange($event, 'asset', 'YearRoofReplaced', asset)" maxlength="4" numberOnlyFormatter placeholder="Year Roof Replaced" type="text">
+                          <label  class="form-label form-small-label" for="YearRoofReplaced{{i}}">Year Roof Replaced</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                        <div  class="input-wrapper input-small-wrapper">
+                          <input  class="input w-input w-small-input" id="YearPlumbingReplaced{{i}}" [(ngModel)]="asset.YearPlumbingReplaced" (change)="txtValueChange($event, 'asset', 'YearPlumbingReplaced', asset)" maxlength="4" numberOnlyFormatter placeholder="YearPlumbingReplaced" type="text">
+                          <label  class="form-label form-small-label" for="YearPlumbingReplaced{{i}}">YearPlumbingReplaced</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 col-sm-6 col-xs-6 desktop-pad-r-5">
+                        <div class="cbk-base-ctn">
+                          <input type="checkbox" [(ngModel)]="asset.Alarm" (change)="txtValueChange($event, 'asset', 'Alarm', asset)" class="regular-checkbox" /><span>Alarm</span>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-6 desktop-pad-l-5">
+                        <div class="cbk-base-ctn">
+                          <input type="checkbox" [(ngModel)]="asset.Pool" (change)="txtValueChange($event, 'asset', 'Pool', asset)" class="regular-checkbox" /><span>Pool</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mar-t-10">
+                      <div class="col-md-6 col-sm-6 col-xs-6 desktop-pad-r-5">
+                        <div class="cbk-base-ctn">
+                          <input type="checkbox" [(ngModel)]="asset.Fenced" (change)="txtValueChange($event, 'asset', 'Fenced', asset)" class="regular-checkbox" /><span>Fenced</span>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-6 desktop-pad-l-5">
+                        <div class="cbk-base-ctn">
+                          <input type="checkbox" [(ngModel)]="asset.DivingBoard" (change)="txtValueChange($event, 'asset', 'DivingBoard', asset)" class="regular-checkbox" /><span>Diving Board</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mar-t-10">
+                      <div class="col-md-6 col-sm-6 col-xs-6 desktop-pad-r-5">
+                        <div class="cbk-base-ctn">
+                          <input type="checkbox" [(ngModel)]="asset.PoolSlide" (change)="txtValueChange($event, 'asset', 'PoolSlide', asset)" class="regular-checkbox" /><span>Pool Slide Board</span>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-6 desktop-pad-l-5">
+                        <div class="cbk-base-ctn">
+                          <input type="checkbox" [(ngModel)]="asset.Pets" (change)="txtValueChange($event, 'asset', 'Pets', asset)" class="regular-checkbox" /><span>Pets</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab_default_2{{i}}">
+                  <!--Owners-->
+                  <div class="empty-state" *ngIf="asset.Owners.length == 0">
+                    <img src="../../../assets/images/empty-list.png">
+                  </div>
+                  <div *ngFor="let owner of asset.Owners; let oIndex = index;">
+                    <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#owner' + oIndex + '-asset' + i">{{(owner.AssetName? asset.AssetName : '')}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                    <div class="sub-panel collapse in" id="owner{{oIndex}}-asset{{i}}">
+                      <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                          <div  class="input-wrapper input-small-wrapper">
+                            <select  class="input w-input w-small-input" id="ownerSoid{{oIndex}}" [(ngModel)]="owner.OwnerSoid" (change)="txtValueChange($event, 'owner', 'OwnerSoid', owner, asset)"  placeholder="Owner">
+                              <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst : '') + ' ' + (user.NameLast)? user.NameLast : '') : 'Empty Name')}}</option>
+                            </select>
+                            <label  class="form-label form-small-label" for="ownerSoid{{oIndex}}">Owner</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                          <div  class="input-wrapper input-small-wrapper">
+                            <input  class="input w-input w-small-input require-field" id="OwnerType{{oIndex}}" [(ngModel)]="owner.OwnerType" maxlength="256" (change)="txtValueChange($event, 'owner', 'OwnerType', owner, asset)" placeholder="Owner Type" type="text">
+                            <label  class="form-label form-small-label" for="OwnerType{{oIndex}}">Owner Type</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                          <div  class="input-wrapper input-small-wrapper">
+                            <input  class="input w-input w-small-input require-field" id="OwnershipStart{{oIndex}}" [(ngModel)]="owner.OwnershipStart" maxlength="8" max="9999-12-31" (blur)="txtValueChange($event, 'owner', 'OwnershipStart', owner, asset)" placeholder="Ownership Start" type="date">
+                            <label  class="form-label form-small-label" for="OwnershipStart{{oIndex}}">Ownership Start</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                          <div  class="input-wrapper input-small-wrapper">
+                            <input  class="input w-input w-small-input require-field" id="OwnershipEnd{{oIndex}}" [(ngModel)]="owner.OwnershipEnd" maxlength="8" max="9999-12-31" (blur)="txtValueChange($event, 'owner', 'OwnershipEnd', owner, asset)" placeholder="Ownership End" type="date">
+                            <label  class="form-label form-small-label" for="OwnershipEnd{{oIndex}}">Ownership End</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                          <div  class="input-wrapper input-small-wrapper">
+                            <input  class="input w-input w-small-input" id="OwnershipEndCause{{oIndex}}" [(ngModel)]="owner.OwnershipEndCause" (change)="txtValueChange($event, 'owner', 'OwnershipEndCause', owner, asset)" maxlength="256" placeholder="Ownership End Cause" type="text">
+                            <label  class="form-label form-small-label" for="OwnershipEndCause{{oIndex}}">Ownership End Cause</label>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                          <div  class="input-wrapper input-small-wrapper">
+                            <input  class="input w-input w-small-input require-field" id="OwnershipPct{{oIndex}}" [(ngModel)]="owner.OwnershipPct" maxlength="8" (change)="txtValueChange($event, 'owner', 'OwnershipPct', owner, asset)" numberOnlyFormatter placeholder="Ownership Pct" type="text">
+                            <label  class="form-label form-small-label" for="OwnershipPct{{oIndex}}">Ownership Pct</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <button class="btn-base btn-remove btn btn-default pull-right mar-t-5" (click)="btnDeleteClick(owner, 'owner', i, asset)">Remove</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="full">
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                          <button class="btn-base btn-primary pull-right" (click)="btnAddAssetOwnerClick($event, asset)">Add</button>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mar-t-10 mar-b-10">
+            <button class="btn-base btn-remove btn btn-default" (click)="btnDeleteClick(asset, 'asset', i)">Remove asset</button>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || assets.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddAssetClick($event)">Add an asset</button>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddAsset">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Asset</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="col-xs-12">
+          <div  class="input-wrapper input-small-wrapper">
+            <select  class="input w-input w-small-input" id="newAssetType_{{i}}" [(ngModel)]="newAsset.AssetType" placeholder="Asset Type">
+              <option value="Home">Home</option>
+              <option value="Car">Car</option>
+            </select>
+            <label  class="form-label form-small-label" for="newAssetType_{{i}}">Asset Type</label>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div  class="input-wrapper input-small-wrapper">
+            <input  class="input w-input w-small-input require-field" id="newAssetName{{i}}" (keyup)="txtAssetNameKeyUp()" [(ngModel)]="newAsset.AssetName" maxlength="256" placeholder="Asset Name" type="text">
+            <label  class="form-label form-small-label" for="newAssetName{{i}}">Asset Name</label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveAssetClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

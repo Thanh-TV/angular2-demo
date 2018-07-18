@@ -1,0 +1,141 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Financial Register</h2>
+    </div>
+    <div class="asset-ctn">
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && registers.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <button class="btn-default btn-primary btn-base mar-b-10 mar-t-10 mar-r-10" (click)="btnOpeningClosingClick('opening')">Opening</button>
+            <button class="btn-default btn-primary btn-base mar-b-10 mar-t-10" (click)="btnOpeningClosingClick('closing')">Closing</button>
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let register of registers; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#financialRegister' + i">{{register.ReportDate | date:'fullDate'}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="panel collapse in" id="financialRegister{{i}}">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5"><span class="lbl-info"><b>Report Date:</b> {{register.ReportDate | date:'fullDate'}}</span></div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5"><span class="lbl-info"><b>Deposits:</b> {{register.Deposits}}</span></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5"><span class="lbl-info"><b>Opening At:</b> {{register.OpeningAt}}</span></div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5"><span class="lbl-info"><b>Closing At:</b> {{register.ClosingAt}}</span></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5"><span class="lbl-info"><b>Opening Cash:</b> {{register.OpeningCash}}</span></div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5"><span class="lbl-info"><b>Opening Checks:</b> {{register.OpeningChecks}}</span></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5"><span class="lbl-info"><b>Closing Cash:</b> {{register.ClosingCash}}</span></div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5"><span class="lbl-info"><b>Closing Checks:</b> {{register.ClosingChecks}}</span></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5"><span class="lbl-info"><b>Closing Credit:</b> {{register.ClosingCredit}}</span></div>
+          </div>
+          <div class="row" *ngIf="register.details && register.isShowMore">
+            <div class="col-xs-12 mar-t-5">
+              <div class="table-responsive">
+                <table class="table table-detail">
+                  <thead>
+                    <tr>
+                      <th align="center">Time</th>
+                      <th align="center">¢ 1</th>
+                      <th align="center">¢ 5</th>
+                      <th align="center">¢ 10</th>
+                      <th align="center">¢ 25</th>
+                      <th align="center">$ 1</th>
+                      <th align="center">$ 2</th>
+                      <th align="center">$ 5</th>
+                      <th align="center">$ 10</th>
+                      <th align="center">$ 20</th>
+                      <th align="center">$ 50</th>
+                      <th align="center">$ 100</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="register.details.Opening">
+                      <td>Opening</td>
+                      <td>{{register.details.Opening.Coins001}}</td>
+                      <td>{{register.details.Opening.Coins005}}</td>
+                      <td>{{register.details.Opening.Coins010}}</td>
+                      <td>{{register.details.Opening.Coins025}}</td>
+                      <td>{{register.details.Opening.Bills001}}</td>
+                      <td>{{register.details.Opening.Bills002}}</td>
+                      <td>{{register.details.Opening.Bills005}}</td>
+                      <td>{{register.details.Opening.Bills010}}</td>
+                      <td>{{register.details.Opening.Bills020}}</td>
+                      <td>{{register.details.Opening.Bills050}}</td>
+                      <td>{{register.details.Opening.Bills100}}</td>
+                    </tr>
+                    <tr *ngIf="register.details.Transient">
+                      <td>Transient</td>
+                      <td>{{register.details.Transient.Coins001}}</td>
+                      <td>{{register.details.Transient.Coins005}}</td>
+                      <td>{{register.details.Transient.Coins010}}</td>
+                      <td>{{register.details.Transient.Coins025}}</td>
+                      <td>{{register.details.Transient.Bills001}}</td>
+                      <td>{{register.details.Transient.Bills002}}</td>
+                      <td>{{register.details.Transient.Bills005}}</td>
+                      <td>{{register.details.Transient.Bills010}}</td>
+                      <td>{{register.details.Transient.Bills020}}</td>
+                      <td>{{register.details.Transient.Bills050}}</td>
+                      <td>{{register.details.Transient.Bills100}}</td>
+                    </tr>
+                    <tr *ngIf="register.details.Closing">
+                      <td>Closing</td>
+                      <td>{{register.details.Closing.Coins001}}</td>
+                      <td>{{register.details.Closing.Coins005}}</td>
+                      <td>{{register.details.Closing.Coins010}}</td>
+                      <td>{{register.details.Closing.Coins025}}</td>
+                      <td>{{register.details.Closing.Bills001}}</td>
+                      <td>{{register.details.Closing.Bills002}}</td>
+                      <td>{{register.details.Closing.Bills005}}</td>
+                      <td>{{register.details.Closing.Bills010}}</td>
+                      <td>{{register.details.Closing.Bills020}}</td>
+                      <td>{{register.details.Closing.Bills050}}</td>
+                      <td>{{register.details.Closing.Bills100}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="full">
+                <button class="btn-small-base btn btn-default pull-right" (click)="register.isShowMore = false;">close</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12"><button class="btn-small-base btn btn-default pull-right" *ngIf="!register.isShowMore" (click)="btnViewMoreClick($event, register)">view more</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || registers.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnOpeningClosingClick('opening')">Opening</button>
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10 mar-r-10" (click)="btnOpeningClosingClick('closing')">Closing</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-notify-user" tabindex="-1" role="dialog" aria-hidden="true" id="modalFinancialRegister">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content custom-scroll">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{(modalFinancialRegisterType == 'opening')? 'Opening' : 'Closing'}}</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <financial-register-add-component [type]="modalFinancialRegisterType" [ledgers]="ledgers" (handleBtnSaveClick)="btnSaveOpeningClosingClick($event)"></financial-register-add-component>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

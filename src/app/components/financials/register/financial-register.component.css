@@ -1,0 +1,28 @@
+#modalFinancialRegister {
+  padding-right: 0 !important;
+}
+#modalFinancialRegister .modal-dialog {
+  width: 95%;
+  max-width: 800px;
+  margin-left: auto;
+}
+.panel {
+  padding-bottom: 10px;
+  border: 2px solid #eee;
+  border-top: none;
+  margin-top: -2px;
+  background: rgba(0, 0, 0, 0.02);
+}
+.lbl-info {
+  display: table;
+  width: 100%;
+  padding-bottom: 5px;
+}
+.lbl-info b {
+  width: 125px;
+  display: table;
+  float: left;
+}
+.table-detail tr th {
+  background-color: #ddd;
+}

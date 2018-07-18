@@ -1,0 +1,895 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card task-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Offices</h2>
+    </div>
+    <div class="asset-ctn">
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && offices.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddAppointmentClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let office of offices; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#userOffice' + i">{{(office.OfficeName? office.OfficeName : (office.ContactName? office.ContactName: ''))}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="sub-panel collapse in" id="userOffice{{i}}">
+          <div class="tabbable-panel custom-scroll">
+            <div class="tabbable-line">
+              <ul class="nav nav-tabs ">
+                <li class="active">
+                  <a href="#tab_default_1{{i}}" data-toggle="tab">
+                  Document </a>
+                </li>
+                <li>
+                  <a href="#tab_default_2{{i}}" data-toggle="tab">
+                  Branches </a>
+                </li>
+                <li>
+                  <a href="#tab_default_3{{i}}" data-toggle="tab">
+                  Employees </a>
+                </li>
+                <li>
+                  <a href="#tab_default_4{{i}}" data-toggle="tab">
+                  Modules </a>
+                </li>
+                <li>
+                  <a href="#tab_default_5{{i}}" data-toggle="tab">
+                  Price Lists </a>
+                </li>
+                <li>
+                  <a href="#tab_default_6{{i}}" data-toggle="tab">
+                  Assets </a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_default_1{{i}}">
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="OfficeName{{i}}" [(ngModel)]="office.OfficeName" (change)="txtValueChange($event, 'office', 'OfficeName', office)"  placeholder="Office Name" />
+                        <label  class="form-label form-small-label" for="OfficeName{{i}}">Office Name</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="ContactName{{i}}" (change)="txtValueChange($event, 'office', 'ContactName', office)" [(ngModel)]="office.ContactName" placeholder="Contact Name" />
+                        <label  class="form-label form-small-label" for="ContactName{{i}}">Contact Name</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="CompanyName{{i}}" [(ngModel)]="office.CompanyName" (change)="txtValueChange($event, 'office', 'CompanyName', office)"  placeholder="Company Name" />
+                        <label  class="form-label form-small-label" for="CompanyName{{i}}">Company Name</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="DBA{{i}}" (change)="txtValueChange($event, 'office', 'DBA', office)" [(ngModel)]="office.DBA" placeholder="DBA" />
+                        <label  class="form-label form-small-label" for="DBA{{i}}">DBA</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="EmailAddress{{i}}" [(ngModel)]="office.EmailAddress" (change)="txtValueChange($event, 'office', 'EmailAddress', office)"  placeholder="Email Address" type="email"/>
+                        <label  class="form-label form-small-label" for="EmailAddress{{i}}">Email Address</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="Region{{i}}" [(ngModel)]="office.Region" (change)="txtValueChange($event, 'office', 'Region', office)"  placeholder="Region" type="text"/>
+                        <label  class="form-label form-small-label" for="Region{{i}}">Region</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="PhoneNumber{{i}}" (change)="txtValueChange($event, 'office', 'PhoneNumber', office)" [(ngModel)]="office.PhoneNumber" phoneNumberFormatter placeholder="Phone Number" />
+                        <label  class="form-label form-small-label" for="PhoneNumber{{i}}">Phone Number</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="FaxNumber{{i}}" (change)="txtValueChange($event, 'office', 'FaxNumber', office)" [(ngModel)]="office.FaxNumber" phoneNumberFormatter placeholder="Fax Number" />
+                        <label  class="form-label form-small-label" for="FaxNumber{{i}}">Fax Number</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select class="input w-input w-small-input" id="Timezone{{i}}" [(ngModel)]="office.Timezone" (change)="txtValueChange($event, 'office', 'Timezone', office)" placeholder="Timezone">
+                          <option value="EST">EST</option>
+                          <option value="CST">CST</option>
+                          <option value="MST">MST</option>
+                          <option value="PST">PST</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="TimeZone{{i}}">Timezone</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="Direction{{i}}" (change)="txtValueChange($event, 'office', 'Direction', office)" [(ngModel)]="office.Direction" placeholder="Direction" />
+                        <label  class="form-label form-small-label" for="Direction{{i}}">Direction</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="field-grouper"><span class="field-group-label">Bill</span>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" type="text" id="BillStreet{{i}}" [(ngModel)]="office.BillStreet" (change)="txtValueChange($event, 'office', 'BillStreet', office)"  placeholder="Street" />
+                              <label  class="form-label form-small-label" for="BillStreet{{i}}">Street</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" type="text" id="BillLine2{{i}}" [(ngModel)]="office.BillLine2" (change)="txtValueChange($event, 'office', 'BillLine2', office)"  placeholder="Line2" />
+                              <label  class="form-label form-small-label" for="BillLine2{{i}}">Line2</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" type="text" id="BillCity{{i}}" [(ngModel)]="office.BillCity" (change)="txtValueChange($event, 'office', 'BillCity', office)"  placeholder="City" />
+                              <label  class="form-label form-small-label" for="BillCity{{i}}">City</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <select   class="input w-input w-small-input" id="BillState{{i}}" [(ngModel)]="office.BillState" (change)="txtValueChange($event, 'office', 'BillState', office)" placeholder="State">
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AZ">AZ</option>
+                                <option value="AR">AR</option>
+                                <option value="CA">CA</option>
+                                <option value="CO">CO</option>
+                                <option value="CT">CT</option>
+                                <option value="DE">DE</option>
+                                <option value="DC">DC</option>
+                                <option value="FL">FL</option>
+                                <option value="GA">GA</option>
+                                <option value="HI">HI</option>
+                                <option value="ID">ID</option>
+                                <option value="IL">IL</option>
+                                <option value="IN">IN</option>
+                                <option value="IA">IA</option>
+                                <option value="KS">KS</option>
+                                <option value="KY">KY</option>
+                                <option value="LA">LA</option>
+                                <option value="ME">ME</option>
+                                <option value="MD">MD</option>
+                                <option value="MA">MA</option>
+                                <option value="MI">MI</option>
+                                <option value="MN">MN</option>
+                                <option value="MS">MS</option>
+                                <option value="MO">MO</option>
+                                <option value="MT">MT</option>
+                                <option value="NE">NE</option>
+                                <option value="NV">NV</option>
+                                <option value="NH">NH</option>
+                                <option value="NJ">NJ</option>
+                                <option value="NM">NM</option>
+                                <option value="NY">NY</option>
+                                <option value="NC">NC</option>
+                                <option value="ND">ND</option>
+                                <option value="OH">OH</option>
+                                <option value="OK">OK</option>
+                                <option value="OR">OR</option>
+                                <option value="PA">PA</option>
+                                <option value="RI">RI</option>
+                                <option value="SC">SC</option>
+                                <option value="SD">SD</option>
+                                <option value="TN">TN</option>
+                                <option value="TX">TX</option>
+                                <option value="UT">UT</option>
+                                <option value="VT">VT</option>
+                                <option value="VA">VA</option>
+                                <option value="WA">WA</option>
+                                <option value="WV">WV</option>
+                                <option value="WI">WI</option>
+                                <option value="WY">WY</option>
+                              </select>
+                              <label  class="form-label form-small-label" for="BillState{{i}}">State</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" type="text" id="BillZipCode{{i}}" [(ngModel)]="office.BillZipCode" (change)="txtValueChange($event, 'office', 'BillZipCode', office)" numberOnlyFormatter maxlength="10"  placeholder="Zip Code" />
+                              <label  class="form-label form-small-label" for="BillZipCode{{i}}">Zip Code</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mar-t-20">
+                    <div class="col-xs-12">
+                      <div class="field-grouper"><span class="field-group-label">Ship</span>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" type="text" id="ShipStreet{{i}}" [(ngModel)]="office.ShipStreet" (change)="txtValueChange($event, 'office', 'ShipStreet', office)"  placeholder="Street" />
+                              <label  class="form-label form-small-label" for="ShipStreet{{i}}">Street</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" type="text" id="ShipLine2{{i}}" [(ngModel)]="office.ShipLine2" (change)="txtValueChange($event, 'office', 'ShipLine2', office)"  placeholder="Line2" />
+                              <label  class="form-label form-small-label" for="ShipLine2{{i}}">Line2</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" type="text" id="ShipCity{{i}}" [(ngModel)]="office.ShipCity" (change)="txtValueChange($event, 'office', 'ShipCity', office)"  placeholder="City" />
+                              <label  class="form-label form-small-label" for="ShipCity{{i}}">City</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <select   class="input w-input w-small-input" id="ShipState{{i}}" [(ngModel)]="office.ShipState" (change)="txtValueChange($event, 'office', 'ShipState', office)" placeholder="State">
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AZ">AZ</option>
+                                <option value="AR">AR</option>
+                                <option value="CA">CA</option>
+                                <option value="CO">CO</option>
+                                <option value="CT">CT</option>
+                                <option value="DE">DE</option>
+                                <option value="DC">DC</option>
+                                <option value="FL">FL</option>
+                                <option value="GA">GA</option>
+                                <option value="HI">HI</option>
+                                <option value="ID">ID</option>
+                                <option value="IL">IL</option>
+                                <option value="IN">IN</option>
+                                <option value="IA">IA</option>
+                                <option value="KS">KS</option>
+                                <option value="KY">KY</option>
+                                <option value="LA">LA</option>
+                                <option value="ME">ME</option>
+                                <option value="MD">MD</option>
+                                <option value="MA">MA</option>
+                                <option value="MI">MI</option>
+                                <option value="MN">MN</option>
+                                <option value="MS">MS</option>
+                                <option value="MO">MO</option>
+                                <option value="MT">MT</option>
+                                <option value="NE">NE</option>
+                                <option value="NV">NV</option>
+                                <option value="NH">NH</option>
+                                <option value="NJ">NJ</option>
+                                <option value="NM">NM</option>
+                                <option value="NY">NY</option>
+                                <option value="NC">NC</option>
+                                <option value="ND">ND</option>
+                                <option value="OH">OH</option>
+                                <option value="OK">OK</option>
+                                <option value="OR">OR</option>
+                                <option value="PA">PA</option>
+                                <option value="RI">RI</option>
+                                <option value="SC">SC</option>
+                                <option value="SD">SD</option>
+                                <option value="TN">TN</option>
+                                <option value="TX">TX</option>
+                                <option value="UT">UT</option>
+                                <option value="VT">VT</option>
+                                <option value="VA">VA</option>
+                                <option value="WA">WA</option>
+                                <option value="WV">WV</option>
+                                <option value="WI">WI</option>
+                                <option value="WY">WY</option>
+                              </select>
+                              <label  class="form-label form-small-label" for="ShipState{{i}}">State</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" type="text" id="ShipZipCode{{i}}" [(ngModel)]="office.ShipZipCode" (change)="txtValueChange($event, 'office', 'ShipZipCode', office)" numberOnlyFormatter maxlength="10"  placeholder="Zip Code" />
+                              <label  class="form-label form-small-label" for="ShipZipCode{{i}}">Zip Code</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab_default_2{{i}}">
+                  <!--Branches-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="office.Branches.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let branch of office.Branches; let bIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#branch' + bIndex + '-office' + i">Branch #{{(bIndex + 1)}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="branch{{bIndex}}-office{{i}}">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="BranchReference{{i}}" [(ngModel)]="branch.BranchReference" (change)="txtValueChange($event, 'branch', 'BranchReference', branch, office)" maxlength="256" placeholder="Branch Reference" type="text">
+                              <label  class="form-label form-small-label" for="BranchReference{{i}}">Branch Reference</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div class="cbk-base-ctn">
+                              <input type="checkbox" [(ngModel)]="branch.Active" (change)="txtValueChange($event, 'branch', 'Active', branch, office)" class="regular-checkbox" /><span>Active</span>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteClick(branch, 'branch', i, office)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                        <button class="btn-base btn-primary pull-right" (click)="btnAddBranchClick($event, office)">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab_default_3{{i}}">
+                  <!--Employees-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="office.Employees.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let employee of office.Employees; let eIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#employee' + eIndex + '-office' + i">{{(employee.PersonName? employee.PersonName : (employee.EmailAddress? employee.EmailAddress : (employee.PhoneNumber? employee.PhoneNumber : '')))}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="employee{{eIndex}}-office{{i}}">
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="PersonName{{i}}" [(ngModel)]="employee.PersonName" (change)="txtValueChange($event, 'employee', 'PersonName', employee, office)" maxlength="256" placeholder="Person Name" type="text">
+                              <label  class="form-label form-small-label" for="PersonName{{i}}">Person Name</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Position{{i}}" [(ngModel)]="employee.Position" (change)="txtValueChange($event, 'employee', 'Position', employee, office)" maxlength="256" placeholder="Position" type="text">
+                              <label  class="form-label form-small-label" for="Position{{i}}">Position</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="EmployeeEmailAddress{{i}}" [(ngModel)]="employee.EmailAddress" (change)="txtValueChange($event, 'employee', 'EmailAddress', employee, office)" maxlength="256" placeholder="Email Address" type="email">
+                              <label  class="form-label form-small-label" for="EmployeeEmailAddress{{i}}">Email Address</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="EmployeePhoneNumber{{i}}" [(ngModel)]="employee.PhoneNumber" (change)="txtValueChange($event, 'employee', 'PhoneNumber', employee, office)" phoneNumberFormatter maxlength="256" phone placeholder="Phone Number" type="text">
+                              <label  class="form-label form-small-label" for="EmployeePhoneNumber{{i}}">Phone Number</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="employeeStart{{i}}" [(ngModel)]="employee.Start" (blur)="txtValueChange($event, 'employee', 'Start', employee, office)" maxlength="8" max="9999-12-31" placeholder="Start" type="date">
+                              <label  class="form-label form-small-label" for="employeeStart{{i}}">Start</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="employeeEnd{{i}}" [(ngModel)]="employee.End" (blur)="txtValueChange($event, 'employee', 'End', employee, office)" maxlength="8" max="9999-12-31" placeholder="End" type="date">
+                              <label  class="form-label form-small-label" for="employeeEnd{{i}}">End</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="employeeClockStart{{i}}" [(ngModel)]="employee.DefaultClockIn" (blur)="txtValueChange($event, 'employee', 'DefaultClockIn', employee, office)" maxlength="8" max="9999-12-31" placeholder="Default Clock In" type="time">
+                              <label  class="form-label form-small-label" for="employeeClockStart{{i}}">Default Clock In</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="employeeClockEnd{{i}}" [(ngModel)]="employee.DefaultClockOut" (blur)="txtValueChange($event, 'employee', 'DefaultClockOut', employee, office)" maxlength="8" max="9999-12-31" placeholder="Default Clock Out" type="time">
+                              <label  class="form-label form-small-label" for="employeeClockEnd{{i}}">Default Clock Out</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5 mar-t-10">
+                            <div class="cbk-base-ctn">
+                              <input type="checkbox" [(ngModel)]="employee.TimeStamping" (change)="txtValueChange($event, 'employee', 'TimeStamping', employee, office)" class="regular-checkbox" /><span>Time Stamping</span>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5 mar-t-10">
+                            <div class="cbk-base-ctn">
+                              <input type="checkbox" [(ngModel)]="employee.TimeClockAdmin" (change)="txtValueChange($event, 'employee', 'TimeClockAdmin', employee, office)" class="regular-checkbox" /><span>Time Clock Admin</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5 mar-t-10">
+                            <div class="cbk-base-ctn">
+                              <input type="checkbox" [(ngModel)]="employee.ViewTraining" (change)="txtValueChange($event, 'employee', 'ViewTraining', employee, office)" class="regular-checkbox" /><span>View Training</span>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5 mar-t-10">
+                            <div class="cbk-base-ctn">
+                              <input type="checkbox" [(ngModel)]="employee.Global" (change)="txtValueChange($event, 'employee', 'Global', employee, office)" class="regular-checkbox" /><span>Global</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5 mar-t-10">
+                            <div class="cbk-base-ctn">
+                              <input type="checkbox" [(ngModel)]="employee.PromptOnChange" (change)="txtValueChange($event, 'employee', 'PromptOnChange', employee, office)" class="regular-checkbox" /><span>Prompt On Change</span>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5 mar-t-10">
+                            <div class="cbk-base-ctn">
+                              <input type="checkbox" [(ngModel)]="employee.GlobalSearch" (change)="txtValueChange($event, 'employee', 'GlobalSearch', employee, office)" class="regular-checkbox" /><span>GlobalSearch</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5 mar-t-10">
+                            <div class="cbk-base-ctn">
+                              <input type="checkbox" [(ngModel)]="employee.GlobalReporting" (change)="txtValueChange($event, 'employee', 'GlobalReporting', employee, office)" class="regular-checkbox" /><span>Global Reporting</span>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5 mar-t-10">
+                            <div class="cbk-base-ctn">
+                              <input type="checkbox" [(ngModel)]="employee.Notifications" (change)="txtValueChange($event, 'employee', 'Notifications', employee, office)" class="regular-checkbox" /><span>Notifications</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 desktop-pad-l-5">
+                            <button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteClick(employee, 'employee', i, office)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                        <button class="btn-base btn-primary pull-right" (click)="btnAddEmployeeClick(office)">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_default_4{{i}}">
+                  <!--Modules-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="office.Modules.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let module of office.Modules; let mIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#module' + mIndex + '-office' + i">{{(module.ModuleName? module.ModuleName : '')}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="module{{mIndex}}-office{{i}}">
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="ModuleName{{mIndex}}" [(ngModel)]="module.ModuleName" (change)="txtValueChange($event, 'module', 'ModuleName', module, office)" maxlength="256" placeholder="Module Name" type="text">
+                              <label  class="form-label form-small-label" for="ModuleName{{mIndex}}">Module Name</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <select   class="input w-input w-small-input" id="Modulemodule{{mIndex}}" [(ngModel)]="module.ShipState" (change)="txtValueChange($event, 'module', 'Status', module, office)" placeholder="Status">
+                                <option value="Open">Open</option>
+                                <option value="Closed">Closed</option>
+                              </select>
+                              <label  class="form-label form-small-label" for="Modulemodule{{mIndex}}">Status</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input require-field" id="moduleStart{{mIndex}}" [(ngModel)]="module.Start" (blur)="txtValueChange($event, 'module', 'Start', module, office)" maxlength="8" max="9999-12-31" placeholder="Start" type="time">
+                              <label  class="form-label form-small-label" for="moduleStart{{mIndex}}">Start</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input require-field" id="moduleEnd{{mIndex}}" [(ngModel)]="module.End" (blur)="txtValueChange($event, 'module', 'End', module, office)" maxlength="8" max="9999-12-31" placeholder="End" type="time">
+                              <label  class="form-label form-small-label" for="moduleEnd{{mIndex}}">End</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 desktop-pad-l-5">
+                            <button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteClick(module, 'module', i, office)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                        <button class="btn-base btn-primary pull-right" (click)="btnAddModuleClick($event, office)">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_default_5{{i}}">
+                  <!--PriceLists-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="office.PriceLists.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let priceList of office.PriceLists; let pIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#priceList' + pIndex + '-office' + i">{{(priceList.Name? priceList.Name : '')}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="priceList{{pIndex}}-office{{i}}">
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="priceListName{{pIndex}}" [(ngModel)]="priceList.Name" (change)="txtValueChange($event, 'priceList', 'Name', priceList, office)" maxlength="256" placeholder="Name" type="text">
+                              <label  class="form-label form-small-label" for="priceListName{{pIndex}}">Name</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div class="cbk-base-ctn mar-t-5 mar-b-10">
+                              <input type="checkbox" [(ngModel)]="priceList.Active" (change)="txtValueChange($event, 'priceList', 'Active', priceList, office)" class="regular-checkbox" /><span>Active</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input require-field" id="priceListStartDate{{pIndex}}" [(ngModel)]="priceList.StartDate" maxlength="8" max="9999-12-31" (blur)="txtValueChange($event, 'priceList', 'StartDate', priceList, office)" placeholder="Start Date" type="date">
+                              <label  class="form-label form-small-label" for="priceListStartDate{{pIndex}}">Start Date</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input require-field" id="priceListEndDate{{pIndex}}" [(ngModel)]="priceList.EndDate" maxlength="8" max="9999-12-31" (blur)="txtValueChange($event, 'priceList', 'EndDate', priceList, office)" placeholder="End Date" type="date">
+                              <label  class="form-label form-small-label" for="priceListEndDate{{pIndex}}">End Date</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <button class="accordion sub-accordion sub-accordion2" data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#priceListSubItems' + pIndex + '-office' + i">List Items<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                            <div class="sub-panel collapse" id="priceListSubItems{{pIndex}}-office{{i}}">
+                              <div class="empty-state mar-b-5" *ngIf="priceList.Items.length == 0">
+                                <img src="../../../assets/images/empty-list.png">
+                              </div>
+                              <div *ngFor="let item of priceList.Items; let itIndex = index;">
+                                <button class="accordion sub-accordion sub-accordion3" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#priceListSubItemsIndex' + itIndex + '-office' + pIndex">{{(item.Item? item.Item : '')}}<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                                <div class="sub-panel price-list-item-panel collapse in" id="priceListSubItemsIndex{{itIndex}}-office{{pIndex}}">
+                                  <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <input  class="input w-input w-small-input" id="priceListItemItem{{itIndex}}" [(ngModel)]="item.Item" (change)="txtValueChange($event, 'priceListItem', 'Item', item, office, priceList)" maxlength="256" placeholder="Item" type="text">
+                                        <label  class="form-label form-small-label" for="priceListItemItem{{itIndex}}">Item</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <input  class="input w-input w-small-input" id="priceListItemCategory{{itIndex}}" [(ngModel)]="item.Category" (change)="txtValueChange($event, 'priceListItem', 'Category', item, office, priceList)" maxlength="256" placeholder="Category" type="text">
+                                        <label  class="form-label form-small-label" for="priceListItemCategory{{itIndex}}">Category</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <input  class="input w-input w-small-input" id="priceListItemDescription{{itIndex}}" [(ngModel)]="item.Description" (change)="txtValueChange($event, 'priceListItem', 'Description', item, office, priceList)" maxlength="256" placeholder="Description" type="text">
+                                        <label  class="form-label form-small-label" for="priceListItemDescription{{itIndex}}">Description</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <select  class="input w-input w-small-input require-field" id="priceListItemModule{{itIndex}}" [(ngModel)]="item.ModuleSoid" (change)="txtValueChange($event, 'priceListItem', 'ModuleSoid', item, office, priceList)" placeholder="Module">
+                                          <option *ngFor="let module of modules;" value="{{module.Soid}}">{{(module.Name? module.Name : 'Empty Name')}}</option>
+                                        </select>
+                                        <label  class="form-label form-small-label" for="priceListItemModule{{itIndex}}">Module</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <select  class="input w-input w-small-input require-field" id="priceListItemUnitOfMeasure{{itIndex}}" [(ngModel)]="item.UnitOfMeasure" (change)="txtValueChange($event, 'priceListItem', 'UnitOfMeasure', item, office, priceList)" placeholder="Unit Of Measure">
+                                          <option value="">Select</option>
+                                          <option value="Each">Each</option>
+                                          <option value="Hour">Hour</option>
+                                        </select>
+                                        <label  class="form-label form-small-label" for="priceListItemUnitOfMeasure{{itIndex}}">Unit Of Measure</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <input  class="input w-input w-small-input" id="priceListItemUnitPrice{{itIndex}}" [(ngModel)]="item.UnitPrice" (change)="txtValueChange($event, 'priceListItem', 'UnitPrice', item, office, priceList)" maxlength="10" numberOnlyFormatter placeholder="Unit Price" type="text">
+                                        <label  class="form-label form-small-label" for="priceListItemUnitPrice{{itIndex}}">Unit Price</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                                      <button class="btn-base btn-remove btn btn-default pull-right mar-t-5" (click)="btnDeleteClick(item, 'priceListItem', i, office, priceList)">Remove</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-xs-12">
+                                  <button class="btn-base btn-primary pull-right mar-t-10" (click)="btnAddPriceListItemClick($event, office, priceList)">Add an item</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 mar-t-10 desktop-pad-l-5">
+                            <button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteClick(priceList, 'priceList', i, office)">Remove price list</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                        <button class="btn-base btn-primary pull-right" (click)="btnAddPriceListClick($event, office)">Add a price list</button>
+                      </div>
+                    </div>
+                  </div>
+                  <!--Customers-->
+                  <!--<div class="base-comment-ctn">-->
+                    <!--<div class="empty-state" *ngIf="office.Customers.length == 0">-->
+                      <!--<img src="../../../assets/images/empty-list.png">-->
+                    <!--</div>-->
+                    <!--<div *ngFor="let customer of office.Customers; let cIndex = index;" [hidden]="cIndex < ((office.currentCustomerPage - 1) * pageSize) || cIndex > (office.currentCustomerPage * pageSize - 1)">-->
+                      <!--<button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#customer' + cIndex + '-office' + i">{{(customer.PersonName? customer.PersonName : '')}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>-->
+                      <!--<div class="sub-panel collapse in" id="customer{{cIndex}}-office{{i}}">-->
+                        <!--<div class="row">-->
+                          <!--<div class="col-xs-12">-->
+                            <!--<div  class="input-wrapper input-small-wrapper">-->
+                              <!--<input  class="input w-input w-small-input" id="CustomerPersonName{{i}}" [(ngModel)]="customer.PersonName" (change)="txtValueChange($event, 'customer', 'PersonName', customer, office)" maxlength="256" placeholder="Person Name" type="text">-->
+                              <!--<label  class="form-label form-small-label" for="CustomerPersonName{{i}}">Person Name</label>-->
+                            <!--</div>-->
+                          <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="row">-->
+                          <!--<div class="col-xs-12">-->
+                            <!--<div  class="input-wrapper input-small-wrapper">-->
+                              <!--<input  class="input w-input w-small-input" id="CustomerNote{{i}}" [(ngModel)]="customer.Notes" (change)="txtValueChange($event, 'customer', 'Notes', customer, office)" maxlength="256" placeholder="Notes" type="text">-->
+                              <!--<label  class="form-label form-small-label" for="CustomerNote{{i}}">Notes</label>-->
+                            <!--</div>-->
+                          <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="row">-->
+                          <!--<div class="col-xs-12 desktop-pad-l-5">-->
+                            <!--<button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteClick(customer, 'customer', i, office)">Remove</button>-->
+                          <!--</div>-->
+                        <!--</div>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="pagination" *ngIf="office.Customers.length != 0">-->
+                      <!--<a (click)="office.currentCustomerPageIndex = 1;" [ngClass]="{'element-disabled': (office.currentCustomerPageIndex == 1)}">&laquo;</a>-->
+                      <!--<a (click)="btnNextPreviousClick(office, 0)" [ngClass]="{'element-disabled': (office.currentCustomerPage == 1)}" class="single-next-previous">&#60;</a>-->
+                      <!--<a (click)="btnPageMoreClick(office, 0)" [ngClass]="{'element-disabled': (office.currentCustomerPageIndex == 1)}">...</a>-->
+                      <!--<a *ngFor="let pageNumber of office.pageNumbers;" (click)="office.currentCustomerPage = pageNumber;" [hidden]="pageNumber > (office.currentCustomerPageIndex * 5) || pageNumber < (office.currentCustomerPageIndex - 1)*5" [ngClass]="{'active': (pageNumber == office.currentCustomerPage)}">{{pageNumber}}</a>-->
+                      <!--<a (click)="btnPageMoreClick(office, 1)" [ngClass]="{'element-disabled': (office.currentCustomerPageIndex == office.maxCustomerPageIndex)}">...</a>-->
+                      <!--<a (click)="btnNextPreviousClick(office, 1)" [ngClass]="{'element-disabled': (office.currentCustomerPage == office.totalCustomerPages)}" class="single-next-previous">&#62;</a>-->
+                      <!--<a (click)="office.currentCustomerPageIndex = office.maxCustomerPageIndex;" [ngClass]="{'element-disabled': (office.currentCustomerPageIndex == office.maxCustomerPageIndex)}">&raquo;</a>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                </div>
+
+                <div class="tab-pane" id="tab_default_6{{i}}">
+                  <!--Assets-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="office.Assets.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let asset of office.Assets; let asIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#asset' + asIndex + '-office' + i">{{(asset.AssetName? asset.AssetName : '')}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="asset{{asIndex}}-office{{i}}">
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="AssetName{{asIndex}}" [(ngModel)]="asset.AssetName" (change)="txtValueChange($event, 'asset', 'AssetName', asset, office)" maxlength="256" placeholder="Asset Name" type="text">
+                              <label  class="form-label form-small-label" for="AssetName{{asIndex}}">Asset Name</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Amortization{{asIndex}}" [(ngModel)]="asset.Amortization" (change)="txtValueChange($event, 'asset', 'Amortization', asset, office)" maxlength="5" numberOnlyFormatter placeholder="Amortization" type="text">
+                              <label  class="form-label form-small-label" for="Amortization{{asIndex}}">Amortization</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="AssetDescription{{asIndex}}" [(ngModel)]="asset.AssetDescription" (change)="txtValueChange($event, 'asset', 'AssetDescription', asset, office)" maxlength="256" placeholder="Description" type="text">
+                              <label  class="form-label form-small-label" for="AssetDescription{{asIndex}}">Description</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input require-field" id="assetPurchasedOn{{asIndex}}" [(ngModel)]="asset.PurchasedOn" maxlength="8" max="9999-12-31" (blur)="txtValueChange($event, 'asset', 'PurchasedOn', asset, office)" placeholder="Purchased On" type="date">
+                              <label  class="form-label form-small-label" for="assetPurchasedOn{{asIndex}}">Purchased On</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="assetPurchasePrice{{asIndex}}" [(ngModel)]="asset.PurchasePrice" (change)="txtValueChange($event, 'asset', 'PurchasePrice', asset, office)" maxlength="5" numberOnlyFormatter placeholder="Purchase Price" type="text">
+                              <label  class="form-label form-small-label" for="assetPurchasePrice{{asIndex}}">Purchase Price</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input require-field" id="assetAcctNbr{{asIndex}}" [(ngModel)]="asset.AcctNbr" (change)="txtValueChange($event, 'asset', 'AcctNbr', asset, office)" maxlength="10" placeholder="Acct Nbr" type="text">
+                              <label  class="form-label form-small-label" for="assetAcctNbr{{asIndex}}">Acct Nbr</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <button class="btn-base btn-remove btn btn-default pull-right mar-t-5" (click)="btnDeleteClick(asset, 'asset', i, office)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                          <button class="btn-base btn-primary pull-right" (click)="btnAddAssetClick($event, office)">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="custom-ctn mar-t-10 mar-b-10">
+            <button class="btn-base btn-remove btn btn-default" (click)="btnDeleteClick(office, 'office', i)">Remove office</button>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || offices.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddOfficeClick($event)">Add an office</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddEmployee">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Employee</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <select  class="input w-input w-small-input require-field" id="newEmployeeUserId{{i}}" [(ngModel)]="newEmployee.PersonSoid" placeholder="Person">
+                <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+              </select>
+              <label  class="form-label form-small-label" for="newEmployeeUserId{{i}}">Person</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newEmployeeStart{{i}}" [(ngModel)]="newEmployee.Start" maxlength="8" max="9999-12-31" placeholder="Start" type="date">
+              <label  class="form-label form-small-label" for="newEmployeeStart{{i}}">Start</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newEmployeeEnd{{i}}" [(ngModel)]="newEmployee.End" maxlength="8" max="9999-12-31" placeholder="End" type="date">
+              <label  class="form-label form-small-label" for="newEmployeeEnd{{i}}">End</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newEmployeeClockStart{{i}}" [(ngModel)]="newEmployee.DefaultClockIn" maxlength="8" max="9999-12-31" placeholder="Default Clock In" type="time">
+              <label  class="form-label form-small-label" for="newEmployeeClockStart{{i}}">Default Clock In</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newEmployeeClockEnd{{i}}" [(ngModel)]="newEmployee.DefaultClockOut" maxlength="8" max="9999-12-31" placeholder="Default Clock Out" type="time">
+              <label  class="form-label form-small-label" for="newEmployeeClockEnd{{i}}">Default Clock Out</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveEmployeeClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddOffice">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Office</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newOfficeCompanyName" [(ngModel)]="newOffice.CompanyName" maxlength="256" placeholder="Company Name" type="text">
+              <label  class="form-label form-small-label" for="newOfficeCompanyName">Company Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newOfficeOfficeName" [(ngModel)]="newOffice.OfficeName" maxlength="256" placeholder="Office Name" type="text">
+              <label  class="form-label form-small-label" for="newOfficeOfficeName">Office Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newOfficeEmailAddress" [(ngModel)]="newOffice.EmailAddress" maxlength="256" placeholder="Email Address" type="email">
+              <label  class="form-label form-small-label" for="newOfficeEmailAddress">Email Address</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newOfficePhoneNumber" phoneNumberFormatter [(ngModel)]="newOffice.PhoneNumber" maxlength="256" placeholder="Phone Number" type="text">
+              <label  class="form-label form-small-label" for="newOfficePhoneNumber">Phone number</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newOfficeRegion" [(ngModel)]="newOffice.Region" maxlength="256" placeholder="Region" type="text">
+              <label  class="form-label form-small-label" for="newOfficeRegion">Region</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveOfficeClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

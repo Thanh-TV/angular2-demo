@@ -1,0 +1,151 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Instructors</h2>
+    </div>
+    <div>
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && instructors.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddInstructorClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let instructor of instructors; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#adminInstructor' + i">{{(instructor.NameFirst? instructor.NameFirst : '')}} {{(instructor.NameLast? instructor.NameLast : '')}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="sub-panel collapse in asset-panel" id="adminInstructor{{i}}">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="InstructorNameFirst{{i}}" (change)="txtValueChange($event, 'instructor', 'NameFirst', instructor)" [(ngModel)]="instructor.NameFirst" placeholder="First Name" maxlength="40"/>
+                <label  class="form-label form-small-label" for="InstructorNameFirst{{i}}">First Name</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="InstructorNameLast{{i}}" (change)="txtValueChange($event, 'instructor', 'NameLast', instructor)" [(ngModel)]="instructor.NameLast" placeholder="Last Name" maxlength="40"/>
+                <label  class="form-label form-small-label" for="InstructorNameLast{{i}}">Last Name</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="InstructorTitle{{i}}" (change)="txtValueChange($event, 'instructor', 'Title', instructor)" [(ngModel)]="instructor.Title" placeholder="Title" maxlength="256"/>
+                <label  class="form-label form-small-label" for="InstructorTitle{{i}}">Title</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="InstructorCertificateName{{i}}" (change)="txtValueChange($event, 'instructor', 'CertificateName', instructor)" [(ngModel)]="instructor.CertificateName" placeholder="Certificate Name" maxlength="256"/>
+                <label  class="form-label form-small-label" for="InstructorCertificateName{{i}}">Certificate Name</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="InstructorPhoneNumber{{i}}" (change)="txtValueChange($event, 'instructor', 'PhoneNumber', instructor)" [(ngModel)]="instructor.PhoneNumber" placeholder="Phone Number" phoneNumberFormatter/>
+                <label  class="form-label form-small-label" for="InstructorPhoneNumber{{i}}">Phone Number</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="InstructorPhoneType{{i}}" (change)="txtValueChange($event, 'instructor', 'PhoneType', instructor)" [(ngModel)]="instructor.PhoneType" placeholder="Phone Type" maxlength="256"/>
+                <label  class="form-label form-small-label" for="InstructorPhoneType{{i}}">Phone Type</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="InstructorEmailAddress{{i}}" (change)="txtValueChange($event, 'instructor', 'EmailAddress', instructor)" [(ngModel)]="instructor.EmailAddress" placeholder="Email Address" type="email" maxlength="256"/>
+                <label  class="form-label form-small-label" for="InstructorEmailAddress{{i}}">Email Address</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="InstructorBiography{{i}}" (change)="txtValueChange($event, 'instructor', 'Biography', instructor)" [(ngModel)]="instructor.Biography" placeholder="Biography" maxlength="256"/>
+                <label  class="form-label form-small-label" for="InstructorBiography{{i}}">Biography</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div class="cbk-base-ctn">
+                <input type="checkbox" [(ngModel)]="instructor.Active" (change)="txtValueChange($event, 'instructor', 'Active', instructor)" class="regular-checkbox" /><span>Active</span>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <button class="btn-base btn btn-default pull-right" (click)="btnRemoveInstructorClick(instructor, i)">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || instructors.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddInstructorClick($event)">Add a instructor</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddInstructor">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add instructor</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6 pad-r-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newInstructorNameFirst" [(ngModel)]="newInstructor.NameFirst" maxlength="40" placeholder="First Name" />
+              <label  class="form-label form-small-label" for="newInstructorNameFirst">Last Name</label>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6 pad-l-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="NewNameLast" [(ngModel)]="newInstructor.NameLast" maxlength="40" placeholder="Last Name" />
+              <label  class="form-label form-small-label" for="NewNameLast">Last Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newInstructorTitle" [(ngModel)]="newInstructor.Title" maxlength="256" type="text" placeholder="Title" />
+              <label  class="form-label form-small-label" for="newInstructorTitle">Title</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newInstructorPhoneNumber" [(ngModel)]="newInstructor.PhoneNumber" phoneNumberFormatter maxlength="256" type="text" placeholder="Phone Number" />
+              <label  class="form-label form-small-label" for="newInstructorPhoneNumber">Phone Number</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newInstructorEmailAddress" [(ngModel)]="newInstructor.EmailAddress" maxlength="256" type="email" placeholder="Email Address" />
+              <label  class="form-label form-small-label" for="newInstructorEmailAddress">Email Address</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveInstructorClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

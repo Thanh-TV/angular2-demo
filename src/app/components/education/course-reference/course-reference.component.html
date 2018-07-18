@@ -1,0 +1,41 @@
+<div class="empty-state mar-b-5" *ngIf="courseReferences.length == 0">
+  <img src="../../../assets/images/empty-list.png">
+</div>
+<div *ngFor="let courseReference of courseReferences; let cIndex = index;">
+  <button class="accordion sub-accordion sub-accordion3" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#courseReference' + courseReference.Soid">{{(courseReference.CourseName? courseReference.CourseName : '')}}<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+  <div class="sub-panel price-list-item-panel collapse in" id="courseReference{{courseReference.Soid}}">
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+        <div  class="input-wrapper input-small-wrapper">
+          <select  class="input w-input w-small-input require-field" id="CourseSoid{{i}}" (change)="txtValueChange($event, 'course', 'CourseSoid', courseReference, parentObject)" [(ngModel)]="courseReference.CourseSoid" placeholder="Course">
+             <option *ngFor="let course of courses;" value="{{course.Soid}}">{{course.Name}}</option>
+          </select>
+          <label class="form-label form-small-label" for="CourseSoid{{i}}">Course</label>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+        <div  class="input-wrapper input-small-wrapper">
+          <input  class="input w-input w-small-input" id="AddedOn{{i}}" [(ngModel)]="courseReference.AddedOn" (blur)="txtValueChange($event, 'course', 'AddedOn', courseReference, parentObject)" maxlength="256" max="9999-12-31" placeholder="Added On" type="date">
+          <label  class="form-label form-small-label" for="AddedOn{{i}}">Added On</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+        <div class="cbk-base-ctn">
+          <input type="checkbox" [(ngModel)]="courseReference.Active" (change)="txtValueChange($event, 'course', 'Active', courseReference, parentObject)" class="regular-checkbox" /><span>Active</span>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+       <button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteCourseClick(courseReference, parentObject)">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <div class="mar-t-10 pull-right">
+      <button class="btn-base btn-primary pull-right" (click)="btnAddCourseClick($event, parentObject)">Add</button>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content" [confirmationType]="confirmationType"></confirmation-component>

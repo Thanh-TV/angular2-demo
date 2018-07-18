@@ -1,0 +1,23 @@
+.sub-panel {
+  padding: 0;
+}
+.tabbable-panel {
+  max-height: 773px;
+}
+.sub-panel .sub-panel {
+  padding: 15px;
+}
+.modal-content-ctn {
+  padding: 20px 15px 5px 15px;
+}
+
+.price-list-item-panel {
+  background: #f7f7f7;
+  padding-bottom: 5px !important;
+}
+
+@media (max-width: 400px) {
+  .sub-panel .sub-panel {
+    padding: 15px 10px 13px 10px;
+  }
+}

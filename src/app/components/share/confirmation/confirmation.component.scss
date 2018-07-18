@@ -1,0 +1,14 @@
+.modal-header {
+  padding: 10px 15px 7px;
+}
+.modal-message, modal-footer {
+  padding: 10px 15px;
+}
+.modal-footer button {
+  padding: 6px 20px !important;
+}
+.modal-dialog {
+  top: 0;
+  margin-top: 50vh;
+  transform: translateY(-50%) !important;
+}

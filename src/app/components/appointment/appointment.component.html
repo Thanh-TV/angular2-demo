@@ -1,0 +1,333 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card task-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Appointments</h2>
+    </div>
+    <div class="asset-ctn">
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && appointments.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddAppointmentClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let appointment of appointments; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#userAppointment' + i">{{appointment.Subject}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="sub-panel collapse in appointment-panel" id="userAppointment{{i}}">
+          <div class="tabbable-panel custom-scroll">
+            <div class="tabbable-line">
+              <ul class="nav nav-tabs ">
+                <li class="active">
+                  <a href="#tab_default_1{{i}}" data-toggle="tab">
+                  Document </a>
+                </li>
+                <li>
+                  <a href="#tab_default_2{{i}}" data-toggle="tab">
+                  Participants </a>
+                </li>
+                <li>
+                  <a href="#tab_default_3{{i}}" data-toggle="tab">
+                  Notes </a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_default_1{{i}}">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="Subject{{i}}" [(ngModel)]="appointment.Subject" (change)="txtValueChange($event, 'appointment', 'Subject', appointment)"  placeholder="Subject" />
+                        <label  class="form-label form-small-label" for="Subject{{i}}">Subject</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div  class="input-wrapper text-area-wrapper">
+                        <textarea class="input w-input w-small-input" id="Description{{i}}" (change)="txtValueChange($event, 'appointment', 'Description', appointment)" [(ngModel)]="appointment.Description" placeholder="Description"></textarea>
+                        <label  class="form-label form-small-label" for="Description{{i}}">Description</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mar-t-15">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select  class="input w-input w-small-input" id="Category{{i}}" [(ngModel)]="appointment.Category" (change)="txtValueChange($event, 'appointment', 'Category', appointment)" placeholder="Category">
+                          <option value="Customer">Customer</option>
+                          <option value="Agency">Agency</option>
+                          <option value="Ticket">Ticket</option>
+                          <option value="To Do">To Do</option>
+                          <option value="Bug">Bug</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="Category{{i}}">Category</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="TimeStart{{i}}" [(ngModel)]="appointment.Time.Start" (blur)="txtValueChange($event, 'time', 'Start', appointment)" maxlength="20" max="9999-12-31T23:59" placeholder="Start" type="datetime-local">
+                        <label  class="form-label form-small-label" for="TimeStart{{i}}">Start</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="TimeEnd{{i}}" [(ngModel)]="appointment.Time.End" (blur)="txtValueChange($event, 'time', 'End', appointment)" maxlength="20" max="9999-12-31T23:59" placeholder="End" type="datetime-local">
+                        <label  class="form-label form-small-label" for="TimeEnd{{i}}">End</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-xs-6 desktop-pad-r-5">
+                      <div class="cbk-base-ctn">
+                        <input type="checkbox" [(ngModel)]="appointment.Time.WholeDay" (change)="txtValueChange($event, 'time', 'WholeDay', appointment)" class="regular-checkbox" /><span>Whole Day</span>
+                      </div>
+                    </div>
+                    <div class="col-xs-6 desktop-pad-l-5">
+                      <div class="cbk-base-ctn">
+                        <input type="checkbox" [(ngModel)]="appointment.Canceled" (change)="txtValueChange($event, 'appointment', 'Canceled', appointment)" class="regular-checkbox" /><span>Canceled</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="tab-pane" id="tab_default_2{{i}}">
+                  <!--Participants-->
+                  <div class="base-comment-ctn" *ngIf="appointment.Participants">
+                    <div class="empty-state" *ngIf="appointment.Participants.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let participant of appointment.Participants; let pIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#participant' + pIndex + '-appointment' + i">Participant #{{(pIndex + 1)}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="participant{{pIndex}}-appointment{{i}}">
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <select  class="input w-input w-small-input" id="ParticipantSoid{{pIndex}}" [(ngModel)]="participant.ParticipantSoid" placeholder="Assignee" (change)="txtValueChange($event, 'participant', 'ParticipantSoid', participant, appointment)">
+                                <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+                              </select>
+                              <label  class="form-label form-small-label" for="ParticipantSoid{{pIndex}}">Participant</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="ParticipantType{{pIndex}}" [(ngModel)]="participant.ParticipantType" (change)="txtValueChange($event, 'participant', 'ParticipantType', participant, appointment)" maxlength="256" placeholder="Participant Type" type="text">
+                              <label  class="form-label form-small-label" for="ParticipantType{{pIndex}}">Participant Type</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <select  class="input w-input w-small-input" id="Response{{pIndex}}" [(ngModel)]="participant.Response" placeholder="Response">
+                                <option value="0">Unknown</option>
+                                <option value="1">Undecided</option>
+                                <option value="2">Rejected</option>
+                                <option value="3">Accepted</option>
+                              </select>
+                              <label  class="form-label form-small-label" for="Response{{pIndex}}">Response</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <span class="lbl-person lbl-participant lbl-desk-padding"><b>Created On:</b> {{participant.CreatedOn | date:'fullDate'}}</span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <span class="lbl-person lbl-participant"><b>Viewed On:</b> {{participant.ViewedOn | date:'fullDate'}}</span>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <span class="lbl-person lbl-participant"><b>Replied On:</b> {{participant.RepliedOn | date:'fullDate'}}</span>
+                          </div>
+                        </div>
+                        <div class="row mar-t-15">
+                          <div class="col-xs-12">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Comment{{pIndex}}" [(ngModel)]="participant.Comment" (change)="txtValueChange($event, 'participant', 'Comment', participant, appointment)" maxlength="256" placeholder="Comment" type="text">
+                              <label  class="form-label form-small-label" for="Comment{{pIndex}}">Comment</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-6 desktop-pad-r-5">
+                            <div class="cbk-base-ctn">
+                              <input type="checkbox" [(ngModel)]="participant.Present" (change)="txtValueChange($event, 'participant', 'Present', participant, appointment)" class="regular-checkbox" /><span>Present</span>
+                            </div>
+                          </div>
+                          <div class="col-xs-6 desktop-pad-l-5">
+                            <button class="btn btn-base btn-default pull-right" (click)="btnDeleteClick(participant, 'participant', i, appointment)">Delete</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="">
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                        <button class="btn-base btn-primary pull-right" (click)="btnAddParticipantClick($event, appointment)">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab_default_3{{i}}">
+                  <!--Notes-->
+                  <div class="base-comment-ctn">
+                    <div *ngIf="appointment.Comments">
+                      <div class="empty-state" *ngIf="appointment.Comments.length == 0">
+                        <img src="../../../assets/images/empty-list.png">
+                      </div>
+                      <div class="base-comment-item" *ngFor="let comment of appointment.Comments" [ngClass]="{'is-editing': comment.isEditing}">
+                        <div class="base-comment-user-avatar">{{(comment.AuthorName? comment.AuthorName[0] : (comment.CreatedBy? comment.CreatedBy[0] : ''))}}</div>
+                        <div class="base-comment-content">
+                          <span *ngIf="!comment.isEditing">{{comment.Content}}</span>
+                          <textarea spellcheck="false" *ngIf="comment.isEditing" type="text" [(ngModel)]="comment.Content"></textarea>
+                          <div *ngIf="comment.isEditing" class="full mar-t-5">
+                            <button class="btn btn-default pull-right btn-small-base mar-l-10" (click)="comment.isEditing=false">Cancel</button>
+                            <button class="btn btn-primary pull-right btn-small-base" (click)="btnUpdateCommentClick(appointment, comment, $event)">Update</button>
+                          </div>
+                          <span class="lbl-created">{{comment.CreatedOn | date: 'M/d/yyyy, h:mm a'}}</span>
+                        </div>
+                        <div class="base-comment-operators"><i class="material-icons" (click)="comment.isEditing = true;">edit</i><i class="material-icons" (click)="btnDeleteClick(comment, 'comment', i, appointment)">delete</i></div>
+                      </div>
+                    </div>
+                    <div class="base-comment-item">
+                      <div class="base-comment-user-avatar">{{((userInfo && userInfo.userInfo && userInfo.userInfo.UserName)? userInfo.userInfo.UserName[0] : '')}}</div>
+                      <div class="base-comment-content comment-input">
+                        <textarea class="txt-add-comment" (keyup)="txtNoteKeyUp($event, appointment)"></textarea>
+                      </div>
+                      <div class="base-comment-content comment-input pull-right">
+                        <button class="btn-base btn-primary pull-right" (click)="btnAddNoteClick($event, appointment)">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="custom-ctn mar-t-10 mar-b-10">
+            <button class="btn-base btn" (click)="btnNotifyUserClick(appointment)">Notify</button>
+            <button class="btn-base btn mar-l-5" (click)="btnResetParticipantsClick($event, appointment, i)">Reset Participants</button>
+            <button class="btn-base btn btn-default mar-l-5" (click)="btnDeleteClick(appointment, 'appointment', i)">Remove</button>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || appointments.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddAppointmentClick($event)">Add an appointment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-notify-user" tabindex="-1" role="dialog" aria-hidden="true" id="modalTaskNotifyUser">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Notify User</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="col-xs-12 mar-t-15">
+          <div  class="input-wrapper input-small-wrapper">
+            <select  class="input w-input w-small-input" id="ddlUser_{{i}}" [(ngModel)]="notifyUser" placeholder="Users">
+              <option value="" selected>All</option>
+              <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+            </select>
+            <label  class="form-label form-small-label" for="ddlUser_{{i}}">User</label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnProcessNotifyUserClick($event)">Notify</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddAppointment">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Appointment</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="NewSubject{{i}}" [(ngModel)]="newAppointment.Subject" placeholder="Subject" />
+              <label  class="form-label form-small-label" for="NewSubject{{i}}">Subject</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <select  class="input w-input w-small-input require-field" id="NewCategory" [(ngModel)]="newAppointment.Category" placeholder="Category">
+                <option value="Customer">Customer</option>
+                <option value="Agency">Agency</option>
+                <option value="Ticket">Ticket</option>
+                <option value="To Do">To Do</option>
+                <option value="Bug">Bug</option>
+              </select>
+              <label  class="form-label form-small-label" for="NewCategory">Category</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newAppointmentTimeStart{{i}}" [(ngModel)]="newAppointment.Start" maxlength="20"  max="9999-12-31T23:59" placeholder="Start" type="datetime-local">
+              <label  class="form-label form-small-label" for="newAppointmentTimeStart{{i}}">Start</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper appointment-end-ctn">
+              <input  class="input w-input w-small-input" id="newAppointmentTimeEnd{{i}}" [(ngModel)]="newAppointment.End" (keyup)="txtValidationKeyUp($event)" maxlength="20" max="9999-12-31T23:59" placeholder="End" type="datetime-local">
+              <label  class="form-label form-small-label" for="newAppointmentTimeEnd{{i}}">End</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="cbk-base-ctn">
+              <input type="checkbox" [(ngModel)]="newAppointment.WholeDay" (change)="cbkWholeDayChange()" class="regular-checkbox" /><span>Whole Day</span>
+            </div>
+          </div>
+        </div>
+        <div class="row mar-t-10">
+          <div class="col-xs-12">
+            <div class="participant-ctn custom-scroll">
+              <div class="participant-item" *ngFor="let participant of newAppointment.Participants; let i = index;">
+                <div class="participant-item-column">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <select  class="input w-input w-small-input" id="newAppointmentSoid{{i}}" [(ngModel)]="participant.ParticipantSoid" placeholder="Participant">
+                      <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+                    </select>
+                    <label  class="form-label form-small-label" for="newAppointmentSoid{{i}}">Participant</label>
+                  </div>
+                </div>
+                <div class="participant-item-column"><i class="material-icons pull-right" (click)="newAppointment.Participants.splice(i, 1);">remove_circle_outline</i></div>
+              </div>
+              <div class="participant-item">
+                <i class="material-icons pull-right" style="margin-top: 0;" (click)="newAppointment.Participants.push({});">add_circle</i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveAppointmentClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

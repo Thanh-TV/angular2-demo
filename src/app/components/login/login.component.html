@@ -1,0 +1,31 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<div class="container base-container">
+    <div class="login-card">
+      <div class="row" align="center">
+          <h2 class="pb-30">Login</h2>
+      </div>
+      <div class="row">
+        <div *ngIf="errorMessage" class="alert alert-block alert-danger">
+          {{errorMessage}}
+        </div>
+      </div>
+      <div class="row">
+        <div  class="input-wrapper">
+          <label  class="form-label" for="email">Email address</label>
+          <input  class="input w-input" id="email" maxlength="256" (keyup)="txtLoginKeyUp()" placeholder="Email Address" [(ngModel)]="email" type="email">
+        </div>
+      </div>
+      <div class="row">
+        <div  class="input-wrapper">
+          <label  class="form-label" for="email">Password</label>
+          <input  class="input w-input" id="password" maxlength="256" (keyup)="txtLoginKeyUp()" placeholder="Password" [(ngModel)]="password" type="password">
+        </div>
+      </div>
+      <div class="row">
+        <button (click)="btnSubmitClick($event)" class="btn btn-primary btn-default full">Sign in</button>
+      </div>
+      <div class="row pt-10" align="center">
+        <span class="pointer" (click)="btnForgotPasswordClick()">Forgot your Password?</span>
+      </div>
+    </div>
+</div>

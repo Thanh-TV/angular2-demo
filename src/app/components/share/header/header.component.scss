@@ -1,0 +1,120 @@
+.navbar-default,
+.container {
+  background-color: white !important;
+}
+
+.navbar-default .navbar-header {
+  width: 100%;
+  max-width: 800px;
+  padding: 7px 0;
+  position: relative;
+  text-align: center;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+.navbar-default img.logo {
+  width: 160px;
+  margin-left: auto;
+  margin-right: auto;
+  transform: translateX(-15px);
+}
+.dropdown-ctn {
+  position: absolute;
+  right: 0;
+  top: 12px;
+}
+a.btn-user-profile {
+  display: table;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 32px;
+  text-align: center;
+  color: white;
+  font-weight: 600;
+  background-color: #0F305B;
+  text-decoration: none;
+  position: relative;
+  text-transform: uppercase;
+}
+a.btn-user-profile i {
+  position: absolute;
+  color: #333;
+  top: 0;
+  margin-top: 7px;
+  left: 0;
+  margin-left: 31px;
+  font-size: 20px;
+}
+.home-right-menu {
+  width: 120px;
+  position: absolute;
+  top: 17px;
+  right: 0;
+  font-family: "Avenir LT W01_65 Medium1475532", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+}
+.home-right-menu span {
+  cursor: pointer;
+  color: #333333;
+}
+.home-right-menu span:last-of-type {
+  color: #25C9D0 !important;
+  margin-left: 10px;
+}
+.modal-header, modal-message, .modal-footer {
+  border: none !important;
+}
+.modal-message {
+  padding: 0 20px;
+}
+.modal-footer button {
+  padding: 6px 20px !important;
+}
+.modal-dialog {
+  margin: 100px auto;
+}
+.btn-main-menu {
+  float: left;
+  margin-top: 5px;
+  width: 35px;
+  height: 35px;
+  position: relative;
+  background: white;
+  border: solid 1px #dbdbdb;
+  border-radius: 4px;
+  outline: none !important;
+}
+.btn-main-menu i {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  opacity: 0.8;
+}
+.header-right-menu {
+  border: none;
+  box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.2);
+  margin-top: 7px;
+}
+.header-right-menu li a {
+  padding: 5px 10px;
+}
+#keepLogoutModal {
+  z-index: 9999;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-header {
+    width: calc(100% - 15px);
+  }
+  .navbar-default img.logo {
+    width: 140px;
+    margin-top: 2px;
+    transform: translateX(-15px);
+  }
+  .navbar-default img.logo.home-page-logo {
+    margin-left: 10px;
+    float: left;
+  }
+}

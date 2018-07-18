@@ -1,0 +1,41 @@
+.profile-card {
+   max-width: 800px;
+   padding: 10px 40px 30px;
+   margin-bottom: 20px;
+   font-weight: 500;
+}
+.btn-profile-base {
+  padding: 5px 20px;
+}
+.profile-person-info {
+  background: rgba(0, 0, 0, 0.03);
+  padding: 15px 15px 0px;
+}
+.lbl-person {
+  display: table;
+  padding: 10px 0;
+}
+.lbl-person b {
+  display: table;
+  float: left;
+}
+.lbl-person-document b,
+.lbl-person-ticket b {
+  width: 90px;
+}
+.lbl-person-accident b {
+  width: 115px;
+}
+.lbl-person-violation b {
+  width: 110px;
+}
+
+@media (max-width: 400px) {
+  .profile-card {
+    padding: 10px 25px 30px;
+  }
+  .panel, .sub-panel {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

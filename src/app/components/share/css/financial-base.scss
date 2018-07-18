@@ -1,0 +1,79 @@
+.financial-register-add-ctn {
+  display: block;
+  width: 100%;
+}
+table th {
+  padding-left: 5px;
+  padding-right: 5px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+table td {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+span i,
+table td i {
+  cursor: pointer;
+}
+table td i {
+  margin-top: 2px;
+  float: right;
+}
+table td input,
+table td select {
+  width: 100%;
+  padding-left: 7px;
+  padding-right: 7px;
+  height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  text-align: center;
+  min-width: 50px;
+}
+table.table2 td input,
+table td select {
+  min-width: 100px;
+}
+table.table1 td {
+  width: 9.09%;
+}
+table.table1 td input {
+  text-align: center;
+}
+table.table2 tr td:nth-of-type(1),
+table.table2 tr td:nth-of-type(2) {
+  width: 15%;
+}
+table.table2.four-columns tr td:nth-of-type(1) {
+  width: 35%;
+}
+table.table2.four-columns tr td:nth-of-type(2) {
+  width: 15%;
+}
+table.table2 tr td:nth-of-type(3),
+table.table2 tr td:nth-of-type(4) {
+  width: 25%;
+}
+table.table2.four-columns tr td:nth-of-type(3) {
+  width: 35%;
+}
+table.table2.four-columns tr td:nth-of-type(4) {
+  width: 15%;
+}
+table.table2 tr td:nth-of-type(5) {
+  width: 20%;
+}
+.check-credit-ctn span {
+  display: table;
+  width: 100%;
+  position: relative;
+  padding: 10px;
+  padding-left: 40px;
+  background: #ddd;
+}
+.check-credit-ctn span i {
+  position: absolute;
+  left: 10px;
+  top: 8px;
+}

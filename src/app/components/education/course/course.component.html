@@ -1,0 +1,734 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Courses</h2>
+    </div>
+    <div class="asset-ctn">
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && courses.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddCourseClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let course of courses; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#userCourse' + i">{{(course.Name? course.Name : (course.Subject? course.Subject : ''))}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="sub-panel collapse in" id="userCourse{{i}}">
+          <div class="tabbable-panel custom-scroll">
+            <div class="tabbable-line">
+              <ul class="nav nav-tabs ">
+                <li class="active">
+                  <a href="#tab_default_1{{i}}" data-toggle="tab">
+                  Document </a>
+                </li>
+                <li>
+                  <a href="#tab_default_2{{i}}" data-toggle="tab">
+                  Books </a>
+                </li>
+                <li>
+                  <a href="#tab_default_3{{i}}" data-toggle="tab">
+                  Schedule </a>
+                </li>
+                <li>
+                  <a href="#tab_default_4{{i}}" data-toggle="tab">
+                  Slides </a>
+                </li>
+                <li>
+                  <a href="#tab_default_5{{i}}" data-toggle="tab">
+                  Tests </a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_default_1{{i}}">
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="Name{{i}}" [(ngModel)]="course.Name" (change)="txtValueChange($event, 'course', 'Name', course)" maxlength="256"  placeholder="Name" />
+                        <label  class="form-label form-small-label" for="Name{{i}}">Name</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="Number{{i}}" [(ngModel)]="course.Number" (change)="txtValueChange($event, 'course', 'Number', course)" maxlength="20" numberOnlyFormatter placeholder="Number" />
+                        <label  class="form-label form-small-label" for="Number{{i}}">Number</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select  class="input w-input w-small-input require-field" id="InstructorSoid{{i}}" (change)="txtValueChange($event, 'course', 'InstructorSoid', course)" [(ngModel)]="course.InstructorSoid" placeholder="Instructor">
+                           <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="InstructorSoid{{i}}">Instructor</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select  class="input w-input w-small-input require-field" id="PresenterSoid{{i}}" (change)="txtValueChange($event, 'course', 'PresenterSoid', course)" [(ngModel)]="course.PresenterSoid" placeholder="Presenter">
+                           <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+                        </select>
+                        <label  class="form-label form-small-label" for="PresenterSoid{{i}}">Presenter</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="Subject{{i}}" [(ngModel)]="course.Subject" (change)="txtValueChange($event, 'course', 'Subject', course)" maxlength="256" placeholder="Subject" type="text"/>
+                        <label  class="form-label form-small-label" for="Subject{{i}}">Subject</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 mar-b-15">
+                      <div  class="input-wrapper text-area-wrapper">
+                        <textarea class="input w-input w-small-input" id="Description{{i}}" [(ngModel)]="course.Description" (change)="txtValueChange($event, 'course', 'Description', course)" maxlength="256" placeholder="Description"></textarea>
+                        <label  class="form-label form-small-label" for="Description{{i}}">Description</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="Hours{{i}}" [(ngModel)]="course.Hours" (change)="txtValueChange($event, 'course', 'Hours', course)" maxlength="10" numberOnlyFormatter placeholder="Hours" />
+                        <label  class="form-label form-small-label" for="Hours{{i}}">Hours</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="Days{{i}}" [(ngModel)]="course.Days" (change)="txtValueChange($event, 'course', 'Days', course)" maxlength="10" numberOnlyFormatter placeholder="Days" />
+                        <label  class="form-label form-small-label" for="Days{{i}}">Days</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="Languages{{i}}" (change)="txtValueChange($event, 'course', 'Languages', course)" [(ngModel)]="course.Languages" maxlength="256" placeholder="Languages" />
+                        <label  class="form-label form-small-label" for="Languages{{i}}">Languages</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="Channel{{i}}" (change)="txtValueChange($event, 'course', 'Channel', course)" [(ngModel)]="course.Channel" maxlength="256" placeholder="Channel" />
+                        <label  class="form-label form-small-label" for="Channel{{i}}">Channel</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="SizeLimit{{i}}" [(ngModel)]="course.SizeLimit" (change)="txtValueChange($event, 'course', 'SizeLimit', course)" maxlength="10" numberOnlyFormatter placeholder="Size Limit" />
+                        <label  class="form-label form-small-label" for="SizeLimit{{i}}">Size Limit</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="PriceStudent{{i}}" [(ngModel)]="course.PriceStudent" (change)="txtValueChange($event, 'course', 'PriceStudent', course)" maxlength="10" numberOnlyFormatter placeholder="Price Student" />
+                        <label  class="form-label form-small-label" for="PriceStudent{{i}}">Price Student</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="PriceDiscounted{{i}}" [(ngModel)]="course.PriceDiscounted" (change)="txtValueChange($event, 'course', 'PriceDiscounted', course)" maxlength="10" numberOnlyFormatter placeholder="PriceDiscounted" />
+                        <label  class="form-label form-small-label" for="PriceDiscounted{{i}}">Price Discounted</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="CeuCount{{i}}" [(ngModel)]="course.CeuCount" (change)="txtValueChange($event, 'course', 'CeuCount', course)" maxlength="10" numberOnlyFormatter placeholder="CeuCount" />
+                        <label  class="form-label form-small-label" for="CeuCount{{i}}">Ceu Count</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="MinimumSize{{i}}" [(ngModel)]="course.MinimumSize" (change)="txtValueChange($event, 'course', 'MinimumSize', course)" maxlength="10" numberOnlyFormatter placeholder="Minimum Size" />
+                        <label  class="form-label form-small-label" for="MinimumSize{{i}}">Minimum Size</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="MaximumSize{{i}}" [(ngModel)]="course.MaximumSize" (change)="txtValueChange($event, 'course', 'MaximumSize', course)" maxlength="10" numberOnlyFormatter placeholder="MaximumSize" />
+                        <label  class="form-label form-small-label" for="MaximumSize{{i}}">Maximum Size</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="Rating{{i}}" [(ngModel)]="course.Rating" (change)="txtValueChange($event, 'course', 'Rating', course)" maxlength="10" numberOnlyFormatter placeholder="Rating" />
+                        <label  class="form-label form-small-label" for="Rating{{i}}">Rating</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="TotalSeconds{{i}}" [(ngModel)]="course.TotalSeconds" (change)="txtValueChange($event, 'course', 'TotalSeconds', course)" maxlength="10" numberOnlyFormatter placeholder="TotalSeconds" />
+                        <label  class="form-label form-small-label" for="TotalSeconds{{i}}">Total Seconds</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="LinkName{{i}}" (change)="txtValueChange($event, 'course', 'LinkName', course)" [(ngModel)]="course.LinkName" maxlength="256" placeholder="LinkName" />
+                        <label  class="form-label form-small-label" for="LinkName{{i}}">Link Name</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="Format{{i}}" (change)="txtValueChange($event, 'course', 'Format', course)" [(ngModel)]="course.Format" maxlength="256" placeholder="Format" />
+                        <label  class="form-label form-small-label" for="Format{{i}}">Format</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12 mar-b-15">
+                      <div  class="input-wrapper text-area-wrapper">
+                        <textarea class="input w-input w-small-input" id="Notes{{i}}" [(ngModel)]="course.Notes" (change)="txtValueChange($event, 'course', 'Notes', course)" placeholder="Notes"></textarea>
+                        <label  class="form-label form-small-label" for="Notes{{i}}">Notes</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input require-field" id="ChangedOn{{i}}" [(ngModel)]="course.ChangedOn" maxlength="8" max="9999-12-31" (blur)="txtValueChange($event, 'course', 'ChangedOn', course)" placeholder="Changed On" type="date">
+                        <label  class="form-label form-small-label" for="ChangedOn{{i}}">Changed On</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="ChangedBy{{i}}" (change)="txtValueChange($event, 'course', 'ChangedBy', course)" [(ngModel)]="course.ChangedBy" maxlength="256" placeholder="Changed By" />
+                        <label  class="form-label form-small-label" for="ChangedBy{{i}}">Changed By</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input require-field" id="ReviewedOn{{i}}" [(ngModel)]="course.ReviewedOn" maxlength="8" max="9999-12-31" (blur)="txtValueChange($event, 'course', 'ReviewedOn', course)" placeholder="Reviewed On" type="date">
+                        <label  class="form-label form-small-label" for="ReviewedOn{{i}}">Reviewed On</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="ReviewedBy{{i}}" (change)="txtValueChange($event, 'course', 'ReviewedBy', course)" [(ngModel)]="course.ReviewedBy" maxlength="256" placeholder="Reviewed By" />
+                        <label  class="form-label form-small-label" for="ReviewedBy{{i}}">Reviewed By</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div class="cbk-base-ctn">
+                        <input type="checkbox" [(ngModel)]="course.Active" (change)="txtValueChange($event, 'course', 'Active', course)" class="regular-checkbox" /><span>Active</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div class="cbk-base-ctn">
+                        <input type="checkbox" [(ngModel)]="course.AvailableOnline" (change)="txtValueChange($event, 'course', 'AvailableOnline', course)" class="regular-checkbox" /><span>Available Online</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div class="cbk-base-ctn">
+                        <input type="checkbox" [(ngModel)]="course.External" (change)="txtValueChange($event, 'course', 'External', course)" class="regular-checkbox" /><span>External</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div class="cbk-base-ctn">
+                        <input type="checkbox" [(ngModel)]="course.IsFreeClass" (change)="txtValueChange($event, 'course', 'IsFreeClass', course)" class="regular-checkbox" /><span>Is Free Class</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_default_2{{i}}">
+                  <!--Books-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="course.Books.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let book of course.Books; let bIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#book' + bIndex + '-course' + i">{{(book.BookName? book.BookName : '')}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="book{{bIndex}}-course{{i}}">
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="BookName{{bIndex}}" [(ngModel)]="book.BookName" (change)="txtValueChange($event, 'book', 'BookName', book, course)" maxlength="256" placeholder="Book Name" type="text">
+                              <label  class="form-label form-small-label" for="BookName{{bIndex}}">Book Name</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="BookCost{{bIndex}}" [(ngModel)]="book.BookCost" (change)="txtValueChange($event, 'book', 'BookCost', book, course)" maxlength="10" numberOnlyFormatter placeholder="Book Cost" type="text">
+                              <label  class="form-label form-small-label" for="BookCost{{bIndex}}">Book Cost</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Reference{{bIndex}}" [(ngModel)]="book.Reference" (change)="txtValueChange($event, 'book', 'Reference', book, course)" numberOnlyFormatter maxlength="256" placeholder="Reference" type="text">
+                              <label  class="form-label form-small-label" for="Reference{{bIndex}}">Reference</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Reference{{bIndex}}" [(ngModel)]="book.Reference" (change)="txtValueChange($event, 'book', 'Reference', book, course)" maxlength="256" placeholder="Reference" type="text">
+                              <label  class="form-label form-small-label" for="Reference{{bIndex}}">Reference</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <select  class="input w-input w-small-input require-field" id="StudentSoid{{bIndex}}" (change)="txtValueChange($event, 'book', 'StudentSoid', book, course)" [(ngModel)]="book.StudentSoid" placeholder="Student">
+                                <option *ngFor="let student of students;" value="{{student.Soid}}">{{(student.ContactName? student.ContactName : 'Undefined Name')}}</option>
+                              </select>
+                              <label  class="form-label form-small-label" for="StudentSoid{{bIndex}}">Student</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div class="cbk-base-ctn mar-t-5">
+                               <input type="checkbox" [(ngModel)]="book.Paid" (change)="txtValueChange($event, 'book', 'Paid', book, course)" class="regular-checkbox" /><span>Paid</span>
+                             </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteClick(book, 'book', i, course)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                          <button class="btn-base btn-primary pull-right" (click)="btnAddClick($event, course, 'book')">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_default_3{{i}}">
+                  <!--Schedule-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="course.Schedule.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let schedule of course.Schedule; let sIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#schedule' + sIndex + '-course' + i">{{schedule.OfferedOn | date: 'M/d/yyyy'}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="schedule{{sIndex}}-course{{i}}">
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <select  class="input w-input w-small-input require-field" id="scheduleInstructorSoid{{sIndex}}" (change)="txtValueChange($event, 'schedule', 'InstructorSoid', schedule, course)" [(ngModel)]="schedule.InstructorSoid" placeholder="Instructor">
+                                 <option *ngFor="let user of users;" value="{{user.Soid}}">{{((user.NameFirst || user.NameLast)? ((user.NameFirst? user.NameFirst: '') + ' ' + (user.NameLast? user.NameLast: '')) : 'Empty Name')}}</option>
+                              </select>
+                              <label  class="form-label form-small-label" for="scheduleInstructorSoid{{sIndex}}">Instructor</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input require-field" id="OfferedOn{{sIndex}}" [(ngModel)]="schedule.OfferedOn" maxlength="8" max="9999-12-31" (blur)="txtValueChange($event, 'schedule', 'OfferedOn', schedule, course)" placeholder="Offered On" type="date">
+                              <label  class="form-label form-small-label" for="OfferedOn{{sIndex}}">Offered On</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="SizeLimit{{sIndex}}" [(ngModel)]="schedule.SizeLimit" (change)="txtValueChange($event, 'schedule', 'SizeLimit', schedule, course)" numberOnlyFormatter maxlength="10" placeholder="Size Limit" type="text">
+                              <label  class="form-label form-small-label" for="SizeLimit{{sIndex}}">Size Limit</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="OfferedOnMin{{sIndex}}" [(ngModel)]="schedule.OfferedOnMin" (change)="txtValueChange($event, 'schedule', 'OfferedOnMin', schedule, course)" numberOnlyFormatter maxlength="10" placeholder="Offered On Min" type="text">
+                              <label  class="form-label form-small-label" for="OfferedOnMin{{sIndex}}">Offered On Min</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="SessionId{{sIndex}}" [(ngModel)]="schedule.SessionId" (change)="txtValueChange($event, 'schedule', 'SessionId', schedule, course)" maxlength="256" placeholder="Session Id" type="text">
+                              <label  class="form-label form-small-label" for="SessionId{{sIndex}}">Session Id</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Password{{sIndex}}" [(ngModel)]="schedule.Password" (change)="txtValueChange($event, 'schedule', 'Password', schedule, course)" maxlength="20" placeholder="Password" type="text">
+                              <label  class="form-label form-small-label" for="Password{{sIndex}}">Password</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Language{{sIndex}}" [(ngModel)]="schedule.Language" (change)="txtValueChange($event, 'schedule', 'Language', schedule, course)" maxlength="256" placeholder="Language" type="text">
+                              <label  class="form-label form-small-label" for="Language{{sIndex}}">Language</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Room{{sIndex}}" [(ngModel)]="schedule.Room" (change)="txtValueChange($event, 'schedule', 'Room', schedule, course)" maxlength="256" placeholder="Room" type="text">
+                              <label  class="form-label form-small-label" for="Room{{sIndex}}">Room</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mar-b-15">
+                          <div class="col-xs-12">
+                            <button class="accordion sub-accordion sub-accordion2" data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#scheduleStudents' + sIndex + '-course' + i">Students<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                            <div class="sub-panel collapse" id="scheduleStudents{{sIndex}}-course{{i}}">
+                              <div class="empty-state mar-b-5" *ngIf="schedule.Students.length == 0">
+                                <img src="../../../assets/images/empty-list.png">
+                              </div>
+                              <div *ngFor="let scheduleStudent of schedule.Students; let shIndex = index;">
+                                <button class="accordion sub-accordion sub-accordion3" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#scheduleStudents' + shIndex + '-schedule' + sIndex">Student #{{(shIndex + 1)}}<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                                <div class="sub-panel price-list-item-panel collapse in" id="scheduleStudents{{shIndex}}-schedule{{sIndex}}">
+                                  <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <input  class="input w-input w-small-input" id="BookId{{shIndex}}" [(ngModel)]="scheduleStudent.BookId" (change)="txtValueChange($event, 'student', 'BookId', scheduleStudent, course, schedule)" maxlength="10" numberOnlyFormatter placeholder="Book Id" type="text">
+                                        <label  class="form-label form-small-label" for="BookId{{shIndex}}">Book Id</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <input  class="input w-input w-small-input" id="PassedOn{{shIndex}}" [(ngModel)]="scheduleStudent.PassedOn" (change)="txtValueChange($event, 'student', 'PassedOn', scheduleStudent, course, schedule)" maxlength="8" max="9999-12-31" placeholder="Passed On" type="date">
+                                        <label  class="form-label form-small-label" for="PassedOn{{shIndex}}">Passed On</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <input  class="input w-input w-small-input" id="DiplomaNumber{{shIndex}}" [(ngModel)]="scheduleStudent.DiplomaNumber" (change)="txtValueChange($event, 'student', 'DiplomaNumber', scheduleStudent, course, schedule)" maxlength="256" placeholder="Diploma Number" type="text">
+                                        <label  class="form-label form-small-label" for="DiplomaNumber{{shIndex}}">Diploma Number</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <input  class="input w-input w-small-input" id="Payment{{shIndex}}" [(ngModel)]="scheduleStudent.Payment" (change)="txtValueChange($event, 'student', 'Payment', scheduleStudent, course, schedule)" maxlength="256" placeholder="Payment" type="text">
+                                        <label  class="form-label form-small-label" for="Payment{{shIndex}}">Payment</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <input  class="input w-input w-small-input" id="PaymentMethod{{shIndex}}" [(ngModel)]="scheduleStudent.PaymentMethod" (change)="txtValueChange($event, 'student', 'PaymentMethod', scheduleStudent, course, schedule)" maxlength="256" placeholder="Payment Method" type="text">
+                                        <label  class="form-label form-small-label" for="PaymentMethod{{shIndex}}">Payment Method</label>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <input  class="input w-input w-small-input" id="Balance{{shIndex}}" [(ngModel)]="scheduleStudent.Balance" (change)="txtValueChange($event, 'student', 'Balance', scheduleStudent, course, schedule)" maxlength="10" numberOnlyFormatter placeholder="Balance" type="text">
+                                        <label  class="form-label form-small-label" for="Balance{{shIndex}}">Balance</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                     <button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteSubObjectClick(scheduleStudent, schedule, course, i, 'student')">Remove</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <div class="mar-t-10 pull-right">
+                                    <button class="btn-base btn-primary pull-right" (click)="btnAddScheduleStudentClick($event, course, schedule)">Add</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div class="cbk-base-ctn">
+                               <input type="checkbox" [(ngModel)]="schedule.Active" (change)="txtValueChange($event, 'schedule', 'Active', schedule, course)" class="regular-checkbox" /><span>Active</span>
+                             </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteClick(schedule, 'schedule', i, course)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                          <button class="btn-base btn-primary pull-right" (click)="btnAddClick($event, course, 'schedule')">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab_default_4{{i}}">
+                  <!--Slides-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="course.Slides.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let slide of course.Slides; let slideIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#slide' + slideIndex + '-course' + i">{{(slide.Title? slide.Title : (slide.SlideNumber? slide.SlideNumber : ''))}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="slide{{slideIndex}}-course{{i}}">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Title{{slideIndex}}" [(ngModel)]="slide.Title" (change)="txtValueChange($event, 'slide', 'Title', slide, course)" maxlength="256" placeholder="Title" type="text">
+                              <label  class="form-label form-small-label" for="Title{{slideIndex}}">Title</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="SlideNumber{{slideIndex}}" [(ngModel)]="slide.SlideNumber" (change)="txtValueChange($event, 'slide', 'SlideNumber', slide, course)" maxlength="10" numberOnlyFormatter placeholder="SlideNumber" type="text">
+                              <label  class="form-label form-small-label" for="SlideNumber{{slideIndex}}">Slide Number</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Duration{{slideIndex}}" [(ngModel)]="slide.Duration" (change)="txtValueChange($event, 'slide', 'Duration', slide, course)" maxlength="10" numberOnlyFormatter placeholder="Duration" type="text">
+                              <label  class="form-label form-small-label" for="Duration{{slideIndex}}">Duration</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 mar-b-15">
+                            <div  class="input-wrapper text-area-wrapper">
+                              <textarea class="input w-input w-small-input" id="Content{{slideIndex}}" [(ngModel)]="course.Content" (change)="txtValueChange($event, 'slide', 'Content', slide, course)" placeholder="Content" maxlength="256"></textarea>
+                              <label  class="form-label form-small-label" for="Content{{slideIndex}}">Content</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Status{{slideIndex}}" [(ngModel)]="slide.Status" (change)="txtValueChange($event, 'slide', 'Status', slide, course)" numberOnlyFormatter maxlength="256" placeholder="Status" type="text">
+                              <label  class="form-label form-small-label" for="Status{{slideIndex}}">Status</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="StartTime{{slideIndex}}" [(ngModel)]="slide.StartTime" (blur)="txtValueChange($event, 'slide', 'StartTime', slide, course)" maxlength="8" numberOnlyFormartter placeholder="Start Time" type="text">
+                              <label  class="form-label form-small-label" for="StartTime{{slideIndex}}">Start Time</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Comments{{slideIndex}}" [(ngModel)]="slide.Comments" (blur)="txtValueChange($event, 'slide', 'Comments', slide, course)" maxlength="256" placeholder="Comments" type="text">
+                              <label  class="form-label form-small-label" for="Comments{{slideIndex}}">Comments</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Transcript{{slideIndex}}" [(ngModel)]="slide.Transcript" (blur)="txtValueChange($event, 'slide', 'Transcript', slide, course)" maxlength="256" placeholder="Transcript" type="text">
+                              <label  class="form-label form-small-label" for="Transcript{{slideIndex}}">Transcript</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div class="cbk-base-ctn">
+                               <input type="checkbox" [(ngModel)]="slide.Audio" (change)="txtValueChange($event, 'slide', 'Audio', slide, course)" class="regular-checkbox" /><span>Audio</span>
+                             </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div class="cbk-base-ctn">
+                               <input type="checkbox" [(ngModel)]="slide.AudioLocked" (change)="txtValueChange($event, 'slide', 'AudioLocked', slide, course)" class="regular-checkbox" /><span>Audio Locked</span>
+                             </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteClick(slide, 'slide', i, course)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                          <button class="btn-base btn-primary pull-right" (click)="btnAddClick($event, course, 'slide')">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane" id="tab_default_5{{i}}">
+                  <!--Tests-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="course.Tests.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let test of course.Tests; let tIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#test' + tIndex + '-course' + i">{{(test.TestName? test.TestName : '')}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="test{{tIndex}}-course{{i}}">
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="TestName{{tIndex}}" [(ngModel)]="test.TestName" (change)="txtValueChange($event, 'test', 'TestName', test, course)" maxlength="256" placeholder="Test Name" type="text">
+                              <label  class="form-label form-small-label" for="TestName{{tIndex}}">Test Name</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="PassScore{{tIndex}}" [(ngModel)]="test.PassScore" (change)="txtValueChange($event, 'test', 'PassScore', test, course)" maxlength="10" numberOnlyFormatter placeholder="Pass Score" type="text">
+                              <label  class="form-label form-small-label" for="PassScore{{tIndex}}">Pass Score</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12 mar-b-15">
+                            <div  class="input-wrapper text-area-wrapper">
+                              <textarea class="input w-input w-small-input" id="Description{{tIndex}}" [(ngModel)]="test.Description" (change)="txtValueChange($event, 'test', 'Description', test, course)" maxlength="256" placeholder="Description"></textarea>
+                              <label  class="form-label form-small-label" for="Description{{tIndex}}">Description</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <button class="accordion sub-accordion sub-accordion2" data-toggle="collapse" aria-expanded="false" [attr.data-target]="'#testQuestions' + tIndex + '-course' + i">Questions<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                            <div class="sub-panel collapse" id="testQuestions{{tIndex}}-course{{i}}">
+                              <div class="empty-state mar-b-5" *ngIf="test.Questions.length == 0">
+                                <img src="../../../assets/images/empty-list.png">
+                              </div>
+                              <div *ngFor="let question of test.Questions; let qIndex = index;">
+                                <button class="accordion sub-accordion sub-accordion3" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#testQuestions' + qIndex + '-test' + tIndex">{{(question.Body? question.Body : '')}}<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                                <div class="sub-panel price-list-item-panel collapse in" id="testQuestions{{qIndex}}-test{{tIndex}}">
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <input  class="input w-input w-small-input" id="Body{{qIndex}}" [(ngModel)]="question.Body" (change)="txtValueChange($event, 'question', 'Body', question, course, test)" maxlength="256" placeholder="Body" type="text">
+                                        <label  class="form-label form-small-label" for="Body{{qIndex}}">Body</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                      <div  class="input-wrapper input-small-wrapper">
+                                        <input  class="input w-input w-small-input" id="Explanation{{qIndex}}" [(ngModel)]="question.Explanation" (change)="txtValueChange($event, 'question', 'Explanation', question, course, test)" maxlength="256" placeholder="Explanation" type="text">
+                                        <label  class="form-label form-small-label" for="Explanation{{qIndex}}">Explanation</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                                      <div class="cbk-base-ctn">
+                                         <input type="checkbox" [(ngModel)]="question.Active" (change)="txtValueChange($event, 'question', 'Active', question, course, test)" class="regular-checkbox" /><span>Active</span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                                      <div class="cbk-base-ctn">
+                                         <input type="checkbox" [(ngModel)]="question.Correct" (change)="txtValueChange($event, 'question', 'Correct', question, course, test)" class="regular-checkbox" /><span>Correct</span>
+                                       </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                     <button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteTestQuestionClick(question, test, course, i)">Remove</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <div class="mar-t-10 pull-right">
+                                    <button class="btn-base btn-primary pull-right" (click)="btnAddTestQuestionClick($event, course, test)">Add</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mar-t-15">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div class="cbk-base-ctn">
+                               <input type="checkbox" [(ngModel)]="test.Active" (change)="txtValueChange($event, 'test', 'Active', test, course)" class="regular-checkbox" /><span>Active</span>
+                             </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteClick(test, 'test', i, course)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="mar-t-10 pull-right">
+                          <button class="btn-base btn-primary pull-right" (click)="btnAddClick($event, course, 'test')">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || courses.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddCourseClick($event)">Add an course</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddCourse">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Course</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newCourseName" [(ngModel)]="newCourse.CourseName" maxlength="256" placeholder="Course Name" type="text">
+              <label  class="form-label form-small-label" for="newCourseName">Course Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newCourseDBA" [(ngModel)]="newCourse.DBA" maxlength="256" placeholder="DBA" type="text">
+              <label  class="form-label form-small-label" for="newCourseDBA">DBA</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newCourseBusinessType" [(ngModel)]="newCourse.BusinessType" maxlength="256" placeholder="Business Type" type="text">
+              <label  class="form-label form-small-label" for="newCourseBusinessType">Business Type</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newCourseWebsite" [(ngModel)]="newCourse.Website" maxlength="256" placeholder="Website" type="text">
+              <label  class="form-label form-small-label" for="newCourseWebsite">Email Address</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveCourseClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

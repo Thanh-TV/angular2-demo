@@ -1,0 +1,46 @@
+.task-description-input {
+  display: block;
+  height: 200px;
+  overflow-y: auto;
+  position: relative;
+}
+.task-description-input + .form-label {
+  width: calc(100% - 30px);
+  background: white;
+  padding-top: 5px;
+  margin-top: -3px;
+  left: 13px;
+  opacity: 1 !important;
+}
+.custom-ctn {
+  padding-left: 0;
+  margin-top: 10px;
+}
+.tabbable-panel {
+  max-height: 570px;
+}
+.modal-dialog {
+  top: 0;
+  margin-top: 50vh;
+  transform: translateY(-50%) !important;
+}
+.modal-content-ctn {
+  padding: 20px 20px 5px 20px;
+}
+.modal-notify-user .modal-content-ctn {
+  padding: 0;
+  display: table;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .nav>li>a {
+      padding: 10px 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .nav>li>a {
+      padding: 8px 5px;
+  }
+}

@@ -1,0 +1,147 @@
+/*******************************
+* MODAL AS LEFT/RIGHT SIDEBAR
+* Add "left" or "right" in modal parent div, after class="modal".
+* Get free snippets on bootpen.com
+*******************************/
+.modal.left-menu-modal.left .modal-dialog,
+.modal.left-menu-modal.right .modal-dialog {
+  position: fixed;
+  margin: auto;
+  width: 320px;
+  height: 100%;
+  -webkit-transform: translate3d(0%, 0, 0);
+      -ms-transform: translate3d(0%, 0, 0);
+       -o-transform: translate3d(0%, 0, 0);
+          transform: translate3d(0%, 0, 0);
+}
+
+.modal.left-menu-modal.left .modal-content,
+.modal.left-menu-modal.right .modal-content {
+  height: 100%;
+  max-height: 100vh;
+  overflow-y: auto;
+  background: #f8f8f8;
+}
+
+.modal.left-menu-modal.left .modal-body,
+.modal.left-menu-modal.right .modal-body {
+  padding: 0;
+}
+
+/*Left*/
+.modal.left-menu-modal.left.fade .modal-dialog{
+  left: -320px;
+  -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+     -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+       -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+          transition: opacity 0.3s linear, left 0.3s ease-out;
+}
+
+.modal.left-menu-modal.left.fade.in .modal-dialog{
+  left: 0;
+}
+
+/*Right*/
+.modal.left-menu-modal.right.fade .modal-dialog {
+  right: -320px;
+  -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+     -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+       -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+          transition: opacity 0.3s linear, right 0.3s ease-out;
+}
+
+.modal.left-menu-modal.right.fade.in .modal-dialog {
+  right: 0;
+}
+
+/* ----- MODAL STYLE ----- */
+.left-menu-modal .modal-content {
+  border-radius: 0;
+  border: none;
+  padding-top: 60px;
+  width: 250px;
+}
+
+.left-menu-modal .modal-header {
+  border-bottom-color: #EEEEEE;
+  background-color: #FAFAFA;
+}
+.left-menu-modal .sidebar-nav {
+  margin-top: 10px;
+}
+.left-menu-modal .sidebar-nav li a {
+  padding-left: 60px;
+  color: #333333;
+  position: relative;
+  cursor: pointer;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: rgba(51, 51, 51, 0.8);
+}
+.left-menu-modal .sidebar-nav li a i {
+  position: absolute;
+  font-size: 20px;
+  left: 20px;
+  top: 10px;
+}
+.left-menu-modal .sidebar-nav.sub-sidebar-nav li a i {
+  left: 45px;
+}
+.left-menu-modal .sidebar-nav.sub-sidebar-nav li:hover a {
+  color: #5b9bd1;
+}
+.left-menu-modal .sidebar-nav.sub-sidebar-nav li:hover a i {
+  left: 42px;
+}
+.left-menu-modal .sidebar-nav li a i.up-down-icon {
+  left: calc(100% - 30px) !important;
+}
+.left-menu-modal .sidebar-nav li a i.key-down-icon {
+  display: none;
+}
+.left-menu-modal .sidebar-nav li a i.key-up-icon {
+  display: inherit;
+}
+.left-menu-modal .sidebar-nav li a[aria-expanded="true"] i.key-down-icon {
+  display: inherit;
+}
+.left-menu-modal .sidebar-nav li a[aria-expanded="true"] i.key-up-icon {
+  display: none;
+}
+.left-menu-modal .sidebar-nav li:hover a:not(.collapse-menu) i,
+.left-menu-modal .sidebar-nav li.active a:not(.collapse-menu) i {
+  left: 17px;
+}
+.left-menu-modal .sidebar-nav li:hover a:not(.collapse-menu),
+.left-menu-modal .sidebar-nav li.active a:not(.collapse-menu) {
+  color: #5b9bd1;
+  background-color: #f6f9fb;
+  border-left: 3px solid #5b9bd1;
+  padding-left: 57px;
+}
+.left-menu-modal .sidebar-nav.sub-sidebar-nav {
+  padding: 0;
+  margin: 0;
+  background: white;
+}
+.left-menu-modal .sidebar-nav.sub-sidebar-nav li a {
+  padding-left: 80px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  display: table;
+  width: 100%;
+}
+.left-menu-modal .sub-sidebar-nav li:hover {
+  color: #5b9bd1;
+  background-color: #f6f9fb;
+  border-left: 3px solid #5b9bd1;
+}
+.left-menu-modal .sub-sidebar-nav li:hover a {
+  padding-left: 77px !important;
+}
+.left-menu-modal h4.modal-title {
+  font-size: 15px;
+  font-weight: bold;
+}
+

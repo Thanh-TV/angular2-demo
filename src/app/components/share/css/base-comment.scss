@@ -1,0 +1,63 @@
+.base-comment-item {
+  display: table;
+  width: 100%;
+  padding: 10px;
+  position: relative;
+}
+.base-comment-item .base-comment-user-avatar {
+  float: left;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1);
+  line-height: 40px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+}
+.base-comment-item .base-comment-content {
+  float: left;
+  width: calc(100% - 50px);
+  margin-left: 10px;
+  padding-bottom: 7px;
+}
+.base-comment-item .base-comment-content:not(.comment-input) {
+  border-bottom: 1px dashed #e0e0e0;
+}
+.base-comment-item .base-comment-content span {
+  display: table;
+  width: 100%;
+  min-height: 15px;
+}
+.base-comment-item .base-comment-content span.lbl-created {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 5px;
+}
+.base-comment-item .base-comment-content textarea {
+  resize: none;
+  width: 100%;
+  height: 80px;
+  border-radius: 3px;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #eee;
+}
+.base-comment-item .base-comment-operators {
+  position: absolute;
+  right: 10px;
+  bottom: 15px;
+  display: none;
+}
+.base-comment-item:not(.is-editing):hover .base-comment-operators {
+  display: block;
+}
+.base-comment-item .base-comment-operators i {
+  font-size: 18px;
+  cursor: pointer;
+  color: #333333;
+  padding: 5px 3px;
+  margin-left: 3px;
+  opacity: 0.8;
+}

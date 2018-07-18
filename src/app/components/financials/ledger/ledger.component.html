@@ -1,0 +1,214 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Financial Ledgers</h2>
+    </div>
+    <div class="asset-ctn">
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && ledgers.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddLedgerClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let ledger of ledgers; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#financialLedger' + i">{{ledger.AccountName}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="panel collapse in" id="financialLedger{{i}}">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" id="AccountName{{i}}" [(ngModel)]="ledger.AccountName" (change)="txtValueChange($event, 'ledger', 'AccountName', ledger)"  placeholder="Account Name" />
+                <label  class="form-label form-small-label" for="AccountName{{i}}">Account Name</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" numberOnlyFormatter id="AccountNumber{{i}}" [(ngModel)]="ledger.AccountNumber" (change)="txtValueChange($event, 'ledger', 'AccountNumber', ledger)"  placeholder="Account Number" />
+                <label  class="form-label form-small-label" for="AccountNumber{{i}}">Account Number</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" id="BankName{{i}}" [(ngModel)]="ledger.BankName" (change)="txtValueChange($event, 'ledger', 'BankName', ledger)"  placeholder="Bank Name" />
+                <label  class="form-label form-small-label" for="BankName{{i}}">Bank Name</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" id="AgencyName{{i}}" [(ngModel)]="ledger.AgencyName" (change)="txtValueChange($event, 'ledger', 'AgencyName', ledger)"  placeholder="Agency Name" />
+                <label  class="form-label form-small-label" for="AgencyName{{i}}">Agency Name</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" id="Owner{{i}}" [(ngModel)]="ledger.Owner" (change)="txtValueChange($event, 'ledger', 'Owner', ledger)"  placeholder="Owner" />
+                <label  class="form-label form-small-label" for="Owner{{i}}">Owner</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" id="RoutingNumber{{i}}" [(ngModel)]="ledger.RoutingNumber" (change)="txtValueChange($event, 'ledger', 'RoutingNumber', ledger)"  placeholder="Routing Number" />
+                <label  class="form-label form-small-label" for="RoutingNumber{{i}}">Routing Number</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" id="AddrStreet{{i}}" [(ngModel)]="ledger.AddrStreet" (change)="txtValueChange($event, 'ledger', 'AddrStreet', ledger)"  placeholder="Street" />
+                <label  class="form-label form-small-label" for="AddrStreet{{i}}">Street</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" id="AddrCity{{i}}" [(ngModel)]="ledger.AddrCity" (change)="txtValueChange($event, 'ledger', 'AddrCity', ledger)"  placeholder="City" />
+                <label  class="form-label form-small-label" for="AddrCity{{i}}">City</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <select   class="input w-input w-small-input" id="AddrState{{i}}" [(ngModel)]="ledger.AddrState" (change)="txtValueChange($event, 'ledger', 'AddrState', ledger)" placeholder="State">
+                  <option value="AL">AL</option>
+                  <option value="AK">AK</option>
+                  <option value="AZ">AZ</option>
+                  <option value="AR">AR</option>
+                  <option value="CA">CA</option>
+                  <option value="CO">CO</option>
+                  <option value="CT">CT</option>
+                  <option value="DE">DE</option>
+                  <option value="DC">DC</option>
+                  <option value="FL">FL</option>
+                  <option value="GA">GA</option>
+                  <option value="HI">HI</option>
+                  <option value="ID">ID</option>
+                  <option value="IL">IL</option>
+                  <option value="IN">IN</option>
+                  <option value="IA">IA</option>
+                  <option value="KS">KS</option>
+                  <option value="KY">KY</option>
+                  <option value="LA">LA</option>
+                  <option value="ME">ME</option>
+                  <option value="MD">MD</option>
+                  <option value="MA">MA</option>
+                  <option value="MI">MI</option>
+                  <option value="MN">MN</option>
+                  <option value="MS">MS</option>
+                  <option value="MO">MO</option>
+                  <option value="MT">MT</option>
+                  <option value="NE">NE</option>
+                  <option value="NV">NV</option>
+                  <option value="NH">NH</option>
+                  <option value="NJ">NJ</option>
+                  <option value="NM">NM</option>
+                  <option value="NY">NY</option>
+                  <option value="NC">NC</option>
+                  <option value="ND">ND</option>
+                  <option value="OH">OH</option>
+                  <option value="OK">OK</option>
+                  <option value="OR">OR</option>
+                  <option value="PA">PA</option>
+                  <option value="RI">RI</option>
+                  <option value="SC">SC</option>
+                  <option value="SD">SD</option>
+                  <option value="TN">TN</option>
+                  <option value="TX">TX</option>
+                  <option value="UT">UT</option>
+                  <option value="VT">VT</option>
+                  <option value="VA">VA</option>
+                  <option value="WA">WA</option>
+                  <option value="WV">WV</option>
+                  <option value="WI">WI</option>
+                  <option value="WY">WY</option>
+                </select>
+                <label  class="form-label form-small-label" for="AddrState{{i}}">State</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" numberOnlyFormatter id="AddrZipCode{{i}}" [(ngModel)]="ledger.AddrZipCode" (change)="txtValueChange($event, 'ledger', 'AddrZipCode', ledger)"  placeholder="Zip Code" />
+                <label  class="form-label form-small-label" for="AddrZipCode{{i}}">Zip Code</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" numberOnlyFormatter id="TransactionFees{{i}}" [(ngModel)]="ledger.TransactionFees" (change)="txtValueChange($event, 'ledger', 'TransactionFees', ledger)"  placeholder="Transaction Fees" />
+                <label  class="form-label form-small-label" for="TransactionFees{{i}}">Transaction Fees</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button class="btn btn-default btn-profile-base pull-right mar-b-10" (click)="btnDeleteClick(ledger, i)">delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || ledgers.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddLedgerClick()">Add a ledger</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddLedger">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Ledger</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="NewAccountName{{i}}" [(ngModel)]="newLedger.AccountName" placeholder="Account Name" />
+              <label  class="form-label form-small-label" for="NewAccountName{{i}}">Account Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input class="input w-input w-small-input require-field" numberOnlyFormatter id="NewAccountNumber{{i}}" [(ngModel)]="newLedger.AccountNumber" placeholder="Account Number" />
+              <label  class="form-label form-small-label" for="NewAccountNumber{{i}}">Account Number</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="NewBankName{{i}}" [(ngModel)]="newLedger.BankName" placeholder="Bank Name" />
+              <label  class="form-label form-small-label" for="NewBankName{{i}}">Bank Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="NewAgencyName{{i}}" [(ngModel)]="newLedger.AgencyName" placeholder="Agency Name" />
+              <label  class="form-label form-small-label" for="NewAgencyName{{i}}">Agency Name</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveLedgerClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

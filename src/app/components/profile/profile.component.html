@@ -1,0 +1,614 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card profile-card">
+    <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+    <div class="row" align="center">
+        <h2 class="pb-10">Profile</h2>
+    </div>
+    <div class="row" [hidden]="isLoading">
+      <button class="accordion" data-toggle="collapse" aria-expanded="true" data-target="#personInformation">Person Information <i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+      <div class="panel collapse in" id="personInformation">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-12 desktop-pad-r-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="nameFirst" [(ngModel)]="user.NameFirst" (change)="txtValueChange($event, 'person', 'NameFirst')" maxlength="256" placeholder="First Name" type="text">
+              <label  class="form-label form-small-label" for="nameFirst">First Name</label>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12 desktop-pad-l-5 desktop-pad-r-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="nameMiddle" [(ngModel)]="user.NameMiddle" (change)="txtValueChange($event, 'person', 'NameMiddle')" maxlength="256" placeholder="Middle Name" type="text">
+              <label  class="form-label form-small-label" for="nameMiddle">Middle Name</label>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-12 desktop-pad-l-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="nameLast" [(ngModel)]="user.NameLast" (change)="txtValueChange($event, 'person', 'NameLast')" maxlength="256" placeholder="Last Name" type="text">
+              <label  class="form-label form-small-label" for="nameLast">Last Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="nameAlternate" [(ngModel)]="user.NameAlternate" (change)="txtValueChange($event, 'person', 'NameAlternate')" maxlength="256" placeholder="Name Alternate" type="text">
+              <label  class="form-label form-small-label" for="nameAlternate">Name Alternate</label>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="DateOfBirth" [(ngModel)]="user.DateOfBirth" max="9999-12-31" (blur)="txtValueChange($event, 'person', 'DateOfBirth')" maxlength="8" placeholder="Date Of Birth" type="date">
+              <label  class="form-label form-small-label" for="DateOfBirth">Date Of Birth</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="SSN" [(ngModel)]="user.SSN" (change)="txtValueChange($event, 'person', 'SSN')" maxlength="256" placeholder="SSN" type="text">
+              <label  class="form-label form-small-label" for="SSN">SSN</label>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input" id="Source" [(ngModel)]="user.Source" (change)="txtValueChange($event, 'person', 'Source')" maxlength="256" placeholder="Source" type="text">
+              <label  class="form-label form-small-label" for="Source">Source</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+            <div  class="input-wrapper input-small-wrapper">
+              <select   class="input w-input w-small-input" id="MaritalStatus" [(ngModel)]="user.MaritalStatus" (change)="txtValueChange($event, 'person', 'MaritalStatus')" placeholder="Marital Status">
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+                <option value="divorced">Divorced</option>
+              </select>
+              <label  class="form-label form-small-label" for="MaritalStatus">Marital Status</label>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="Languages" [(ngModel)]="user.Languages" (change)="txtValueChange($event, 'person', 'Languages')" maxlength="256" placeholder="Other Languages" type="text">
+                    <label  class="form-label form-small-label" for="Languages">Other Languages</label>
+                  </div>
+                </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 mar-t-5">
+            <div class="field-grouper"><span class="field-group-label">Driving</span>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="cbk-base-ctn">
+                    <input type="checkbox" [(ngModel)]="user.IsDriver" (change)="txtValueChange($event, 'person', 'IsDriver')" class="regular-checkbox" /><span>Is Driver</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row mar-t-10">
+                <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="DLState" [(ngModel)]="user.DLState" (change)="txtValueChange($event, 'person', 'DLState')" maxlength="256" placeholder="DL State" type="text">
+                    <label  class="form-label form-small-label" for="DLState">DL State</label>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="DLNumber" [(ngModel)]="user.DLNumber" (change)="txtValueChange($event, 'person', 'DLNumber')" maxlength="256" placeholder="DL Number" type="text">
+                    <label  class="form-label form-small-label" for="DLNumber">DL Number</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="DLStartDate{{i}}" [(ngModel)]="user.DLStartDate" (blur)="txtValueChange($event, 'person', 'DLStartDate')" maxlength="8" placeholder="DL Start Date" type="date">
+                    <label  class="form-label form-small-label" for="DLStartDate{{i}}">DL Start Date</label>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="DLExpirationDate{{i}}" [(ngModel)]="user.DLExpirationDate" (blur)="txtValueChange($event, 'person', 'DLExpirationDate')" maxlength="8" placeholder="DL Expiration Date" type="date">
+                    <label  class="form-label form-small-label" for="DLExpirationDate{{i}}">DL Expiration Date</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mar-t-10">
+          <div class="col-xs-6 pad-r-5">
+            <div class="cbk-base-ctn">
+              <input type="checkbox" [(ngModel)]="user.SpeaksEnglish" (change)="txtValueChange($event, 'person', 'SpeaksEnglish')" class="regular-checkbox" /><span>Speaks English</span>
+            </div>
+          </div>
+          <div class="col-xs-6 pad-l-5">
+            <div class="cbk-base-ctn">
+              <input type="checkbox" [(ngModel)]="user.SpeaksSpanish" (change)="txtValueChange($event, 'person', 'SpeaksSpanish')" class="regular-checkbox" /><span>Speaks Spanish</span>
+            </div>
+          </div>
+        </div>
+        <div class="row mar-t-5">
+          <div class="col-xs-6 pad-r-5">
+            <div class="cbk-base-ctn">
+              <input type="checkbox" [(ngModel)]="user.Gender" (change)="txtValueChange($event, 'person', 'Gender')" class="regular-checkbox" /><span>Gender</span>
+            </div>
+          </div>
+          <div class="col-xs-6 pad-l-5">
+            <div class="cbk-base-ctn">
+              <input type="checkbox" [(ngModel)]="user.Prospect" (change)="txtValueChange($event, 'person', 'Prospect')" class="regular-checkbox" /><span>Prospect</span>
+            </div>
+          </div>
+        </div>
+        <div class="row mar-t-5 mar-b-10">
+          <div class="col-xs-6 pad-r-5">
+            <div class="cbk-base-ctn">
+              <input type="checkbox" [(ngModel)]="user.IsDriver" (change)="txtValueChange($event, 'person', 'IsDriver')" class="regular-checkbox" /><span>Is Driver</span>
+            </div>
+          </div>
+          <div class="col-xs-6 pad-l-5">
+            <div class="cbk-base-ctn">
+              <input type="checkbox" [(ngModel)]="user.Smokes" (change)="txtValueChange($event, 'person', 'Smokes')" class="regular-checkbox" /><span>Smokes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="accordion" data-toggle="collapse" aria-expanded="true" data-target="#personAddresses">Addresses<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+      <div class="panel collapse in panel-list collapse" id="personAddresses">
+        <div *ngIf="user.Addresses" class="person-address-ctn">
+          <div class="empty-state" *ngIf="user.Addresses.length == 0">
+            <img src="../../../assets/images/empty-list.png">
+          </div>
+          <div *ngFor="let address of user.Addresses; let i = index;">
+            <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#personAddress' + i">{{((address.Street? (address.Street + ', ') : '') + (address.Line2? (address.Line2 + ', ') : '') + (address.City? (address.City + ', ') : '') + (address.State? (address.State + ', ') : '') + (address.ZipCode? address.ZipCode : ''))}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+            <div class="sub-panel collapse in" id="personAddress{{i}}">
+              <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12 desktop-pad-r-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="type_{{i}}" [(ngModel)]="address.Type" (change)="txtValueChange($event, 'address', 'Type', address)" maxlength="256" placeholder="Type" type="text">
+                    <label  class="form-label form-small-label" for="type_{{i}}">Type</label>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5 desktop-pad-l-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="address_line_1{{i}}" [(ngModel)]="address.Street" (change)="txtValueChange($event, 'address', 'Street', address)" maxlength="256" placeholder="Street" type="text">
+                    <label  class="form-label form-small-label" for="address_line_1{{i}}">Street</label>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12 desktop-pad-l-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="address_line_2{{i}}" [(ngModel)]="address.Line2" (change)="txtValueChange($event, 'address', 'Line2', address)" maxlength="256" placeholder="Line 2" type="text">
+                    <label  class="form-label form-small-label" for="address_line_2{{i}}">Line 2</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-12 desktop-pad-r-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="city_{{i}}" [(ngModel)]="address.City" (change)="txtValueChange($event, 'address', 'City', address)" maxlength="10" numberOnlyFormatter placeholder="City" type="text">
+                    <label  class="form-label form-small-label" for="city_{{i}}">City</label>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 desktop-pad-r-5 desktop-pad-l-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <select   class="input w-input w-small-input" id="state_{{i}}" [(ngModel)]="address.State" (change)="txtValueChange($event, 'address', 'State', address)" placeholder="State">
+                      <option value="AL">AL</option>
+                      <option value="AK">AK</option>
+                      <option value="AZ">AZ</option>
+                      <option value="AR">AR</option>
+                      <option value="CA">CA</option>
+                      <option value="CO">CO</option>
+                      <option value="CT">CT</option>
+                      <option value="DE">DE</option>
+                      <option value="DC">DC</option>
+                      <option value="FL">FL</option>
+                      <option value="GA">GA</option>
+                      <option value="HI">HI</option>
+                      <option value="ID">ID</option>
+                      <option value="IL">IL</option>
+                      <option value="IN">IN</option>
+                      <option value="IA">IA</option>
+                      <option value="KS">KS</option>
+                      <option value="KY">KY</option>
+                      <option value="LA">LA</option>
+                      <option value="ME">ME</option>
+                      <option value="MD">MD</option>
+                      <option value="MA">MA</option>
+                      <option value="MI">MI</option>
+                      <option value="MN">MN</option>
+                      <option value="MS">MS</option>
+                      <option value="MO">MO</option>
+                      <option value="MT">MT</option>
+                      <option value="NE">NE</option>
+                      <option value="NV">NV</option>
+                      <option value="NH">NH</option>
+                      <option value="NJ">NJ</option>
+                      <option value="NM">NM</option>
+                      <option value="NY">NY</option>
+                      <option value="NC">NC</option>
+                      <option value="ND">ND</option>
+                      <option value="OH">OH</option>
+                      <option value="OK">OK</option>
+                      <option value="OR">OR</option>
+                      <option value="PA">PA</option>
+                      <option value="RI">RI</option>
+                      <option value="SC">SC</option>
+                      <option value="SD">SD</option>
+                      <option value="TN">TN</option>
+                      <option value="TX">TX</option>
+                      <option value="UT">UT</option>
+                      <option value="VT">VT</option>
+                      <option value="VA">VA</option>
+                      <option value="WA">WA</option>
+                      <option value="WV">WV</option>
+                      <option value="WI">WI</option>
+                      <option value="WY">WY</option>
+                    </select>
+                    <label  class="form-label form-small-label" for="state_{{i}}">State</label>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 desktop-pad-l-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="zip_code{{i}}" [(ngModel)]="address.ZipCode" (change)="txtValueChange($event, 'address', 'ZipCode', address)" maxlength="10" numberOnlyFormatter placeholder="Zip code" type="text">
+                    <label  class="form-label form-small-label" for="zip_code{{i}}">Zip code</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-xs-12">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="address_comment_{{i}}" [(ngModel)]="address.Comment" (change)="txtValueChange($event, 'address', 'Comment', address)" maxlength="256" placeholder="Comment" type=" ext">
+                    <label  class="form-label form-small-label" for="address_comment_{{i}}">Comment</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="cbk-base-ctn">
+                    <input type="checkbox" [(ngModel)]="address.Main" (change)="txtValueChange($event, 'address', 'Main', address)" class="regular-checkbox" /><span>Main</span>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <button class="btn btn-default btn-profile-base pull-right" (click)="btnDeleteClick(address, 'address', i)">delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-default btn-primary btn-profile-base pull-right mar-b-10 mar-t-10" (click)="btnAddAddressClick($event)">Add</button>
+      </div>
+
+      <button class="accordion" data-toggle="collapse" aria-expanded="true" data-target="#personEmailAddresses">Email Addresses<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+      <div class="panel collapse in panel-list collapse" id="personEmailAddresses">
+        <div class="empty-state" *ngIf="user.EmailAddresses.length == 0">
+          <img src="../../../assets/images/empty-list.png">
+        </div>
+        <div *ngIf="user.EmailAddresses" class="person-email-address-ctn">
+          <div *ngFor="let emailAddress of user.EmailAddresses; let i = index;">
+            <button class="accordion sub-accordion" aria-expanded="true" data-toggle="collapse" [attr.data-target]="'#personEmailAddress' + i">{{(emailAddress.Address? emailAddress.Address: '')}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+            <div class="sub-panel collapse in" id="personEmailAddress{{i}}">
+              <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12 desktop-pad-r-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="email_address_type{{i}}" [(ngModel)]="emailAddress.Type" (change)="txtValueChange($event, 'email', 'Type', emailAddress)" maxlength="256" placeholder="Type" type="text">
+                    <label  class="form-label form-small-label" for="email_address_type{{i}}">Type</label>
+                  </div>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-12 desktop-pad-l-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="email_address_{{i}}" [(ngModel)]="emailAddress.Address" (change)="txtValueChange($event, 'email', 'Address', emailAddress)" maxlength="256" placeholder="Email Address" type="text">
+                    <label  class="form-label form-small-label" for="email_address_{{i}}">Email Address</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-xs-12">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="email_comment_{{i}}" [(ngModel)]="emailAddress.Comment" (change)="txtValueChange($event, 'email', 'Comment', emailAddress)" maxlength="256" placeholder="Comment" type=" ext">
+                    <label  class="form-label form-small-label" for="email_comment_{{i}}">Comment</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="cbk-base-ctn">
+                    <input type="checkbox" [(ngModel)]="emailAddress.Main" (change)="txtValueChange($event, 'emailAddess', 'Main', emailAddress)" class="regular-checkbox" /><span>Main</span>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <button class="btn btn-default btn-profile-base pull-right" (click)="btnDeleteClick(emailAddress, 'emailAddress', i)">delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="btn-default btn-primary btn-profile-base pull-right mar-b-10 mar-t-10" (click)="btnAddEmailAddressClick($event)">Add</button>
+        </div>
+      </div>
+
+      <button class="accordion" data-toggle="collapse" aria-expanded="true" data-target="#personPhoneNumbers">Phone Numbers<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+      <div class="panel collapse in panel-list collapse" id="personPhoneNumbers">
+        <div class="empty-state" *ngIf="user.PhoneNumbers.length == 0">
+          <img src="../../../assets/images/empty-list.png">
+        </div>
+        <div *ngIf="user.PhoneNumbers" class="person-phone-number-ctn">
+          <div *ngFor="let phoneNumber of user.PhoneNumbers; let i = index;">
+            <button class="accordion sub-accordion" aria-expanded="true" data-toggle="collapse" [attr.data-target]="'#phoneNumber' + i">{{phoneNumber.Number}}<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+            <div class="sub-panel collapse in" id="phoneNumber{{i}}">
+              <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12 desktop-pad-r-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="phone_number_type{{i}}" [(ngModel)]="phoneNumber.Type" (change)="txtValueChange($event, 'phone', 'Type', phoneNumber)" maxlength="256" placeholder="Type" type="text">
+                    <label  class="form-label form-small-label" for="phone_number_type{{i}}">Type</label>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5 desktop-pad-r-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="phone_number{{i}}" [ngModel]="phoneNumber.Number" (change)="txtValueChange($event, 'phone', 'Number', phoneNumber)" phoneNumberFormatter maxlength="256" placeholder="Number" type="text">
+                    <label  class="form-label form-small-label" for="phone_number{{i}}">Number</label>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12 desktop-pad-l-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="phone_number_extension{{i}}" [(ngModel)]="phoneNumber.Extension" (change)="txtValueChange($event, 'phone', 'Extension', phoneNumber)" maxlength="256" placeholder="Extension " type="text">
+                    <label  class="form-label form-small-label" for="phone_number_extension{{i}}">Extension</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-sm-126 col-xs-12">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="phone_number_comment{{i}}" [(ngModel)]="phoneNumber.Comment" (change)="txtValueChange($event, 'phone', 'Comment', phoneNumber)" maxlength="256" placeholder="Comment" type="text">
+                    <label  class="form-label form-small-label" for="phone_number_comment{{i}}">Comment</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="cbk-base-ctn">
+                    <input type="checkbox" [(ngModel)]="phoneNumber.Main" (change)="txtValueChange($event, 'phone', 'Main', phoneNumber)" class="regular-checkbox" /><span>Main</span>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <button class="btn btn-default btn-profile-base pull-right" (click)="btnDeleteClick(phoneNumber, 'phoneNumber', i)">delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-default btn-primary btn-profile-base pull-right mar-b-10 mar-t-10" (click)="btnAddPhoneNumberClick($event)">Add</button>
+      </div>
+
+      <button class="accordion" data-toggle="collapse" aria-expanded="true" data-target="#personDocuments">Documents<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+      <div class="panel collapse in" id="personDocuments">
+        <div class="empty-state mar-b-15" *ngIf="user.Documents.length == 0">
+          <img src="../../../assets/images/empty-list.png">
+        </div>
+        <div *ngIf="user.Documents" class="person-document-ctn">
+          <div *ngFor="let document of user.Documents; let i = index;">
+            <button class="accordion sub-accordion" aria-expanded="true" data-toggle="collapse" [attr.data-target]="'#document' + i">{{(document.FileName? document.FileName : '')}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+            <div class="sub-panel collapse in" id="document{{i}}">
+              <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12 desktop-pad-r-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="document_type{{i}}" [(ngModel)]="document.Type" (change)="txtValueChange($event, 'document', 'Type', document)" maxlength="256" placeholder="Type" type="text">
+                    <label  class="form-label form-small-label" for="document_type{{i}}">Type</label>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12 desktop-pad-l-5 desktop-pad-r-5"></div>
+                <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5"><span class="lbl-person lbl-person-document"><b>File Name:</b> <a target="_blank  " [attr.href]="('/Documents/' + user.Folder + '/' + document.FileName)">{{document.FileName}}</a></span></div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5"><span class="lbl-person lbl-person-document"><b>Created On:</b> {{document.CreatedOn | date:'fullDate'}}</span></div>
+                <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5"><span class="lbl-person lbl-person-document"><b>Length:</b> {{document.Length}}</span></div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-sm-126 col-xs-12 mar-t-10">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="document_comment{{i}}" [(ngModel)]="document.Comments" (change)="txtValueChange($event, 'document', 'Comments', document)" maxlength="256" placeholder="Comment" type="text">
+                    <label  class="form-label form-small-label" for="document_comment{{i}}">Comment</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <button class="btn btn-default btn-profile-base pull-right" (click)="btnDeleteClick(document, 'document', i)">delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--<button class="btn-default btn-primary btn-profile-base pull-right mar-b-10 mar-t-10" (click)="btnAddDocumentClick($event)">Add</button>-->
+        </div>
+      </div>
+
+      <button class="accordion" data-toggle="collapse" aria-expanded="true" data-target="#personAssets">Assets<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+      <div class="panel collapse in panel-list collapse" id="personAssets">
+        <div class="empty-state" *ngIf="user.Assets.length == 0">
+          <img src="../../../assets/images/empty-list.png">
+        </div>
+        <div *ngIf="user.Assets" class="person-asset-ctn">
+          <div *ngFor="let asset of user.Assets; let i = index;">
+            <button class="accordion sub-accordion" aria-expanded="true" data-toggle="collapse" [attr.data-target]="'#asset' + i">{{asset.AssetName}}<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+            <div class="sub-panel collapse in" id="asset{{i}}">
+              <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-12 desktop-pad-r-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <select  class="input w-input w-small-input" id="new_asset_type_{{i}}" [(ngModel)]="asset.AssetType" (change)="txtValueChange($event, 'asset', 'AssetType', asset)" placeholder="Asset Type">
+                      <option value="Home">Home</option>
+                      <option value="Car">Car</option>
+                    </select>
+                    <label  class="form-label form-small-label" for="new_asset_type_{{i}}">Asset Type</label>
+                  </div>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-12 desktop-pad-l-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="asset_name{{i}}" [(ngModel)]="asset.AssetName" (change)="txtValueChange($event, 'asset', 'AssetName', asset)" maxlength="256" placeholder="Asset Name" type="text">
+                    <label  class="form-label form-small-label" for="asset_name{{i}}">Asset Name</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="asset_OwnershipPct{{i}}" [(ngModel)]="asset.OwnershipPct" (change)="txtValueChange($event, 'asset', 'OwnershipPct', asset)" maxlength="5" min="0" max="100" numberOnlyFormatter placeholder="Ownership Pct" type="text">
+                    <label  class="form-label form-small-label" for="asset_OwnershipPct{{i}}">Ownership Pct</label>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                  <div  class="input-wrapper input-small-wrapper">
+                    <input  class="input w-input w-small-input" id="asset_Value{{i}}" [(ngModel)]="asset.Value" (change)="txtValueChange($event, 'asset', 'Value', asset)" maxlength="5" min="0" max="100" numberOnlyFormatter placeholder="Value" type="text">
+                    <label  class="form-label form-small-label" for="asset_Value{{i}}">Value</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="cbk-base-ctn">
+                    <input type="checkbox" [(ngModel)]="asset.Own" (change)="txtValueChange($event, 'asset', 'Own', asset)" class="regular-checkbox" /><span>Own</span>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <button class="btn btn-default btn-profile-base pull-right" (click)="btnDeleteClick(asset, 'asset', i)">delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-default btn-primary btn-profile-base pull-right mar-b-10 mar-t-10" (click)="btnAddAssetClick($event)">Add</button>
+      </div>
+
+      <!--<button class="accordion" data-toggle="collapse" aria-expanded="true" data-target="#personAccidents">Accidents<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>-->
+      <!--<div class="panel collapse in panel-list collapse" id="personAccidents">-->
+        <!--<div class="empty-state" *ngIf="user.Accidents.length == 0">-->
+          <!--<img src="../../../assets/images/empty-list.png">-->
+        <!--</div>-->
+        <!--<div *ngIf="user.Accidents" class="person-accident-ctn">-->
+          <!--<div *ngFor="let accident of user.Accidents; let i = index;">-->
+            <!--<button class="accordion sub-accordion" aria-expanded="true" data-toggle="collapse" [attr.data-target]="'#accident' + i">{{accident.AccidentDate | date:'fullDate'}}<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>-->
+            <!--<div class="sub-panel collapse in" id="accident{{i}}">-->
+              <!--<div class="row">-->
+                <!--<div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">-->
+                  <!--<div  class="input-wrapper input-small-wrapper">-->
+                    <!--<select  class="input w-input w-small-input" id="ddl_asset{{i}}" [(ngModel)]="accident.AssetSoid" (change)="txtValueChange($event, 'accident', 'AssetSoid', accident)" placeholder="Asset">-->
+                      <!--<option *ngFor="let ddlAsset of user.Assets" value="{{ddlAsset.AssetSoid}}">{{ddlAsset.AssetName}}</option>-->
+                    <!--</select>-->
+                    <!--<label  class="form-label form-small-label" for="ddl_asset{{i}}">Asset</label>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">-->
+                  <!--<div  class="input-wrapper input-small-wrapper">-->
+                    <!--<input  class="input w-input w-small-input" id="personAccidentDate{{i}}" [(ngModel)]="accident.AccidentDate" (blur)="txtValueChange($event, 'accident', 'AccidentDate', accident)" maxlength="8" placeholder="Accident Date" type="date">-->
+                    <!--<label  class="form-label form-small-label" for="personAccidentDate{{i}}">Accident Date</label>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="row">-->
+                <!--<div class="col-xs-6">-->
+                  <!--<div class="cbk-base-ctn">-->
+                    <!--<input type="checkbox" [(ngModel)]="accident.AtFault" (change)="txtValueChange($event, 'accident', 'AtFault', accident)" class="regular-checkbox" /><span>At Fault</span>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-xs-6">-->
+                  <!--<button class="btn btn-default btn-profile-base pull-right" (click)="btnDeleteClick(accident, 'accident', i)">delete</button>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<button class="btn-default btn-primary btn-profile-base pull-right mar-b-10 mar-t-10" (click)="btnAddAccidentClick($event)">Add</button>-->
+      <!--</div>-->
+
+      <!--<button class="accordion" data-toggle="collapse" aria-expanded="true" data-target="#personTickets">Tickets<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>-->
+      <!--<div class="panel collapse in panel-list collapse" id="personTickets">-->
+        <!--<div class="empty-state" *ngIf="user.Tickets.length == 0">-->
+          <!--<img src="../../../assets/images/empty-list.png">-->
+        <!--</div>-->
+        <!--<div *ngIf="user.Tickets" class="person-ticket-ctn">-->
+          <!--<div *ngFor="let ticket of user.Tickets; let i = index;">-->
+            <!--<button class="accordion sub-accordion" aria-expanded="true" data-toggle="collapse" [attr.data-target]="'#ticket' + i">{{ticket.TicketDate | date:'fullDate'}}<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>-->
+            <!--<div class="sub-panel collapse in" id="ticket{{i}}">-->
+              <!--<div class="row">-->
+                <!--<div class="col-md-3 col-sm-3 col-xs-12 desktop-pad-r-5">-->
+                  <!--<div  class="input-wrapper input-small-wrapper">-->
+                    <!--<input  class="input w-input w-small-input" id="ticket_type{{i}}" [(ngModel)]="ticket.TicketType" (change)="txtValueChange($event, 'ticket', 'TicketType', ticket)" maxlength="256" placeholder="Type" type="text">-->
+                    <!--<label  class="form-label form-small-label" for="ticket_type{{i}}">Type</label>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-9 col-sm-9 col-xs-12 desktop-pad-l-5">-->
+                  <!--<div  class="input-wrapper input-small-wrapper">-->
+                    <!--<input  class="input w-input w-small-input" id="personTicketDate{{i}}" [(ngModel)]="ticket.TicketDate" (blur)="txtValueChange($event, 'ticket', 'TicketDate', ticket)" maxlength="15" numberOnlyFormatter placeholder="Ticket Date" type="date">-->
+                    <!--<label  class="form-label form-small-label" for="personTicketDate{{i}}">Ticket Date</label>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="row">-->
+                <!--<div class="col-md-12 col-sm-12 col-xs-12 mar-t-10">-->
+                  <!--<div  class="input-wrapper input-small-wrapper">-->
+                    <!--<input  class="input w-input w-small-input" id="ticket_outcome{{i}}" [(ngModel)]="ticket.TicketOutcome" (change)="txtValueChange($event, 'ticket', 'TicketOutcome', ticket)" maxlength="256" placeholder="Ticket Outcome" type="text">-->
+                    <!--<label  class="form-label form-small-label" for="ticket_outcome{{i}}">Ticket Outcome</label>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="row">-->
+                <!--<div class="col-xs-6">-->
+
+                <!--</div>-->
+                <!--<div class="col-xs-6">-->
+                  <!--<button class="btn btn-default btn-profile-base pull-right" (click)="btnDeleteClick(ticket, 'ticket', i)">delete</button>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<button class="btn-default btn-primary btn-profile-base pull-right mar-b-10 mar-t-10" (click)="btnAddTicketClick($event)">Add</button>-->
+      <!--</div>-->
+
+      <!--<button class="accordion" data-toggle="collapse" aria-expanded="true" data-target="#personViolations">Violations<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>-->
+      <!--<div class="panel collapse in panel-list collapse" id="personViolations">-->
+        <!--<div class="empty-state" *ngIf="user.Violations.length == 0">-->
+          <!--<img src="../../../assets/images/empty-list.png">-->
+        <!--</div>-->
+        <!--<div *ngIf="user.Violations" class="person-violation-ctn">-->
+          <!--<div *ngFor="let violation of user.Violations; let i = index;">-->
+            <!--<button class="accordion sub-accordion" aria-expanded="true" data-toggle="collapse" [attr.data-target]="'#violation' + i">{{violation.ViolationDate | date:'fullDate'}}<i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>-->
+            <!--<div class="sub-panel collapse in collapse" id="violation{{i}}">-->
+              <!--<div class="row">-->
+                <!--<div class="col-md-3 col-sm-3 col-xs-12 desktop-pad-r-5">-->
+                  <!--<div  class="input-wrapper input-small-wrapper">-->
+                    <!--<input  class="input w-input w-small-input" id="violation_type{{i}}" [(ngModel)]="violation.ViolationType" (change)="txtValueChange($event, 'violation', 'ViolationType', violation)" maxlength="256" placeholder="Type" type="text">-->
+                    <!--<label  class="form-label form-small-label" for="violation_type{{i}}">Type</label>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-9 col-sm-9 col-xs-12 desktop-pad-l-5">-->
+                  <!--<div  class="input-wrapper input-small-wrapper">-->
+                    <!--<input  class="input w-input w-small-input" id="personViolationDate{{i}}" [(ngModel)]="violation.ViolationDate" (blur)="txtValueChange($event, 'violation', 'ViolationDate', violation)" maxlength="15" numberOnlyFormatter placeholder="Violation Date" type="date">-->
+                    <!--<label  class="form-label form-small-label" for="personViolationDate{{i}}">Violation Date</label>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="row">-->
+                <!--<div class="col-md-12 col-sm-126 col-xs-12 mar-t-10">-->
+                  <!--<div  class="input-wrapper input-small-wrapper">-->
+                    <!--<input  class="input w-input w-small-input" id="violation_Description{{i}}" [(ngModel)]="violation.Description" (change)="txtValueChange($event, 'violation', 'Description', violation)" maxlength="256" placeholder="Description" type="text">-->
+                    <!--<label  class="form-label form-small-label" for="violation_Description{{i}}">Description</label>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="row">-->
+                <!--<div class="col-xs-6">-->
+
+                <!--</div>-->
+                <!--<div class="col-xs-6">-->
+                  <!--<button class="btn btn-default btn-profile-base pull-right" (click)="btnDeleteClick(violation, 'violation', i)">delete</button>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<button class="btn-default btn-primary btn-profile-base pull-right mar-b-10 mar-t-10" (click)="btnAddViolationClick($event)">Add</button>-->
+      <!--</div>-->
+
+    </div>
+  </div>
+</div>
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

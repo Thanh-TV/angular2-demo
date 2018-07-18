@@ -1,0 +1,13 @@
+.sub-panel {
+    background: rgba(0, 0, 0, 0.01);
+    border: solid 1px #eee;
+}
+.sub-panel .sub-panel {
+  background: white !important;
+}
+.sub-panel .sub-panel .sub-panel {
+    background: rgba(0, 0, 0, 0.01) !important;
+}
+.sub-panel.course-panel {
+  max-height: 500px;
+}

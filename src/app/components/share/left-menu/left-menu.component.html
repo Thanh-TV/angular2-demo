@@ -1,0 +1,95 @@
+<!-- Modal -->
+<div class="modal left fade left-menu-modal" id="leftMenuModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content custom-scroll">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Menu</h4>
+      </div>
+
+      <div class="modal-body">
+        <ul class="nav sidebar-nav">
+          <li [ngClass]="{'active': (currentPage == 'dashboard')}">
+            <a (click)="redirectTo('dashboard')"><i class="material-icons">dashboard</i> Dashboard</a>
+          </li>
+          <li [ngClass]="{'active': (currentPage == 'assets')}">
+           <a (click)="redirectTo('assets')"><i class="material-icons">equalizer</i> Asset</a>
+          </li>
+          <li [ngClass]="{'active': (currentPage == 'groups')}">
+            <a (click)="redirectTo('groups')"><i class="material-icons">group</i> Groups</a>
+          </li>
+          <li [ngClass]="{'active': (currentPage == 'modules')}">
+            <a (click)="redirectTo('modules')"><i class="material-icons">view_module</i> Modules</a>
+          </li>
+          <li>
+            <a data-toggle="collapse" class="collapse-menu" href="#sub-education"><i class="material-icons">cast_for_education</i> Education<i class="material-icons up-down-icon key-up-icon">keyboard_arrow_up</i> <i class="material-icons up-down-icon key-down-icon">keyboard_arrow_down</i></a>
+            <ul class="sidebar-nav sub-sidebar-nav collapse" id="sub-education">
+              <li [ngClass]="{'active': (currentPage == 'education/instructors')}">
+               <a class="collapse-menu" (click)="redirectTo('education/instructors')"><i class="material-icons">label</i> Instructors</a>
+              </li>
+              <li [ngClass]="{'active': (currentPage == 'education/students')}">
+               <a class="collapse-menu" (click)="redirectTo('education/students')"><i class="material-icons">label</i> Students</a>
+              </li>
+              <li [ngClass]="{'active': (currentPage == 'education/topics')}">
+                <a class="collapse-menu" (click)="redirectTo('education/topics')"><i class="material-icons">label</i> Topics</a>
+              </li>
+              <li [ngClass]="{'active': (currentPage == 'education/courses')}">
+                <a class="collapse-menu" (click)="redirectTo('education/courses')"><i class="material-icons">label</i> Courses</a>
+              </li>
+              <li [ngClass]="{'active': (currentPage == 'education/certifications')}">
+                <a class="collapse-menu" (click)="redirectTo('education/certifications')"><i class="material-icons">label</i> Certifications</a>
+              </li>
+              <li [ngClass]="{'active': (currentPage == 'education/disciplines')}">
+                <a class="collapse-menu" (click)="redirectTo('education/disciplines')"><i class="material-icons">label</i> Disciplines</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a data-toggle="collapse" class="collapse-menu" href="#sub-financial"><i class="material-icons">payment</i> Financials <i class="material-icons up-down-icon key-up-icon">keyboard_arrow_up</i> <i class="material-icons up-down-icon key-down-icon">keyboard_arrow_down</i></a>
+            <ul class="sidebar-nav sub-sidebar-nav collapse" id="sub-financial">
+              <li [ngClass]="{'active': (currentPage == 'financial/register')}">
+                <a class="collapse-menu" (click)="redirectTo('financial/register')"><i class="material-icons">label</i> Register</a>
+              </li>
+              <li [ngClass]="{'active': (currentPage == 'financial/ledgers')}">
+               <a class="collapse-menu" (click)="redirectTo('financial/ledgers')"><i class="material-icons">label</i> Ledgers</a>
+              </li>
+            </ul>
+          </li>
+          <li [ngClass]="{'active': (currentPage == 'users')}">
+            <a (click)="redirectTo('users')"><i class="material-icons">person</i> Users</a>
+          </li>
+          <li [ngClass]="{'active': (currentPage == 'tasks')}">
+            <a (click)="redirectTo('tasks')"><i class="material-icons">done</i> Tasks</a>
+          </li>
+          <li [ngClass]="{'active': (currentPage == 'appointments')}">
+            <a (click)="redirectTo('appointments')"><i class="material-icons">perm_contact_calendar</i> Appointment</a>
+          </li>
+          <li [ngClass]="{'active': (currentPage == 'offices')}">
+            <a (click)="redirectTo('offices')"><i class="material-icons">home</i> Office</a>
+          </li>
+          <li [ngClass]="{'active': (currentPage == 'companies')}">
+            <a (click)="redirectTo('companies')"><i class="material-icons">meeting_room</i> Company</a>
+          </li>
+          <li [ngClass]="{'active': (currentPage == 'customers')}">
+            <a (click)="redirectTo('customers')"><i class="material-icons">people_outline</i> Customer</a>
+          </li>
+          <li>
+            <a data-toggle="collapse" class="collapse-menu" href="#sub-insurance"><i class="material-icons">account_balance</i> Insurance <i class="material-icons up-down-icon key-up-icon">keyboard_arrow_up</i> <i class="material-icons up-down-icon key-down-icon">keyboard_arrow_down</i></a>
+            <ul class="sidebar-nav sub-sidebar-nav collapse" id="sub-insurance">
+              <li [ngClass]="{'active': (currentPage == 'insurance/companies')}">
+                <a class="collapse-menu" (click)="redirectTo('insurance/companies')"><i class="material-icons">label</i> Companies</a>
+              </li>
+              <li [ngClass]="{'active': (currentPage == 'insurance/customers')}">
+               <a class="collapse-menu" (click)="redirectTo('insurance/customers')"><i class="material-icons">label</i> Customers</a>
+              </li>
+            </ul>
+          </li>
+          <li [ngClass]="{'active': (currentPage == 'tickets')}">
+            <a (click)="redirectTo('tickets')"><i class="material-icons">shopping_cart</i> Ticket</a>
+          </li>
+        </ul>
+      </div>
+
+    </div><!-- modal-content -->
+  </div><!-- modal-dialog -->
+</div><!-- modal -->

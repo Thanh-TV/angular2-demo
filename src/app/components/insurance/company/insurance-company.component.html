@@ -1,0 +1,313 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Insurance Companies</h2>
+    </div>
+    <div class="asset-ctn">
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && companies.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddCompanyClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let company of companies; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#userCompany' + i">{{(company.CompanyName? company.CompanyName : '')}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="sub-panel collapse in" id="userCompany{{i}}">
+          <div class="tabbable-panel custom-scroll">
+            <div class="tabbable-line">
+              <ul class="nav nav-tabs ">
+                <li class="active">
+                  <a href="#tab_default_1{{i}}" data-toggle="tab">
+                  Document </a>
+                </li>
+                <li>
+                  <a href="#tab_default_2{{i}}" data-toggle="tab">
+                  Products </a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_default_1{{i}}">
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="CompanyName{{i}}" [(ngModel)]="company.CompanyName" (change)="txtValueChange($event, 'company', 'CompanyName', company)"  placeholder="Company Name" />
+                        <label  class="form-label form-small-label" for="CompanyName{{i}}">Company Name</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="Abbreviation{{i}}" [(ngModel)]="company.Abbreviation" (change)="txtValueChange($event, 'company', 'Abbreviation', company)"  placeholder="Abbreviation" />
+                        <label  class="form-label form-small-label" for="Abbreviation{{i}}">Abbreviation</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input require-field" id="Website{{i}}" [(ngModel)]="company.Website" maxlength="8" max="9999-12-31" (blur)="txtValueChange($event, 'company', 'Website', company)" placeholder="Website" type="text">
+                        <label  class="form-label form-small-label" for="Website{{i}}">Website</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input  class="input w-input w-small-input" id="Street{{i}}" [(ngModel)]="company.AddrStreet" (change)="txtValueChange($event, 'company', 'AddrStreet', company)"  placeholder="Street" type="text"/>
+                        <label  class="form-label form-small-label" for="Street{{i}}">Street</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="City{{i}}" (change)="txtValueChange($event, 'company', 'AddrCity', company)" [(ngModel)]="company.AddrCity" placeholder="City" />
+                        <label  class="form-label form-small-label" for="City{{i}}">City</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <select   class="input w-input w-small-input" id="AddrState{{i}}" [(ngModel)]="company.AddrState" (change)="txtValueChange($event, 'company', 'AddrState', company)" placeholder="State">
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AZ">AZ</option>
+                                <option value="AR">AR</option>
+                                <option value="CA">CA</option>
+                                <option value="CO">CO</option>
+                                <option value="CT">CT</option>
+                                <option value="DE">DE</option>
+                                <option value="DC">DC</option>
+                                <option value="FL">FL</option>
+                                <option value="GA">GA</option>
+                                <option value="HI">HI</option>
+                                <option value="ID">ID</option>
+                                <option value="IL">IL</option>
+                                <option value="IN">IN</option>
+                                <option value="IA">IA</option>
+                                <option value="KS">KS</option>
+                                <option value="KY">KY</option>
+                                <option value="LA">LA</option>
+                                <option value="ME">ME</option>
+                                <option value="MD">MD</option>
+                                <option value="MA">MA</option>
+                                <option value="MI">MI</option>
+                                <option value="MN">MN</option>
+                                <option value="MS">MS</option>
+                                <option value="MO">MO</option>
+                                <option value="MT">MT</option>
+                                <option value="NE">NE</option>
+                                <option value="NV">NV</option>
+                                <option value="NH">NH</option>
+                                <option value="NJ">NJ</option>
+                                <option value="NM">NM</option>
+                                <option value="NY">NY</option>
+                                <option value="NC">NC</option>
+                                <option value="ND">ND</option>
+                                <option value="OH">OH</option>
+                                <option value="OK">OK</option>
+                                <option value="OR">OR</option>
+                                <option value="PA">PA</option>
+                                <option value="RI">RI</option>
+                                <option value="SC">SC</option>
+                                <option value="SD">SD</option>
+                                <option value="TN">TN</option>
+                                <option value="TX">TX</option>
+                                <option value="UT">UT</option>
+                                <option value="VT">VT</option>
+                                <option value="VA">VA</option>
+                                <option value="WA">WA</option>
+                                <option value="WV">WV</option>
+                                <option value="WI">WI</option>
+                                <option value="WY">WY</option>
+                              </select>
+                              <label  class="form-label form-small-label" for="AddrState{{i}}">State</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="ZipCode{{i}}" (change)="txtValueChange($event, 'company', 'AddrZip', company)" [(ngModel)]="company.AddrZip" placeholder="Zip Code" />
+                        <label  class="form-label form-small-label" for="ZipCode{{i}}">Zip Code</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="Acct{{i}}" (change)="txtValueChange($event, 'company', 'AcctNbr', company)" [(ngModel)]="company.AcctNbr" placeholder="Acct #" />
+                        <label  class="form-label form-small-label" for="Acct{{i}}">Acct #</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="PhoneNumber{{i}}" (change)="txtValueChange($event, 'company', 'Phone', company)" [(ngModel)]="company.Phone" phoneNumberFormatter placeholder="Phone Number" />
+                        <label  class="form-label form-small-label" for="PhoneNumber{{i}}">Phone Number</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                      <div  class="input-wrapper input-small-wrapper">
+                        <input class="input w-input w-small-input" id="FaxNumber{{i}}" (change)="txtValueChange($event, 'company', 'Fax', company)" [(ngModel)]="company.Fax" phoneNumberFormatter placeholder="Fax Number" />
+                        <label  class="form-label form-small-label" for="FaxNumber{{i}}">Fax Number</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_default_2{{i}}">
+                  <!--Products-->
+                  <div class="base-comment-ctn">
+                    <div class="empty-state" *ngIf="company.Products.length == 0">
+                      <img src="../../../assets/images/empty-list.png">
+                    </div>
+                    <div *ngFor="let product of company.Products; let pIndex = index;">
+                      <button class="accordion sub-accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#product' + pIndex + '-company' + i">{{(product.ProductName? product.ProductName : '')}} <i class="material-icons key-up-icon">keyboard_arrow_up</i> <i class="material-icons key-down-icon">keyboard_arrow_down</i></button>
+                      <div class="sub-panel collapse in" id="product{{pIndex}}-company{{i}}">
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="ProductName{{pIndex}}" [(ngModel)]="product.ProductName" (change)="txtValueChange($event, 'product', 'ProductName', product, company)" maxlength="256" placeholder="Product Name" type="text">
+                              <label  class="form-label form-small-label" for="ProductName{{pIndex}}">Product Name</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="LegalName{{pIndex}}" [(ngModel)]="product.LegalName" (change)="txtValueChange($event, 'product', 'LegalName', product, company)" maxlength="256" placeholder="Legal Name" type="text">
+                              <label  class="form-label form-small-label" for="LegalName{{pIndex}}">Legal Name</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="NAIC{{pIndex}}" [(ngModel)]="product.NAIC" (change)="txtValueChange($event, 'product', 'NAIC', product, company)" maxlength="256" placeholder="NAIC" type="text">
+                              <label  class="form-label form-small-label" for="NAIC{{pIndex}}">NAIC</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Term{{pIndex}}" [(ngModel)]="product.Term" (change)="txtValueChange($event, 'product', 'Term', product, company)" numberOnlyFormatter maxlength="20" placeholder="Term" type="text">
+                              <label  class="form-label form-small-label" for="Term{{pIndex}}">Term</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="PolicyFee{{pIndex}}" [(ngModel)]="product.PolicyFee" (change)="txtValueChange($event, 'product', 'PolicyFee', product, company)" numberOnlyFormatter maxlength="20" placeholder="Policy Fee" type="text">
+                              <label  class="form-label form-small-label" for="PolicyFee{{pIndex}}">Policy Fee</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Cost{{pIndex}}" [(ngModel)]="product.Cost" (change)="txtValueChange($event, 'product', 'Cost', product, company)" numberOnlyFormatter maxlength="20" placeholder="Cost" type="text">
+                              <label  class="form-label form-small-label" for="Cost{{pIndex}}">Cost</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="Commission{{pIndex}}" [(ngModel)]="product.Commission" (change)="txtValueChange($event, 'product', 'Commission', product, company)" numberOnlyFormatter maxlength="20" placeholder="Commission" type="text">
+                              <label  class="form-label form-small-label" for="Commission{{pIndex}}">Commission</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div  class="input-wrapper input-small-wrapper">
+                              <input  class="input w-input w-small-input" id="RenewalComm{{pIndex}}" [(ngModel)]="product.RenewalComm" (change)="txtValueChange($event, 'product', 'RenewalComm', product, company)" numberOnlyFormatter maxlength="20" placeholder="RenewalComm" type="text">
+                              <label  class="form-label form-small-label" for="RenewalComm{{pIndex}}">Cost</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+                            <div class="cbk-base-ctn">
+                               <input type="checkbox" [(ngModel)]="product.Taxable" (change)="txtValueChange($event, 'product', 'Taxable', product, company)" class="regular-checkbox" /><span>Taxable</span>
+                             </div>
+                          </div>
+                          <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+                            <div class="cbk-base-ctn">
+                               <input type="checkbox" [(ngModel)]="product.Active" (change)="txtValueChange($event, 'product', 'Active', product, company)" class="regular-checkbox" /><span>Active</span>
+                             </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <button class="btn-base btn-remove btn btn-default pull-right" (click)="btnDeleteClick(product, 'product', i, company)">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="base-comment-content comment-input mar-t-10 pull-right">
+                          <button class="btn-base btn-primary pull-right" (click)="btnAddCompanyProductClick($event, company)">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || companies.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddCompanyClick($event)">Add an company</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddCompany">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Company</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newCompanyName" [(ngModel)]="newCompany.CompanyName" maxlength="256" placeholder="Company Name" type="text">
+              <label  class="form-label form-small-label" for="newCompanyName">Company Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newCompanyDBA" [(ngModel)]="newCompany.DBA" maxlength="256" placeholder="DBA" type="text">
+              <label  class="form-label form-small-label" for="newCompanyDBA">DBA</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newCompanyBusinessType" [(ngModel)]="newCompany.BusinessType" maxlength="256" placeholder="Business Type" type="text">
+              <label  class="form-label form-small-label" for="newCompanyBusinessType">Business Type</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newCompanyWebsite" [(ngModel)]="newCompany.Website" maxlength="256" placeholder="Website" type="text">
+              <label  class="form-label form-small-label" for="newCompanyWebsite">Email Address</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveCompanyClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

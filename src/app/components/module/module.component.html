@@ -1,0 +1,98 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Modules</h2>
+    </div>
+    <div>
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && modules.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddModuleClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let module of modules; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#adminModule' + i">{{(module.Name? module.Name : '')}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="sub-panel collapse in asset-panel" id="adminModule{{i}}">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="ModuleName{{i}}" (change)="txtValueChange($event, 'module', 'Name', module)" [(ngModel)]="module.Name" placeholder="Name" maxlength="256"/>
+                <label  class="form-label form-small-label" for="ModuleName{{i}}">Name</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="Realm{{i}}" (change)="txtValueChange($event, 'module', 'Realm', module)" [(ngModel)]="module.Realm" placeholder="Realm" maxlength="256"/>
+                <label  class="form-label form-small-label" for="Realm{{i}}">Realm</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 mar-b-15">
+              <div  class="input-wrapper text-area-wrapper">
+                <textarea class="input w-input w-small-input" id="Description{{i}}" [(ngModel)]="module.Description" (change)="txtValueChange($event, 'module', 'Description', module)" placeholder="Description" maxlength="512"></textarea>
+                <label  class="form-label form-small-label" for="Description{{i}}">Description</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button class="btn-base btn btn-default pull-right" (click)="btnRemoveModuleClick(module, i)">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || modules.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddModuleClick($event)">Add an module</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddModule">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add module</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newModuleName" [(ngModel)]="newModule.Name" maxlength="256" placeholder="Name" />
+              <label  class="form-label form-small-label" for="newModuleName">Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="NewRealm" [(ngModel)]="newModule.Realm" maxlength="256" placeholder="Realm" />
+              <label  class="form-label form-small-label" for="NewRealm">Realm</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 mar-b-10">
+            <div  class="input-wrapper text-area-wrapper">
+                <textarea class="input w-input w-small-input" id="newModuleDescription" [(ngModel)]="newModule.Description" placeholder="Description" maxlength="512"></textarea>
+                <label  class="form-label form-small-label" for="newModuleDescription">Description</label>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveModuleClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

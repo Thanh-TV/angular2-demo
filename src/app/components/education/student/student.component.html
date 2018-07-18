@@ -1,0 +1,204 @@
+<header-component [headerConfig]="headerConfig"></header-component>
+<left-menu-component></left-menu-component>
+<div class="container base-container">
+  <div class="login-card base-card">
+    <div class="row" align="center">
+        <h2 class="pb-10">Students</h2>
+    </div>
+    <div>
+      <div class="loading-overlay" [hidden]="!isLoading"><div></div></div>
+      <div class="empty-state" *ngIf="!isLoading && students.length == 0">
+        <img src="../../../assets/images/empty-list.png">
+        <div class="row" align="center">
+          <button class="btn-default btn-primary btn-base mar-t-10" (click)="btnAddStudentClick($event)">Add new</button>
+        </div>
+      </div>
+      <div *ngFor="let student of students; let i = index;">
+        <button class="accordion" data-toggle="collapse" aria-expanded="true" [attr.data-target]="'#adminStudent' + i">{{(student.ContactName? student.ContactName : '')}}<i class="material-icons key-down-icon">keyboard_arrow_down</i><i class="material-icons key-up-icon">keyboard_arrow_up</i></button>
+        <div class="sub-panel collapse in asset-panel" id="adminStudent{{i}}">
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input class="input w-input w-small-input" id="StudentName{{i}}" (change)="txtValueChange($event, 'student', 'ContactName', student)" [(ngModel)]="student.ContactName" placeholder="Contact Name" maxlength="256"/>
+                <label  class="form-label form-small-label" for="StudentName{{i}}">Contact Name</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <select  class="input w-input w-small-input" id="CompanySoid{{i}}" [(ngModel)]="student.CompanySoid" (change)="txtValueChange($event, 'student', 'CompanySoid', student)"  placeholder="Company">
+                  <option *ngFor="let company of companies;" value="{{company.Soid}}">{{(company.CompanyName? company.CompanyName : 'Empty Name')}}</option>
+                </select>
+                <label  class="form-label form-small-label" for="CompanySoid{{i}}">Company</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" type="text" id="Phone{{i}}" [(ngModel)]="student.Phone" (change)="txtValueChange($event, 'student', 'Phone', student)" phoneNumberFormatter placeholder="Phone" />
+                <label  class="form-label form-small-label" for="Phone{{i}}">Phone</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" type="text" id="Email{{i}}" [(ngModel)]="student.Email" (change)="txtValueChange($event, 'student', 'Email', student)"  placeholder="Email" />
+                <label  class="form-label form-small-label" for="Email{{i}}">Email</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" type="text" id="StudentStreet{{i}}" [(ngModel)]="student.AddrStreet" (change)="txtValueChange($event, 'student', 'AddrStreet', student)"  placeholder="Street" />
+                <label  class="form-label form-small-label" for="StudentStreet{{i}}">Street</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" type="text" id="StudentLine2{{i}}" [(ngModel)]="student.AddrLine2" (change)="txtValueChange($event, 'student', 'AddrLine2', student)"  placeholder="Line2" />
+                <label  class="form-label form-small-label" for="StudentLine2{{i}}">Line2</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" type="text" id="StudentCity{{i}}" [(ngModel)]="student.AddrCity" (change)="txtValueChange($event, 'student', 'AddrCity', student)"  placeholder="City" />
+                <label  class="form-label form-small-label" for="StudentCity{{i}}">City</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-r-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <select   class="input w-input w-small-input" id="StudentState{{i}}" [(ngModel)]="student.AddrState" (change)="txtValueChange($event, 'student', 'AddrState', student)" placeholder="State">
+                  <option value="AL">AL</option>
+                  <option value="AK">AK</option>
+                  <option value="AZ">AZ</option>
+                  <option value="AR">AR</option>
+                  <option value="CA">CA</option>
+                  <option value="CO">CO</option>
+                  <option value="CT">CT</option>
+                  <option value="DE">DE</option>
+                  <option value="DC">DC</option>
+                  <option value="FL">FL</option>
+                  <option value="GA">GA</option>
+                  <option value="HI">HI</option>
+                  <option value="ID">ID</option>
+                  <option value="IL">IL</option>
+                  <option value="IN">IN</option>
+                  <option value="IA">IA</option>
+                  <option value="KS">KS</option>
+                  <option value="KY">KY</option>
+                  <option value="LA">LA</option>
+                  <option value="ME">ME</option>
+                  <option value="MD">MD</option>
+                  <option value="MA">MA</option>
+                  <option value="MI">MI</option>
+                  <option value="MN">MN</option>
+                  <option value="MS">MS</option>
+                  <option value="MO">MO</option>
+                  <option value="MT">MT</option>
+                  <option value="NE">NE</option>
+                  <option value="NV">NV</option>
+                  <option value="NH">NH</option>
+                  <option value="NJ">NJ</option>
+                  <option value="NM">NM</option>
+                  <option value="NY">NY</option>
+                  <option value="NC">NC</option>
+                  <option value="ND">ND</option>
+                  <option value="OH">OH</option>
+                  <option value="OK">OK</option>
+                  <option value="OR">OR</option>
+                  <option value="PA">PA</option>
+                  <option value="RI">RI</option>
+                  <option value="SC">SC</option>
+                  <option value="SD">SD</option>
+                  <option value="TN">TN</option>
+                  <option value="TX">TX</option>
+                  <option value="UT">UT</option>
+                  <option value="VT">VT</option>
+                  <option value="VA">VA</option>
+                  <option value="WA">WA</option>
+                  <option value="WV">WV</option>
+                  <option value="WI">WI</option>
+                  <option value="WY">WY</option>
+                </select>
+                <label  class="form-label form-small-label" for="StudentState{{i}}">State</label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 desktop-pad-l-5">
+              <div  class="input-wrapper input-small-wrapper">
+                <input  class="input w-input w-small-input" type="text" id="StudentZipCode{{i}}" [(ngModel)]="student.AddrZip" (change)="txtValueChange($event, 'student', 'AddrZip', student)" numberOnlyFormatter maxlength="10"  placeholder="Zip Code" />
+                <label  class="form-label form-small-label" for="StudentZipCode{{i}}">Zip Code</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button class="btn-base btn btn-default pull-right" (click)="btnRemoveStudentClick(student, i)">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="isLoading || students.length == 0">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <button class="btn-default btn-primary btn-base pull-right mar-b-10 mar-t-10" (click)="btnAddStudentClick($event)">Add a student</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalAddStudent">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add student</h4>
+      </div>
+      <div class="modal-content-ctn">
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <select  class="input w-input w-small-input require-field" id="NewStudentCompany" [(ngModel)]="newStudent.CompanySoid" placeholder="Company">
+                <option *ngFor="let company of companies;" value="{{company.Soid}}">{{(company.CompanyName? company.CompanyName : 'Empty Name')}}</option>
+              </select>
+              <label  class="form-label form-small-label" for="NewStudentCompany">Company</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newStudentName" [(ngModel)]="newStudent.ContactName" maxlength="256" placeholder="Contact Name" />
+              <label  class="form-label form-small-label" for="newStudentName">Contact Name</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="NewPhone" [(ngModel)]="newStudent.Phone" phoneNumberFormatter placeholder="Phone" />
+              <label  class="form-label form-small-label" for="NewPhone">Phone</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div  class="input-wrapper input-small-wrapper">
+              <input  class="input w-input w-small-input require-field" id="newStudentEmail" [(ngModel)]="newStudent.Email" maxlength="256" type="email" placeholder="Email" />
+              <label  class="form-label form-small-label" for="newStudentEmail">Email</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-base btn-primary" (click)="btnSaveStudentClick($event)">Add</button>
+        <button type="button" class="btn btn-base btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<confirmation-component [btnLeftText]="confirmation.btnLeftText" [btnRightText]="confirmation.btnRightText" [title]="confirmation.title" (handleBtnLeftClick)="btnConfirmDeletingClick($event)" (handleBtnRightClick)="btnConfirmCancelingClick()" [content]="confirmation.content"></confirmation-component>

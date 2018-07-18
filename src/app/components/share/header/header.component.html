@@ -1,0 +1,40 @@
+<nav class="navbar navbar-default navbar-fixed-top fix-nav" id="header">
+    <div class="container">
+        <div class="navbar-header">
+            <button *ngIf="menuLeft" class="btn-main-menu" (click)="showLeftMenu()"><i class="material-icons">menu</i></button>
+            <img class="logo" [ngClass]="{'home-page-logo': isHomePage}" src="../../../assets/images/logo-portal-color.png">
+            <div class="dropdown-ctn" *ngIf="loggedInPage">
+              <div class="dropdown">
+                <a class="dropdown-toggle btn-user-profile" data-toggle="dropdown" aria-expanded="true">
+                  <span>{{userShortName}}</span>
+                  <i class="material-icons">keyboard_arrow_down</i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right header-right-menu">
+                  <li (click)="onProfileClick()"><a>View profile</a></li>
+                  <li (click)="onChangePasswordClick()"><a>Change password</a></li>
+                  <li (click)="logout()"><a>Logout</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="home-right-menu" *ngIf="isHomePage">
+              <span (click)="btnSignInClick()">Sign in</span>
+              <span (click)="btnRegisterClick()">Register</span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="keepLogoutModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-message">
+        You will be logged out in {{timeOutSecs}} seconds
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-left" (click)="btnKeepSignInClick()">Keep me logged in</button>
+      </div>
+    </div>
+  </div>
+</div>

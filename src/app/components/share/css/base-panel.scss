@@ -1,0 +1,16 @@
+.sub-panel {
+  padding: 0;
+}
+
+.sub-panel .sub-panel {
+  padding: 15px;
+}
+.modal-content-ctn {
+  padding: 20px 15px 5px 15px;
+}
+
+@media (max-width: 400px) {
+  .sub-panel .sub-panel {
+    padding: 15px 10px 13px 10px;
+  }
+}
