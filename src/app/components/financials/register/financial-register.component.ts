@@ -8,7 +8,7 @@ declare var window:any;
 @Component({
   selector: 'financial-register-component',
   templateUrl: './financial-register.component.html',
-  styleUrls: ['./financial-register.component.css', '../../../share/css/base-panel.scss'],
+  styleUrls: ['./financial-register.component.css', '../../share/css/base-panel.scss'],
   providers: [BaseService]
 })
 

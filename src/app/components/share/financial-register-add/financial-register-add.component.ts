@@ -5,7 +5,7 @@ import { BaseService} from '../../../services/base.service';
 @Component({
   selector: 'financial-register-add-component',
   templateUrl: './financial-register-add.component.html',
-  styleUrls: ['./financial-register-add.component.css', '../../css/financial-base.scss'],
+  styleUrls: ['./financial-register-add.component.css', '../css/financial-base.scss'],
   providers: [BaseService]
 })
 

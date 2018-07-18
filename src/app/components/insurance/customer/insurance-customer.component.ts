@@ -8,7 +8,7 @@ declare var window:any;
 @Component({
   selector: 'insurance-customer-component',
   templateUrl: './insurance-customer.component.html',
-  styleUrls: ['../../../share/css/base-panel.scss']
+  styleUrls: ['../../share/css/base-panel.scss']
 })
 
 export class InsuranceCustomerComponent implements OnInit {

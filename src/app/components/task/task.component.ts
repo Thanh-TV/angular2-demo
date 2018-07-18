@@ -8,7 +8,7 @@ declare var window:any;
 @Component({
   selector: 'task-component',
   templateUrl: './task.component.html',
-  styleUrls: ['./task.component.scss', '../../share/css/base-comment.scss', '../../share/css/base-panel.scss']
+  styleUrls: ['./task.component.scss', '../share/css/base-comment.scss', '../share/css/base-panel.scss']
 })
 
 export class TaskComponent implements OnInit {

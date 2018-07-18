@@ -8,7 +8,7 @@ declare var $:any;
 @Component({
   selector: 'asset-component',
   templateUrl: './asset.component.html',
-  styleUrls: ['./asset.component.scss', '../../share/css/base-panel.scss']
+  styleUrls: ['./asset.component.scss', '../share/css/base-panel.scss']
 })
 
 export class AssetComponent implements OnInit {

@@ -8,7 +8,7 @@ declare var window:any;
 @Component({
   selector: 'certification-component',
   templateUrl: './certification.component.html',
-  styleUrls: ['../../../share/css/education-base.scss']
+  styleUrls: ['../../share/css/education-base.scss']
 })
 
 export class CertificationComponent implements OnInit {

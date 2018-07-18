@@ -16,7 +16,13 @@ export class ProfileComponent implements OnInit {
   errorMessage:any = '';
   isLoading:any = false;
   user:any = {
-
+    Addresses: [],
+    Assets: [],
+    Documents: [],
+    EmailAddresses: [],
+    Employments: [],
+    PhoneNumbers: [],
+    Shops: []
   };
   deletingObject:any;
   deletingType:any;

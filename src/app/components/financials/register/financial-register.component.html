@@ -126,12 +126,12 @@
 
 <div class="modal fade modal-notify-user" tabindex="-1" role="dialog" aria-hidden="true" id="modalFinancialRegister">
   <div class="modal-dialog modal-sm">
-    <div class="modal-content custom-scroll">
+    <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">{{(modalFinancialRegisterType == 'opening')? 'Opening' : 'Closing'}}</h4>
       </div>
-      <div class="modal-content-ctn">
+      <div class="modal-content-ctn custom-scroll">
         <financial-register-add-component [type]="modalFinancialRegisterType" [ledgers]="ledgers" (handleBtnSaveClick)="btnSaveOpeningClosingClick($event)"></financial-register-add-component>
       </div>
     </div>

@@ -8,7 +8,7 @@ declare var window:any;
 @Component({
   selector: 'appointment-component',
   templateUrl: './appointment.component.html',
-  styleUrls: ['./appointment.component.scss', '../../share/css/base-comment.scss', '../../share/css/base-panel.scss']
+  styleUrls: ['./appointment.component.scss', '../share/css/base-comment.scss', '../share/css/base-panel.scss']
 })
 
 export class AppointmentComponent implements OnInit {

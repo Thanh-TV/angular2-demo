@@ -8,7 +8,7 @@ declare var window:any;
 @Component({
   selector: 'ticket-component',
   templateUrl: './ticket.component.html',
-  styleUrls: ['./ticket.component.css', '../../share/css/base-comment.scss', '../../share/css/base-panel.scss']
+  styleUrls: ['./ticket.component.css', '../share/css/base-comment.scss', '../share/css/base-panel.scss']
 })
 
 export class TicketComponent implements OnInit {

@@ -8,7 +8,7 @@ declare var window:any;
 @Component({
   selector: 'company-component',
   templateUrl: './company.component.html',
-  styleUrls: ['./company.component.scss', '../../share/css/base-panel.scss']
+  styleUrls: ['./company.component.scss', '../share/css/base-panel.scss']
 })
 
 export class CompanyComponent implements OnInit {

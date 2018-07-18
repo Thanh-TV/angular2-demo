@@ -8,7 +8,7 @@ declare var window:any;
 @Component({
   selector: 'office-component',
   templateUrl: './office.component.html',
-  styleUrls: ['./office.component.scss', '../../share/css/base-comment.scss']
+  styleUrls: ['./office.component.scss', '../share/css/base-comment.scss']
 })
 
 export class OfficeComponent implements OnInit {

@@ -8,7 +8,7 @@ declare var window:any;
 @Component({
   selector: 'financial-ledger-component',
   templateUrl: './ledger.component.html',
-  styleUrls: ['./ledger.component.css', '../../../share/css/base-panel.scss'],
+  styleUrls: ['./ledger.component.css', '../../share/css/base-panel.scss'],
   providers: [BaseService]
 })
 

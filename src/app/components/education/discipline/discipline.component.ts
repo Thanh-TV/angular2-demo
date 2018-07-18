@@ -8,7 +8,7 @@ declare var window:any;
 @Component({
   selector: 'discipline-component',
   templateUrl: './discipline.component.html',
-  styleUrls: ['../../../share/css/education-base.scss']
+  styleUrls: ['../../share/css/education-base.scss']
 })
 
 export class DisciplineComponent implements OnInit {

@@ -71,7 +71,7 @@ const AppRoutes: Routes = [
     path: 'profile',
     component: ProfileComponent
   }, {
-    path: 'assets',
+    path: 'asset',
     component: AssetComponent
   }, {
     path: 'tasks',
@@ -130,6 +130,9 @@ const AppRoutes: Routes = [
   }, {
     path: 'education/disciplines',
     component: DisciplineComponent
+  },  {
+    path: '**',
+    redirectTo: '/'
   }
 ]
 

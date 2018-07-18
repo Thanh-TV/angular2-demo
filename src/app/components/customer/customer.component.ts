@@ -8,7 +8,7 @@ declare var window:any;
 @Component({
   selector: 'customer-component',
   templateUrl: './customer.component.html',
-  styleUrls: ['../../share/css/base-panel.scss', '../../share/css/financial-base.scss', './customer.component.scss']
+  styleUrls: ['../share/css/base-panel.scss', '../share/css/financial-base.scss', './customer.component.scss']
 })
 
 export class CustomerComponent implements OnInit {
